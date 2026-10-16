@@ -8,8 +8,8 @@ export function pin(tipo: Tipo) {
   return L.divIcon({
     className: "pin",
     iconSize: [w, h],
-    iconAnchor: [w / 2, h],
-    tooltipAnchor: [0, -h + 4],
+    iconAnchor: [w / 2, Math.round((h * 34) / 35)], // ponta do pino exatamente sobre o ponto
+    tooltipAnchor: [0, -h + 6],
     html: `<svg viewBox="0 0 25 35" width="${w}" height="${h}" aria-hidden="true">
       <path d="M12.5 1C6.2 1 1 6 1 12.2 1 20.6 12.5 34 12.5 34S24 20.6 24 12.2C24 6 18.8 1 12.5 1Z" fill="${cor}" stroke="#fff" stroke-width="1.6"/>
       <circle cx="12.5" cy="12.3" r="4.4" fill="#fff" fill-opacity=".92"/></svg>`,
