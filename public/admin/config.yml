@@ -1,0 +1,148 @@
+# CMS do Clã do Machado (Sveltia CMS, compatível com Decap CMS).
+# Acesse em /admin e entre com sua conta do GitHub. Cada "Salvar" vira um commit e o Netlify publica sozinho.
+backend:
+  name: github
+  repo: SEU-USUARIO/cla-do-machado # <- troque pelo repositório no GitHub (usuario/nome)
+  branch: main
+
+local_backend: true # em desenvolvimento (npm run dev), edita os arquivos locais
+
+site_url: https://cladomachado.netlify.app
+media_folder: public/img
+public_folder: /img
+locale: pt
+
+collections:
+  - name: cidades
+    label: Cidades
+    label_singular: Cidade
+    folder: src/content/cidades
+    extension: json
+    format: json
+    create: true
+    slug: "{{nome}}"
+    identifier_field: nome
+    summary: "{{nome}} · {{tipo}}"
+    sortable_fields: [nome, tipo, dominio]
+    fields:
+      - { name: nome, label: Nome, widget: string }
+      - name: tipo
+        label: Tamanho
+        widget: select
+        options:
+          - { label: Cidade-Estado, value: estado }
+          - { label: Cidade grande, value: grande }
+          - { label: Cidade média, value: media }
+          - { label: Cidade pequena, value: pequena }
+      - { name: x, label: "Posição X (horizontal)", widget: number, value_type: float, hint: "Segure Shift e clique no mapa do site para copiar 'x, y'." }
+      - { name: y, label: "Posição Y (vertical)", widget: number, value_type: float }
+      - { name: dominio, label: Domínio, widget: string, required: false }
+      - { name: governo, label: Governo, widget: string, required: false }
+      - { name: populacao, label: População, widget: text, required: false }
+      - { name: clima, label: Clima, widget: string, required: false }
+      - { name: economia, label: Economia, widget: text, required: false }
+      - { name: religiao, label: Religião, widget: string, required: false }
+      - { name: estabelecimentos, label: Estabelecimentos, widget: text, required: false }
+      - { name: texto, label: "Texto livre (história, descrição)", widget: markdown, required: false }
+      - { name: pagina, label: "Mapa da cidade (código do mapa, ex.: komora)", widget: string, required: false }
+      - { name: link, label: "Link externo de mapa", widget: string, required: false }
+      - name: eventos
+        label: Linha do tempo
+        widget: list
+        required: false
+        summary: "{{fields.data}}"
+        fields:
+          - { name: data, label: Data, widget: string }
+          - { name: texto, label: Acontecimento, widget: markdown, required: false }
+
+  - name: pontos
+    label: Pontos de interesse
+    label_singular: Ponto de interesse
+    folder: src/content/pontos
+    extension: json
+    format: json
+    create: true
+    slug: "{{nome}}"
+    identifier_field: nome
+    summary: "{{nome}} · {{categoria}}"
+    fields:
+      - { name: nome, label: Nome, widget: string }
+      - name: categoria
+        label: Categoria
+        widget: select
+        options:
+          - { label: Assentamento, value: assentamento }
+          - { label: Covil de criatura, value: covil }
+          - { label: Dungeon, value: dungeon }
+          - { label: PDI (construção), value: pdi_construcao }
+          - { label: PDI (natural), value: pdi_natural }
+          - { label: Mais, value: mais }
+      - { name: x, label: "Posição X", widget: number, value_type: float }
+      - { name: y, label: "Posição Y", widget: number, value_type: float }
+      - { name: icone, label: "Ícone (nome do Font Awesome, ex.: tents, dragon, tree)", widget: string }
+      - { name: cor, label: "Cor do ícone (ex.: black, #51b587)", widget: string, default: black }
+      - { name: descricao, label: Descrição, widget: markdown }
+      - { name: link, label: "Link externo de mapa", widget: string, required: false }
+      - name: eventos
+        label: Linha do tempo
+        widget: list
+        required: false
+        summary: "{{fields.data}}"
+        fields:
+          - { name: data, label: Data, widget: string }
+          - { name: texto, label: Acontecimento, widget: markdown, required: false }
+
+  - name: panteao
+    label: História e deuses
+    label_singular: Texto
+    folder: src/content/panteao
+    extension: json
+    format: json
+    create: true
+    slug: "{{nome}}"
+    identifier_field: nome
+    summary: "{{nome}} · {{tipo}}"
+    sortable_fields: [ordem, nome]
+    fields:
+      - { name: nome, label: Nome, widget: string }
+      - { name: subtitulo, label: Subtítulo (ex.: A Dama da Vida), widget: string, required: false }
+      - name: tipo
+        label: Tipo
+        widget: select
+        options:
+          - { label: Deus / religião, value: deus }
+          - { label: História, value: historia }
+      - { name: ordem, label: "Ordem de exibição", widget: number, value_type: int }
+      - { name: corpo, label: Texto, widget: markdown }
+
+  - name: mapas-cidade
+    label: Mapas de cidade
+    label_singular: Mapa de cidade
+    folder: src/content/mapas-cidade
+    extension: json
+    format: json
+    create: true
+    slug: "{{nome}}"
+    identifier_field: nome
+    fields:
+      - { name: nome, label: Nome, widget: string }
+      - { name: imagem, label: "Imagem do mapa", widget: image }
+      - { name: largura, label: "Largura da imagem (px)", widget: number, value_type: int }
+      - { name: altura, label: "Altura da imagem (px)", widget: number, value_type: int }
+      - { name: centroX, label: "Centro X", widget: number, value_type: float, default: 0 }
+      - { name: centroY, label: "Centro Y", widget: number, value_type: float, default: 0 }
+      - { name: zoom, label: "Zoom inicial", widget: number, value_type: int, default: 0 }
+      - { name: zoomMin, label: "Zoom mínimo", widget: number, value_type: int, default: -2 }
+      - { name: texto, label: "História da cidade", widget: markdown, required: false }
+      - name: pois
+        label: Locais do mapa (taverna, templo…)
+        widget: list
+        summary: "{{fields.nome}}"
+        fields:
+          - { name: nome, label: Nome, widget: string }
+          - { name: icone, label: "Ícone (Font Awesome: beer-mug-empty, hands-praying, hammer…)", widget: string }
+          - { name: cor, label: Cor, widget: string, default: black }
+          - { name: x, label: "Posição X", widget: number, value_type: float }
+          - { name: y, label: "Posição Y", widget: number, value_type: float }
+          - { name: descricao, label: "Descrição curta", widget: markdown, required: false }
+          - { name: detalhe, label: "NPCs e detalhes", widget: markdown, required: false }

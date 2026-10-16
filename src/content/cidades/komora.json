@@ -1,0 +1,28 @@
+{
+  "nome": "Komora",
+  "tipo": "pequena",
+  "x": 1446.75,
+  "y": 883.25,
+  "dominio": "Erimoor",
+  "governo": "Dario Branto",
+  "populacao": "1200 (Humanos: 20%, Gnomos 17%, Elfos da Floresta e Eladrins: 16%, Tabaxi, 15%, Meio-elfos: 12%, Tieflings: 5%, Outros: 15%)",
+  "clima": "Subtropical",
+  "economia": "Agricultura, pecuária de aves e suínos e produção de cerveja",
+  "religiao": "Iliynara e Huerir",
+  "estabelecimentos": "Taverna Dragão de Komora, Sede do Clã do Machado",
+  "pagina": "komora",
+  "eventos": [
+    {
+      "data": "Primeiro Hitrice de Arborea, 2949",
+      "texto": "O Clã do Machado chega à cidade e se instala nas propriedades de Roger Tyler, comandante da nova sede."
+    },
+    {
+      "data": "Primeiro Hitrice de Lisura, 2949",
+      "texto": "Misteriosa chuva de sapos assola Komora e a praga toma a cidade por dias e dias."
+    },
+    {
+      "data": "Primeiro Zarchid de Pujan, 2949",
+      "texto": "Clã do Machado derrota bruxa em Komora e encerra a praga de sapos."
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "nome": "Erimoor",
+  "tipo": "estado",
+  "x": 1399.25,
+  "y": 792,
+  "dominio": "Erimoor",
+  "governo": "Olena Alighieri",
+  "populacao": "300.000 (Humanos: 30%, Gnomos: 16%, Anões da Colina: 12%, Meio-Elfos: 10%, Aasimares: 10%, Fairy: 5%, Elfos do Mar: 4%, Tritões: 3% Outros: 10%)",
+  "clima": "Subtropical",
+  "economia": "Seu grande porto e posição central no continente tornam Erimoor a cidade com o comércio mais forte de Phantyr fornecendo produtos de todos os tipos, vindos de toda parte.",
+  "religiao": "Hanne e Huerir",
+  "estabelecimentos": "Templo de Hanne, Templo de Huerir, Anfiteatro, Hipódromo.",
+  "pagina": "erimoor",
+  "eventos": [
+    {
+      "data": "1255",
+      "texto": "Tribos humanas das margens da Baía Horizonte se uniram para construir Erimoor em meio à Era dos Milagres."
+    },
+    {
+      "data": "Anos de 2100",
+      "texto": "Erimoor e Meride disputam terras da Floresta Talaedra e da parte leste da Planície Horizonte se tornando rivais territoriais. Erimoor é bem sucedida ficando com maior parte da região."
+    },
+    {
+      "data": "Anos de 2100",
+      "texto": "Erimoor e Tigodon criam uma aliança."
+    },
+    {
+      "data": "2500",
+      "texto": "Tigodon sofre ataque de Bhorg’Dra vindo pela Floresta Cetrine. Erimoor auxilia um destacamento militar e Tigodon consegue sobrepujar os draconatos do Império Poente."
+    },
+    {
+      "data": "Aproximadamente 2800",
+      "texto": "Erimoor, tentando barrar o crescimento de Meride, começa um novo conflito."
+    },
+    {
+      "data": "Aproximadamente 2800",
+      "texto": "Hazordus, um grande dragão vermelho, monta seu covil nas imediações da cidade."
+    },
+    {
+      "data": "Anos de 2800",
+      "texto": "Erimoor pede auxílio a Tigodon em seu conflito contra Meride, mas a ajuda é negada. Fim da aliança Tigodon-Erimoor."
+    },
+    {
+      "data": "2850",
+      "texto": "Com a derrota para Meride, Erimoor perde território e as cidades de Ouro Negro, Khyrm, Koll, Siem e Pieph são anexadas ao domínio de Meride."
+    },
+    {
+      "data": "De 2850 a 2900",
+      "texto": "Erimoor consegue se reestruturar firmando o maior comercio do continente, o suficiente para travar uma guerra comercial com Tigodon."
+    }
+  ]
+}

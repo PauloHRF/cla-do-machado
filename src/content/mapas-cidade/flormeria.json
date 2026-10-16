@@ -1,0 +1,67 @@
+{
+  "nome": "Florméria",
+  "imagem": "/img/cidades_flormeria.webp",
+  "largura": 857,
+  "altura": 904,
+  "centroX": 428.5,
+  "centroY": 452,
+  "zoom": 0,
+  "zoomMin": -1,
+  "texto": "<p> Florméria ganha esse nome graças às inúmeras flores brancas que crescem no tronco das árvores gigantes presentes na região. A cidade se originou de duas vilas menores de humanos e elfos. No passado, esses dois vilarejos se juntaram em um casamento diplomático para que ambos conseguissem se defender dos perigos da floresta e por conta dessa união, mais elfos e humanos começaram a se juntar e mais meio-elfos nasceram. A vila foi crescendo e seu nome chegou aos ouvidos dos meios-elfos eremitas, que como não conseguiam encontrar um lar em nenhum lugar, viram na cidade uma oportunidade de aceitação. </p> <p> Com a migração, miscigenação dos humanos e elfos e as famílias compostas somente de meio-elfos, Florméria se tornou a peculiar cidade onde as três espécies convivem em \"harmonia\". Contudo, apesar da história de união entre humanos e elfos, a elite convive separada. Os elfos Miraris e os humanos Nanney comandam a economia da cidade e por eles firmou-se um acordo de que somente um(a) meio-elfo(a) pode governar. </p> <p> Florméria cresceu no meio de árvores gigantescas e da densa floresta. Protegida por uma barreira natural composta pela vegetação, a cidade tem somente duas entradas: pelo riacho navegável por pequenas embarcações que corta a cidade e a sudeste pelo grande portão formado por galhos retorcidos. O que mais chama a atenção são as construções que se estendem até a copa das árvores gigantes, interligadas por passarelas firmes feitas de madeiras. Existem construções no solo também, que se mesclam com as árvores menores e a vegetação natural, mas estão reservadas para os comuns. Quanto mais perto do topo, mais perto da elite você estará chegando e postos de vigia são vistos com mais frequência no alto. </p> <p> No coração da cidade, há uma praça que abriga uma grande feira, próximo a esse centro comercial fica a taverna As Flores Noturnas. Ao sul, fica o Templo de Iliynara e próximo, a Perfumaria Perfuma. A noroeste e a sudeste, ficam as duas sedes da guilda dos coletores, responsáveis pela defesa da cidade, por auxiliar os moradores dos arredores de Florméria e por escoltar mercadores e caravanas que passam pela floresta. </p>",
+  "pois": [
+    {
+      "nome": "Palácio de Governo",
+      "icone": "place-of-worship",
+      "cor": "red",
+      "x": 546,
+      "y": 764,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Tara.webp' width='250' height='400' class='center'><p><b>Tara Perfuma</b> - Meia-Elfa, governa a cidade há 55 anos. Sabe lidar bem com assuntos externos e é uma ótima intermediária entre os assuntos das famílias nobres de humanos e elfos.</p>"
+    },
+    {
+      "nome": "Guilda dos Coletores",
+      "icone": "person-military-pointing",
+      "cor": "black",
+      "x": 233,
+      "y": 562,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Jenvendor.webp' width='250' height='400' class='center'><p><b>Jenvendor Perfuma</b> - Meio-Elfo, lidera os coletores há 55 anos. Não lida bem com forasteiros, é um pouco parecido com os elfos nesse quesito. É um exímio guerreiro. Irmão de Tara.</p>"
+    },
+    {
+      "nome": "Guilda dos Coletores",
+      "icone": "person-military-pointing",
+      "cor": "black",
+      "x": 686,
+      "y": 527,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Jenvendor.webp' width='250' height='400' class='center'><p><b>Jenvendor Perfuma</b> - Meio-Elfo, lidera os coletores há 55 anos. Não lida bem com forasteiros, é um pouco parecido com os elfos nesse quesito. É um exímio guerreiro. Irmão de Tara.</p>"
+    },
+    {
+      "nome": "Taverna As Flores Noturnas",
+      "icone": "beer-mug-empty",
+      "cor": "#c76320",
+      "x": 338,
+      "y": 496,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Templo de Iliynara",
+      "icone": "hands-praying",
+      "cor": "blue",
+      "x": 494,
+      "y": 237,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Perfumaria Perfuma",
+      "icone": "flask",
+      "cor": "#cecf12",
+      "x": 367,
+      "y": 225,
+      "descricao": "",
+      "detalhe": ""
+    }
+  ]
+}

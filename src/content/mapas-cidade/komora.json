@@ -1,0 +1,121 @@
+{
+  "nome": "Komora",
+  "imagem": "/img/cidades_komora.webp",
+  "largura": 676,
+  "altura": 676,
+  "centroX": 333,
+  "centroY": 333,
+  "zoom": 1,
+  "zoomMin": -2,
+  "texto": "<p>Komora é uma cidade relativamente nova, foi formada a partir de uma pequena vila na estrada que liga a Baía Kinshale a Erimoor. Sua promoção de vila a cidade ocorreu por conta de sua posição estratégica: Komora controla a entrada terrestre na Planície do Horizonte e o comércio vindo da Floresta Kinshale, além disso, ela está na fronteira do domínio com Meride. Devido ao histórico de conflitos territoriais entre as duas Cidades Estado, e Meride ter sido ocupada por Hazordus entre 2890 e 2894, a guarda de Komora foi intensificada. Além da guarda local, há um pequeno batalhão do exército de Erimoor alocado na cidade.</p> <p>Instalada numa planície fértil e próxima a Floresta Kinshale, uma boa parte dos moradores de Komora está ligado de alguma forma à pecuária e à agronomia. A cidade também produz cerveja, porém sua produção é limitada a apenas metade do ano, no período do inverno, que é considerada uma iguaria, fruto de uma receita antiga adaptada dos monges do Monastério do Vento do Norte. Em relação à pecuária, Komora possui grandes criações de suínos e de aves.</p> <p>Na cidade existe um grande depósito de madeira, presente desde que a Família Branto passou a governar, ainda quando Komora era uma pequena vila. Nele é armazenado tanto o que é recolhido da Floresta Kinshale quanto o que é trazido do Bosque Merlara e o atual governante, Dario Branto, aumentou bastante o seu estoque de madeira.</p>",
+  "pois": [
+    {
+      "nome": "Clã do Machado",
+      "icone": "landmark",
+      "cor": "#b91e1e",
+      "x": 202,
+      "y": 504,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Roger Tyler.webp' width='250' height='400' class='center'><p><b>Roger Tyler - Lider do Clã</b> - Roger é um humano de uma família da baixa nobreza de Erimoor. Segundo ele, nunca gostou muito da cidade grande e das pessoas que vivem la. Dessa forma, quando jovem, foi-se aventurar.</p><p>Nessas aventuras conheceu o Clã do Machado desde seu inicio, acompanhando de longe seu crescimento até a sua maior vitória. Com a queda de Hazordus, resolveu tentar se aproximar do Clã, utilizando parte de sua pouca influencia para sediar uma filial na cidade de Komora.</p><p>Ele vive na cidade de Komora junto de sua família: sua mãe e seu marido.</p><img src='/img/NPCs/Ux.webp' width='250' height='400' class='center'><p><b>Ux (Goblin)</b> - O assistente de Roger é auto intitulado goblinbuilder, é possível vê-lo em seu tempo livre no clã sempre levantando algum halter ou qualquer outro tipo de peso. Apesar do foco no corpo, é muito sagaz e observador, pois ele sabe que o cérebro também é um músculo. Sempre direto no que diz, prefere ficar um dia sem Whey do que deixar passar qualquer injustiça.</p><p>É desconhecido a forma que Roger e Ux chegaram em sua parceria</p><img src='/img/NPCs/Luci.webp' width='250' height='400' class='center'><p><b>Luci</b> - Familiar comprado pelo Clã para entregar mensagens para aventureiros que não estão perto da sede.</p>"
+    },
+    {
+      "nome": "Quartel General",
+      "icone": "person-military-pointing",
+      "cor": "black",
+      "x": 300,
+      "y": 253,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/raphael_fortescue.webp' width='250' height='400' class='center'><p><b>Raphael Fortescue</b> - Capitão da guarda da cidade, sempre se dedicou a sua defesa. Hoje ele tem a luta politica contra os membros do exercito de Erimoor na cidade, vem fazendo de tudo para que eles vão embora logo. (irmão da Emma Fortescue)</p>"
+    },
+    {
+      "nome": "Alquimista",
+      "icone": "flask",
+      "cor": "#cecf12",
+      "x": 412,
+      "y": 506,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Alice.webp' width='250' height='400' class='center'><p><b>Alice</b> - Uma alquimista que se mudou para a cidade buscando ajudar sua família após seus anos de estudos. Cuida do seu pai, que já esta com problemas de saúde devido a idade, e sustenta sua famila com o dinheiro da loja.</p>"
+    },
+    {
+      "nome": "Patrulha",
+      "icone": "person-military-pointing",
+      "cor": "black",
+      "x": 73,
+      "y": 190,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Exército de Erimoor",
+      "icone": "dungeon",
+      "cor": "#5e20c7",
+      "x": 505,
+      "y": 548,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Ferreiro",
+      "icone": "hammer",
+      "cor": "#9f07f0",
+      "x": 275.5,
+      "y": 520,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Emma Fortescue.webp' width='250' height='400' class='center'><p><b>Emma Fortescue</b> - Ferreira de Komora, nascida e crescida na cidade. Os pais morreram quando eram crianças e ela e o irmão foram criados pelos avós. Ela se tornou aprendiz de ferreiro logo quando atingiu a adolescência e assim que se tornou adulta, trabalhou até conseguir abrir sua propria forja.</p>"
+    },
+    {
+      "nome": "Cemiterio",
+      "icone": "ghost",
+      "cor": "#294f53",
+      "x": 646,
+      "y": 601,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Taverna Dragão de Komora",
+      "icone": "beer-mug-empty",
+      "cor": "#c76320",
+      "x": 363,
+      "y": 392,
+      "descricao": "",
+      "detalhe": "<p>Possui 3 andares e um porão.</p><p>No porão é guardado estoques de mantimentos e bebidas, ele tem aproximadamente o mesmo tamanho da cozinha e fica abaixo dela. No primeiro andar é encontrado o bar, mesas compartilhadas, um pequeno palco e a cozinha. O segundo andar é composto por duas áreas, de quartos compartilhados e algumas mesas menores no mezanino. O terceiro e último andar tem mais quartos e menos mesas, sendo elas, mais românticas com uma boa visão do palco.</p><h1>NPCs:</h1><img src='/img/NPCs/Jade.webp' width='250' height='400' class='center'><p><b>Jade</b> - Dona da taverna Dragão de Komora. O estabelecimento é um dos primeiros da cidade, estando nela desde que era uma pequena vila. Jade herdou a taverna de seus pais quando eles morreram. </p><img src='/img/NPCs/Sebastian Raae.webp' width='250' height='400' class='center'><p><b>Sebastian Raae</b> - Um gnomo que trabalha como atendente na taverna, ele e Jade tem um relacionamento amoroso relativamente complicado</p><img src='/img/NPCs/Komora.webp' width='250' height='400' class='center'><p><b>Komora</b> - Mascote da Taverna Dragão de Komora. É um dragão de komodo que, surpreendentemente, é domesticado</p>"
+    },
+    {
+      "nome": "Templo",
+      "icone": "hands-praying",
+      "cor": "blue",
+      "x": 368,
+      "y": 234,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Casa do Governante",
+      "icone": "chess-rook",
+      "cor": "#204f25",
+      "x": 308,
+      "y": 302,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/dario_branto.webp' width='250' height='400' class='center'><p><b>Dario Branto</b> - Governante da Cidade</p>"
+    },
+    {
+      "nome": "Oficina",
+      "icone": "gear",
+      "cor": "#39a764",
+      "x": 209,
+      "y": 426,
+      "descricao": "",
+      "detalhe": "<p>Pequena e aparentemente sempre em reforma. A oficina, dentro do possível, é bem organizada, porém cheia de bugigangas e coisas em construção. Lá mora um gato chamado 'Engenhoca'. O estabelecimento não é dividido em uma área para clientes e outra para funcionários, é como se fosse (e provavelmente é) uma sala de estar adaptada para ser usada como oficina.<h1>NPCs:</h1><img src='/img/NPCs/Krakvar.webp' width='250' height='400' class='center'><p><b>Krakvar</b> - Um jovem artífice morador da cidade. Sabe fazer coisas básicas, mas vem estudando para melhorar sua loja cada vez mais! Para isso ele precisa de materiais cada vez mais raros. Mas mesmo assim ele sempre lembra que os melhores artefatos, ele nunca sera capaz de fazer (sim ele tem autoestima baixa).</p>"
+    },
+    {
+      "nome": "Biblioteca",
+      "icone": "book",
+      "cor": "#20bac7",
+      "x": 459,
+      "y": 277,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Esmeralda.webp' width='250' height='400' class='center'><p><b>Esmeralda</b> - Bibliotecária (não é a dona da biblioteca, a biblioteca faz parte da propriedade do líder da cidade). É irmã da Jade (dona da taverna). Ela é extremamente metódica, passando o tempo indexando os livros, já que a biblioteca não vem sendo muito frequentada.</p>"
+    }
+  ]
+}

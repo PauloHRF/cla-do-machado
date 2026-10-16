@@ -1,0 +1,9 @@
+{
+  "nome": "Entreposto de Florméria com o Clã do Machado",
+  "categoria": "pdi_construcao",
+  "x": 1575,
+  "y": 1024,
+  "icone": "landmark",
+  "cor": "black",
+  "descricao": "<b>Entreposto de Florméria com o Clã do Machado</b></br>Uma base segura mantida pelos coletores de Florméria para membros do Clã do Machado. Nela, grupos de aventureiros podem requisitar o auxílio de um coletor para viajarem mais rapidamente pela Floresta Kinshale.</br><b>Efeito:</b> o coletor funciona como um ranger da floresta, eliminando o efeito “terreno difícil” durante viagens na Floresta Kinshale. O coletor viaja apenas na floresta e no máximo 4 hexes junto com o grupo."
+}

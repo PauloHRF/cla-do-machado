@@ -1,0 +1,23 @@
+{
+  "nome": "Ruínas de um vilarejo antigo",
+  "categoria": "pdi_construcao",
+  "x": 1411.5,
+  "y": 1061,
+  "icone": "landmark",
+  "cor": "black",
+  "descricao": "Ruínas de um vilarejo muito antigo com uma estátua de uma mulher com irradiações de luz, ambos em processo avançado de intemperismo. Na estátua está gravado os dizeres \"Em homenagem ao ser de Luz que nos abençoou\".<br>",
+  "eventos": [
+    {
+      "data": "Meados de 1300 (Era dos Milagres)",
+      "texto": "Uma das Sete Contas de Hanne criou um ser de luz na floresta Kinshale."
+    },
+    {
+      "data": "Final do século 1300 (Era dos Milagres)",
+      "texto": "O ser de luz foi corrompido por sentimentos negativos e teve que ser aprisionado."
+    },
+    {
+      "data": "Primeiro Hitrice de Babel, 2949",
+      "texto": "O Clã do Machado descobre que o ser corrompido está se alimentando de energia vital para se libertar. Prevendo que seria inevitável, liberaram por si mesmos o ser."
+    }
+  ]
+}

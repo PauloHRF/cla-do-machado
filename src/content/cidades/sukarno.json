@@ -1,0 +1,20 @@
+{
+  "nome": "Sukarno",
+  "tipo": "pequena",
+  "x": 1713.29,
+  "y": 1005.93,
+  "dominio": "Meride",
+  "governo": "Não possui. O Clã do Machado provê e protege a cidade",
+  "populacao": "1600 (Humanos: 40%, Outros: 25%, Elfos e Meio-elfos: 13%, Halfings: 12%, Gnomos: 10%)",
+  "clima": "Tropical",
+  "economia": "Comércio, produção de armas e armaduras",
+  "religiao": "Nenhuma predominante",
+  "estabelecimentos": "Sede do Clã do Machado, Torre da Magia, Forja de Rurik, Santuário da Vida.",
+  "pagina": "sukarno",
+  "eventos": [
+    {
+      "data": "2942",
+      "texto": "O Clã do Machado se estabelece em Sukarno para ajudar a região."
+    }
+  ]
+}

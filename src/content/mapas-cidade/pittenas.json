@@ -1,0 +1,40 @@
+{
+  "nome": "Pittenas",
+  "imagem": "/img/cidades_pittenas.webp",
+  "largura": 800,
+  "altura": 555,
+  "centroX": 400,
+  "centroY": 278,
+  "zoom": 1,
+  "zoomMin": -2,
+  "texto": "<p>As casas da cidade são todas em tamanho reduzido devido à distribuição das raças de seus habitantes. Apenas a taverna \"As Quatro Canecas\" e o pequeno Templo de Gawellin são de tamanho e estrutura para criaturas médias.</p>",
+  "pois": [
+    {
+      "nome": "Taverna As Quatro Canecas",
+      "icone": "beer-mug-empty",
+      "cor": "#c76320",
+      "x": 360,
+      "y": 348,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Templo de Gawelin",
+      "icone": "hands-praying",
+      "cor": "blue",
+      "x": 360,
+      "y": 393,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Alonzo.webp' width='250' height='400' class='center'><p><b>Alonzo</b> - Alonzo é o sacerdote responsável pelo templo. É um tabaxi pequeno com a voz meio rouca.</p>"
+    },
+    {
+      "nome": "Mercador Ambulante",
+      "icone": "sack-dollar",
+      "cor": "#bf9000",
+      "x": 364,
+      "y": 246,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Gavin.webp' width='250' height='400' class='center'><p><b>Gavin</b> - Gavin é um mercador ambulante que sempre tem uma boa informação pelo preço certo.</p>"
+    }
+  ]
+}

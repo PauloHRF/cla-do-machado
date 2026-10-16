@@ -1,0 +1,94 @@
+{
+  "nome": "Erimoor",
+  "imagem": "/img/cidades_erimoor.webp",
+  "largura": 4096,
+  "altura": 3072,
+  "centroX": 2000,
+  "centroY": 1500,
+  "zoom": -1,
+  "zoomMin": -2,
+  "texto": "<p>Erimoor foi uma das primeiras cidades fundadas no continente em meio à Era dos Milagres e por muito tempo foi a maior e a mais poderosa, até Meride começar a crescer e se desenvolver tornando-se uma preocupação. Nos anos de 2100, Erimoor e Meride travaram sua primeira guerra para definir a dominância dos territórios da Floresta Talaedra e da parte leste da Planície do Horizonte. Com Erimoor vitoriosa, a região é incorporada ao seu domínio e fica sob sua influência.</p> <p> Durante o conflito das duas Cidades Estado, Erimoor firma uma aliança com Tigodon, que não demonstrava hostilidade, para proteger sua fronteira ao oeste enquanto a guerra com Meride ocorria a leste. Tigodon, em 2500, fez proveito desta aliança pedindo auxílio no momento que o Império de Bhorg’Dra avançou sobre seus territórios na Floresta Cetrine e com a ajuda de Erimoor, os draconatos foram rechaçados.</p> <p> O grande dragão vermelho Hazordus monta seu covil nas imediações da cidade por volta dos anos 2800 criando preocupação na região. Contudo, o dragão parece não sair do local para qualquer ação relevante. Nesse mesmo período, Meride e Erimoor travam novamente uma disputa territorial, mas agora Meride se desenvolveu expandindo para o norte.</p> <p> Erimoor não conseguiu conter os avanços de sua rival e pede auxílio a Tigodon, que nega com a justificativa de que sabia que o governo de Erimoor estava contaminado pela influência de Hazordus, algo que nunca foi provado. Sem ajuda, em 2850, Erimoor perde a guerra e as cidades de Ouro Negro, Khyrm, Koll, Siem e Pieph são anexadas ao domínio de Meride.</p> <p>Nas décadas seguintes, Hazordus, por meio de suas conspirações, conseguiu por um fantoche no governo e secretamente passou a controlar Erimoor. O tesouro de Hazordus é usado para impulsionar o comércio e a força política da cidade, retomando parte de sua grandeza anterior ao conflito com Meride. A reedificação na região da Baía Horizontal aumenta as tensões com Tigodon e as duas cidades passam a travar uma guerra comercial e boatos se espalham de que ambas agiam por fora dos acordos e tratados, buscando sabotar a rival.</p> <p>Em 2890, Hazordus sai de seu covil em Erimoor para atacar Meride e usurpar o poder. Quatro anos depois, o governo é retomado pela Imperatriz com a ajuda de aventureiros e o imenso dragão vermelho é expulso, forçado a retornar para Erimoor. A essa altura, por toda Phantyr, a ideia de que Hazordus governa e controla a cidade já não parece ser fantasiosa.</p>",
+  "pois": [
+    {
+      "nome": "Palacete da Governante",
+      "icone": "chess-rook",
+      "cor": "#204f25",
+      "x": 2084,
+      "y": 1300,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Anfiteatro",
+      "icone": "masks-theater",
+      "cor": "purple",
+      "x": 1822,
+      "y": 1329,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Casa da Guarda Principal",
+      "icone": "person-military-pointing",
+      "cor": "black",
+      "x": 2762,
+      "y": 1082.5,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Templo de Hanne",
+      "icone": "hands-praying",
+      "cor": "blue",
+      "x": 2308,
+      "y": 613.5,
+      "descricao": "<p>A estrutura do templo em si é pequena e humilde, porém há uma grande construção reservada para acolhimento de doentes, necessitados, abandonados e afins.</p>",
+      "detalhe": ""
+    },
+    {
+      "nome": "Hipódromo",
+      "icone": "horse-head",
+      "cor": "#20bac7",
+      "x": 3225,
+      "y": 1566,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Templo de Huerir",
+      "icone": "hands-praying",
+      "cor": "blue",
+      "x": 3202,
+      "y": 2705.5,
+      "descricao": "<p>Este templo tem a peculiariedade de fechar as portas de tempos em tempos, como se tivesse vontade própria. Assim que ele se fecha só é possível entra ou sair assim que a passagem é liberada novamente, porém o tempo de fechamento é sempre aleatório.</p>",
+      "detalhe": ""
+    },
+    {
+      "nome": "Aluguel de Barcos",
+      "icone": "anchor",
+      "cor": "#9f1414",
+      "x": 2282,
+      "y": 2570,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Farol",
+      "icone": "compass",
+      "cor": "orange",
+      "x": 1772,
+      "y": 3021,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Academia Mão da Honra",
+      "icone": "hand-fist",
+      "cor": "#ff5500",
+      "x": 2172,
+      "y": 2849,
+      "descricao": "<p>A academia Mão da Honra é uma instituição muito respeitada por moldar a arte da cavalaria formando cavaleiros honrados e fortes que servirão como guarda-costas e guerreiros de reis e nobres, ou que se tornarão heróis respeitados e conhecidos pelo mundo.</p>",
+      "detalhe": ""
+    }
+  ]
+}

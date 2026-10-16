@@ -1,0 +1,67 @@
+{
+  "nome": "Sukarno",
+  "imagem": "/img/cidades_sukarno.webp",
+  "largura": 2048,
+  "altura": 1536,
+  "centroX": 1024,
+  "centroY": 768,
+  "zoom": 0,
+  "zoomMin": -1,
+  "texto": "",
+  "pois": [
+    {
+      "nome": "Clã do Machado",
+      "icone": "chess-rook",
+      "cor": "#204f25",
+      "x": 398,
+      "y": 1290,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src=\"/img/NPCs/HollyOak.webp\" width=\"250\" height=\"400\" class=\"center\"><p><b>Lira \"HollyOak\" Aendryr</b> - É uma das líderes do clã em Sukarno. Como \"HollyOak\", Lira é responsável por proteger a natureza e para isso formou uma pequena força tarefa para patrulhar as proximidades da floresta Kinshali depois do quanto a floresta sofreu.</p><img src=\"/img/NPCs/Elakim.webp\" width=\"250\" height=\"400\" class=\"center\"><p><b>Elakim Nightcaller</b> - Paladina de Hieldy ressuscitada, juntou-se ao Clã do Machado com o qual fez inúmeros feitos.</p><img src=\"/img/NPCs/Yuliya.webp\" width=\"250\" height=\"400\" class=\"center\"><p><b>Yuliya</b> - Halfling, assistente de Lira e do Clã do Machado.</p><img src=\"/img/NPCs/Medrein.webp\" width=\"250\" height=\"400\" class=\"center\"><p><b>Medrein</b> - É um clérigo da vida e feiticeiro aasimar, principal clérigo da cidade, líder do Clã do Machado e ajuda quando dá a Torre da Magia.</p>"
+    },
+    {
+      "nome": "Taverna Goodbarrel",
+      "icone": "beer-mug-empty",
+      "cor": "#c76320",
+      "x": 348,
+      "y": 1303,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src=\"/img/NPCs/Glora.webp\" width=\"250\" height=\"400\" class=\"center\"><p><b>Glora Goodbarrel</b> - Líder do Clã do Machado e dono da principal taverna da cidade que fica na sede do Clã.</p>"
+    },
+    {
+      "nome": "Forja do Rurik",
+      "icone": "hammer",
+      "cor": "#9f07f0",
+      "x": 89,
+      "y": 877,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src=\"/img/NPCs/Rurik.webp\" width=\"250\" height=\"400\" class=\"center\"><p><b>Rurik</b> - É um anão de forja que vive a maior parte do tempo recluso nela. É um mestre armeiro de qualidade indiscutível, servo de Gawelin e líder do Clã do Machado.</p>"
+    },
+    {
+      "nome": "Torre da Magia",
+      "icone": "flask",
+      "cor": "#cecf12",
+      "x": 458,
+      "y": 561,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Casa do Saber",
+      "icone": "scroll",
+      "cor": "#20bac7",
+      "x": 690,
+      "y": 459,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Santuário da Vida",
+      "icone": "hands-praying",
+      "cor": "blue",
+      "x": 1298,
+      "y": 106,
+      "descricao": "",
+      "detalhe": ""
+    }
+  ]
+}

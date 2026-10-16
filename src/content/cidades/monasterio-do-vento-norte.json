@@ -1,0 +1,20 @@
+{
+  "nome": "Monastério do Vento Norte",
+  "tipo": "pequena",
+  "x": 1526.78,
+  "y": 991.93,
+  "eventos": [
+    {
+      "data": "Segundo Shaedy de Pugna, 2949",
+      "texto": "Lenhadores são atacados por lagartos afetados por uma marca roxa."
+    },
+    {
+      "data": "Segundo Tremera de Lisura, 2949",
+      "texto": "O Clã do Machado descobre que os monges fizeram pacto com um demônio, que está infectando corpos e animais com a marca roxa."
+    },
+    {
+      "data": "Segundo Tremera de Pujan, 2949",
+      "texto": "O Clã acha túneis que os monges estão construindo e começa a mapeá-los."
+    }
+  ]
+}

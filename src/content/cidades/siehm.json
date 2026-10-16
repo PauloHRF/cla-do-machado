@@ -1,0 +1,24 @@
+{
+  "nome": "Siehm",
+  "tipo": "media",
+  "x": 1774.29,
+  "y": 755.91,
+  "dominio": "Meride",
+  "governo": "Frank Winters",
+  "populacao": "3500 (Humanos: 75%, Elfos da floresta: 20%, Gnomos: 5%)",
+  "clima": "Tropical",
+  "economia": "Pesca e produção de peles",
+  "religiao": "Amari",
+  "estabelecimentos": "Taverna Forest Junk, Guilda dos Caçadores, Sede do Clã do Machado, Mansão de Osferon Bracken",
+  "pagina": "siehm",
+  "eventos": [
+    {
+      "data": "2850",
+      "texto": "Siehm é anexada ao domínio de Meride após a vitória da Cidade Estado na guerra contra Erimoor."
+    },
+    {
+      "data": "2949",
+      "texto": "Osferon Bracken, nobre de Erimoor, investe na cidade com o projeto de estruturar o porto local e trazer o Clã do Machado para Siehm."
+    }
+  ]
+}

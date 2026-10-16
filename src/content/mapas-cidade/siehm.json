@@ -1,0 +1,31 @@
+{
+  "nome": "Siehm",
+  "imagem": "/img/cidades_siehm.webp",
+  "largura": 1638.4,
+  "altura": 1638.4,
+  "centroX": 819.2,
+  "centroY": 819.2,
+  "zoom": 0,
+  "zoomMin": -1,
+  "texto": "",
+  "pois": [
+    {
+      "nome": "Clã do Machado",
+      "icone": "chess-rook",
+      "cor": "#204f25",
+      "x": 1111,
+      "y": 759,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Kamaria.webp' width='250' height='400' class='center'><p><b>Kamaria</b> - Líder do Clã do Machado de Zurbakan e braço direito de Tulgor, agora comanda a nova sede em Siehm. É uma orquisa centrada e muito inteligente.</p>"
+    },
+    {
+      "nome": "Mansão de Osferon Bracken",
+      "icone": "place-of-worship",
+      "cor": "red",
+      "x": 409,
+      "y": 1292,
+      "descricao": "",
+      "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Osferon_Bracken.webp' width='250' height='400' class='center'><p><b>Osferon Bracken</b> - Nobre de Erimoor que está investindo na cidade de Siehm e trouxe o Clã do Machado.</p>"
+    }
+  ]
+}
