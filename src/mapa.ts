@@ -1,5 +1,5 @@
 import L from "leaflet";
-import { cidades, pontos, TIPOS, CATEGORIAS, locais, type Local, type Tipo } from "./data";
+import { asset, cidades, pontos, TIPOS, CATEGORIAS, locais, type Local, type Tipo } from "./data";
 import { pin, disco } from "./icons";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
 
@@ -48,7 +48,7 @@ export function mountMapa() {
     zoomControl: false, attributionControl: false,
     maxBounds: [[-400, -400], [3264, 2588]], maxBoundsViscosity: 0.6,
   });
-  L.imageOverlay("/img/mapadomundo.webp", BOUNDS, { interactive: false }).addTo(map);
+  L.imageOverlay(asset("/img/mapadomundo.webp"), BOUNDS, { interactive: false }).addTo(map);
   L.control.zoom({ position: "topright", zoomInTitle: "Aproximar", zoomOutTitle: "Afastar" }).addTo(map);
   map.setView([2270.5, 824], isMobile() ? 0 : 1);
   if (!isMobile() && !location.hash.includes("local")) map.panBy([-230, 0], { animate: false });
@@ -79,8 +79,8 @@ export function mountMapa() {
     }
     camadas[cat] = g;
   }
-  camadas.alcance = L.imageOverlay("/img/mapa-de-atuacao.webp", BOUNDS, { opacity: 0.5, interactive: false });
-  camadas.dominios = L.imageOverlay("/img/mapadedominios.webp", BOUNDS, { opacity: 1, interactive: false });
+  camadas.alcance = L.imageOverlay(asset("/img/mapa-de-atuacao.webp"), BOUNDS, { opacity: 0.5, interactive: false });
+  camadas.dominios = L.imageOverlay(asset("/img/mapadedominios.webp"), BOUNDS, { opacity: 1, interactive: false });
 
   const ligadas: Record<string, boolean> = { estado: true, grande: true, media: true, pequena: true };
   const toggle = (id: string, on: boolean) => (on ? camadas[id].addTo(map) : camadas[id].remove());

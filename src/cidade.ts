@@ -1,5 +1,5 @@
 import L from "leaflet";
-import { mapasCidade, cidades } from "./data";
+import { asset, mapasCidade, cidades } from "./data";
 import { disco } from "./icons";
 import { esc, md, setTab, openTab, hideTab, panelWidth, showCoords, isMobile, closeEvents } from "./ui";
 import { fichaCidade } from "./mapa";
@@ -15,7 +15,7 @@ export function mountCidade(slug: string) {
     zoomControl: false, attributionControl: false,
     maxBounds: [[-m.altura * 0.2, -m.largura * 0.2], [m.altura * 1.2, m.largura * 1.2]], maxBoundsViscosity: 0.6,
   });
-  L.imageOverlay(m.imagem, bounds, { interactive: false }).addTo(map);
+  L.imageOverlay(asset(m.imagem), bounds, { interactive: false }).addTo(map);
   L.control.zoom({ position: "topright", zoomInTitle: "Aproximar", zoomOutTitle: "Afastar" }).addTo(map);
   showCoords(map);
   document.querySelector<HTMLElement>('#rail [data-tab="filtros"]')!.title = "Locais";

@@ -64,4 +64,7 @@ export const locais = new Map<string, Local>();
 for (const c of cidades) locais.set(c.slug, { kind: "cidade", ...c });
 for (const p of pontos) locais.set(p.slug, { kind: "ponto", ...p });
 
+// Reescreve "/img/..." (como salvo nos JSON) para a base do site.
+export const asset = (s: string) => s.replace(/(["'(]|^)\/(?:cla-do-machado\/)?img\//g, `$1${import.meta.env.BASE_URL}img/`);
+
 export const norm = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();

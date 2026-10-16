@@ -1,10 +1,10 @@
 import { marked } from "marked";
-import { panteao, type Evento } from "./data";
+import { panteao, asset, type Evento } from "./data";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
 // O conteúdo é Markdown (o CMS grava assim), mas HTML simples também passa.
-export const md = (s?: string) => (s ? (marked.parse(s, { async: false }) as string) : "");
+export const md = (s?: string) => (s ? asset(marked.parse(s, { async: false }) as string) : "");
 
 export const esc = (s: string) =>
   s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
