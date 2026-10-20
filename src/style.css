@@ -136,14 +136,9 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 .btn.voltar { margin-bottom: 14px; }
 .btn i { font-size: 0.9em; opacity: 0.9; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-/* grade: todos os botões com o mesmo tamanho; seta indica que abre uma janela */
+/* grade: todos os botões com o mesmo tamanho */
 .chips.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.chips.grid .btn { width: 100%; min-height: 50px; padding-right: 26px; }
-.chips.grid .btn::after {
-  content: "\2192"; position: absolute; right: 10px; top: 50%; transform: translateY(-52%);
-  font: 1rem/1 var(--serif); color: var(--gold); transition: right 0.15s;
-}
-.chips.grid .btn:hover::after { right: 6px; }
+.chips.grid .btn { width: 100%; min-height: 50px; }
 .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
 .actions .btn:only-child, .actions .btn:last-child:nth-child(odd) { grid-column: 1 / -1; }
 
