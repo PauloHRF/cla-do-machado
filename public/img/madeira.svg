@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <filter id="veios" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.004 0.09" numOctaves="5" seed="14" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.16  0 0 0 0 0.07  0 0 0 0 0.02  0 0 0 2.4 -0.85"/>
+    </filter>
+    <filter id="claros" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.18" numOctaves="3" seed="5"/>
+      <feColorMatrix values="0 0 0 0 0.62  0 0 0 0 0.34  0 0 0 0 0.14  0 0 0 1.8 -0.9"/>
+    </filter>
+    <filter id="poros" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05 0.7" numOctaves="2" seed="21"/>
+      <feColorMatrix values="0 0 0 0 0.1  0 0 0 0 0.04  0 0 0 0 0.01  0 0 0 1 -0.42"/>
+    </filter>
+    <linearGradient id="vinheta" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000" stop-opacity=".38"/>
+      <stop offset=".3" stop-color="#000" stop-opacity="0"/>
+      <stop offset=".75" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".45"/>
+    </linearGradient>
+    <linearGradient id="lat" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#000" stop-opacity=".35"/>
+      <stop offset=".18" stop-color="#000" stop-opacity="0"/>
+      <stop offset=".82" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".35"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="200" fill="#6a3a1b"/>
+  <rect width="800" height="200" filter="url(#claros)"/>
+  <rect width="800" height="200" filter="url(#veios)"/>
+  <rect width="800" height="200" filter="url(#poros)" opacity=".6"/>
+  <!-- emendas das tábuas -->
+  <g stroke="#1e0d04" stroke-width="2.5" stroke-opacity=".75"><line x1="0" y1="67" x2="800" y2="67"/><line x1="0" y1="134" x2="800" y2="134"/></g>
+  <g stroke="#c98a50" stroke-width="1.2" stroke-opacity=".28"><line x1="0" y1="69" x2="800" y2="69"/><line x1="0" y1="136" x2="800" y2="136"/></g>
+  <rect width="800" height="200" fill="url(#vinheta)"/>
+  <rect width="800" height="200" fill="url(#lat)"/>
+</svg>
