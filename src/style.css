@@ -204,7 +204,7 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 /* ---------- linha do tempo ---------- */
 #events {
   position: fixed; z-index: 1200; top: 0; right: 0; bottom: 0; width: min(380px, 100vw);
-  background: var(--paper) url(/img/tex-papel.webp) center / cover; box-shadow: -4px 0 18px rgb(0 0 0 / 0.5);
+  background: var(--paper) url(/img/pergaminho.svg) center / cover; box-shadow: -4px 0 18px rgb(0 0 0 / 0.5);
   padding: 22px 22px 40px 26px; overflow-y: auto;
 }
 .x { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: var(--accent); color: #f6e9cc; cursor: pointer; z-index: 2; }
