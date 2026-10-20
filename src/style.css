@@ -202,7 +202,7 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 #modal { position: fixed; z-index: 1300; inset: 0; background: rgb(10 6 2 / 0.7); display: grid; place-items: center; padding: 16px; }
 #modal .box {
   position: relative; width: min(680px, 100%); max-height: 88vh; overflow-y: auto; border-radius: 6px;
-  background: var(--paper) url(/img/tex-papel2.webp) center / cover; padding: 26px 28px 30px; border: 3px solid var(--accent);
+  background: var(--paper) url(/img/pergaminho.svg) center / cover; padding: 26px 28px 30px; border: 3px solid var(--accent);
   box-shadow: 0 10px 40px rgb(0 0 0 / 0.7);
 }
 #modal h1 { text-align: center; font-size: 3rem !important; }
