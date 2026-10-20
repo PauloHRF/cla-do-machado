@@ -79,7 +79,7 @@ export function lore(slug: string) {
 export function loreButtons() {
   const wrap = document.createElement("div");
   const grupo = (titulo: string, tipo: "historia" | "deus") =>
-    `<h2 class="ribbon">${titulo}</h2><div class="chips">${panteao
+    `<h2 class="ribbon">${titulo}</h2><div class="chips grid">${panteao
       .filter((p) => p.tipo === tipo)
       .map((p) => `<button class="btn" data-lore="${p.slug}">${esc(p.nome)}</button>`)
       .join("")}</div>`;

@@ -89,10 +89,13 @@ h1, h2, h3 { font-family: var(--display); font-weight: 400; letter-spacing: 0.03
 #panel h1, #modal h1, #events h1 { font-size: 2.5rem; line-height: 1; color: var(--accent); margin-bottom: 0.5rem; }
 h2.sub { font-size: 1.5rem; color: var(--ink-soft); text-align: center; margin-bottom: 0.8rem; }
 h2.ribbon {
-  display: inline-block; background: var(--accent); color: #f3e4c4; font-size: 1.55rem; line-height: 1;
-  padding: 6px 14px 4px; margin: 22px 0 10px -22px; padding-left: 22px; box-shadow: 2px 2px 0 rgb(0 0 0 / 0.25);
+  display: flex; align-items: center; gap: 10px; color: var(--accent); font-size: 1.7rem; line-height: 1;
+  margin: 24px 0 12px; padding: 0;
 }
+h2.ribbon::before { content: "◆"; font-size: 0.6em; }
+h2.ribbon::after { content: ""; flex: 1; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); }
 #panel-body > section > h2.ribbon:first-child { margin-top: 6px; }
+.destaque { font-style: italic; font-size: 1.15rem; color: var(--ink-soft); }
 p { margin: 0 0 0.8em; }
 .muted { color: var(--ink-soft); font-style: italic; }
 .dica { font-size: 0.9rem; margin-top: 20px; }
@@ -128,6 +131,11 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 .btn.primary:hover { background: #3a6e33; }
 .btn.voltar { margin-bottom: 14px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+/* botões de tamanho uniforme em duas colunas */
+.chips.grid { display: grid; grid-template-columns: 1fr 1fr; }
+.chips.grid .btn, .actions .btn { justify-content: center; text-align: center; min-height: 44px; }
+.actions .btn { flex: 1 1 calc(50% - 8px); }
+.btn { border: 2px solid rgb(246 233 204 / 0.35); border-radius: 4px; }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 
 /* filtros */
@@ -209,7 +217,6 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
   #panel-close i { transform: rotate(-90deg); }
   #panel-body { padding: 14px 18px 30px; }
   #panel h1 { font-size: 2.1rem; }
-  h2.ribbon { margin-left: -18px; padding-left: 18px; }
   #search { left: 10px; right: 58px; width: auto; transform: none; top: 10px; }
   #events { top: auto; left: 0; width: auto; height: 60vh; border-radius: 16px 16px 0 0; box-shadow: 0 -4px 18px rgb(0 0 0 / 0.6); }
   #modal .box { padding: 22px 18px 26px; }

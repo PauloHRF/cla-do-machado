@@ -3,6 +3,9 @@ import { asset, cidades, pontos, TIPOS, CATEGORIAS, locais, type Local, type Tip
 import { pin, disco } from "./icons";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
 
+// TODO: trocar pelo link do formulário de contribuições.
+const FORM_CONTRIBUICAO = "#";
+
 const BOUNDS: L.LatLngBoundsExpression = [[0, 0], [2864, 2188]];
 
 const CAMPOS: [string, keyof import("./data").Cidade][] = [
@@ -53,8 +56,7 @@ export function mountMapa() {
   map.setView([2270.5, 824], isMobile() ? 0 : 1);
   if (!isMobile() && !location.hash.includes("local")) map.panBy([-230, 0], { animate: false });
   showCoords(map);
-  document.querySelector<HTMLElement>('#rail [data-tab="filtros"]')!.title = "Filtros";
-
+  
   // ----- camadas -----
   const camadas: Record<string, L.Layer> = {};
   const marcadores = new Map<string, L.Marker>();
@@ -102,7 +104,7 @@ export function mountMapa() {
   filtros.innerHTML = `
     <h2 class="ribbon">Cidades</h2>
     ${(Object.keys(TIPOS) as Tipo[]).map((t) => linha(t, TIPOS[t].nome, `<svg class="mini" viewBox="0 0 25 35"><path d="M12.5 1C6.2 1 1 6 1 12.2 1 20.6 12.5 34 12.5 34S24 20.6 24 12.2C24 6 18.8 1 12.5 1Z" fill="${TIPOS[t].cor}" stroke="#fff" stroke-width="1.6"/></svg>`)).join("")}
-    <h2 class="ribbon">Ícones</h2>
+    <h2 class="ribbon">Contribuições</h2>
     ${usadas.map((c) => linha(c, CATEGORIAS[c]?.nome ?? c, `<i class="fa-solid fa-${CATEGORIAS[c]?.icone ?? "location-dot"} mini"></i>`)).join("")}
     <h2 class="ribbon">Mapas</h2>
     ${linha("alcance", "Alcance do Clã", `<i class="fa-solid fa-bullseye mini"></i>`)}
@@ -113,6 +115,17 @@ export function mountMapa() {
     toggle(i.dataset.camada!, i.checked);
   });
   setTab("filtros", filtros);
+
+  // ----- painel: contribuições -----
+  const contrib = document.createElement("section");
+  contrib.innerHTML = `
+    <h1>Aventurando-se no Clã do Machado</h1>
+    <p class="destaque">Phantyr é feito das histórias de quem o explora.</p>
+    <p>Cada aventura deixa marcas, revela segredos e dá vida a novos lugares. E quem melhor para contar essas histórias do que aqueles que as vivenciaram?</p>
+    <p>Compartilhe suas descobertas, relate acontecimentos marcantes e registre localidades que merecem ser conhecidas. Seja uma vila visitada, um personagem importante, um evento memorável ou um mistério desvendado.</p>
+    <p>Sua aventura também faz parte da história do mundo. Registre suas experiências e ajude a construir o legado do Clã do Machado.</p>
+    <div class="actions"><a class="btn primary" href="${FORM_CONTRIBUICAO}" target="_blank" rel="noopener"><i class="fa-solid fa-feather-pointed"></i> Adicionar contribuição</a></div>`;
+  setTab("contribuicoes", contrib);
 
   // ----- seleção -----
   let atual: Local | null = null;
@@ -153,7 +166,7 @@ export function mountMapa() {
     selecionar,
     destroy() {
       map.remove();
-      ["inicio", "filtros", "detalhe"].forEach(hideTab);
+      ["inicio", "filtros", "contribuicoes", "detalhe"].forEach(hideTab);
       document.title = "Clã do Machado — Mapa de Phantyr";
     },
   };
