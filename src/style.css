@@ -69,7 +69,7 @@ button, input { font: inherit; }
 /* ---------- painel ---------- */
 #panel {
   position: fixed; z-index: 1050; top: 0; bottom: 0; left: var(--rail); width: var(--panel);
-  background: var(--paper) url(/img/pergaminho.svg) center / cover;
+  background: var(--paper) url(/img/pergaminho.webp) center / cover;
   box-shadow: 4px 0 18px rgb(0 0 0 / 0.5);
   display: flex; flex-direction: column; transition: transform 0.25s ease;
 }
@@ -83,8 +83,6 @@ button, input { font: inherit; }
   position: absolute; top: 8px; right: 8px; width: 34px; height: 34px; border: 0; border-radius: 50%;
   background: rgb(0 0 0 / 0.35); color: var(--paper); cursor: pointer;
 }
-/* rosa dos ventos com machado, marca d'água do pergaminho em todas as abas */
-#panel-body { background: url(/img/rosa-dos-ventos.svg) no-repeat right -90px bottom -70px / 340px; }
 #panel-body { flex: 1; overflow-y: auto; padding: 18px 22px 40px; overscroll-behavior: contain; }
 
 /* ---------- barra de rolagem: trilho de pergaminho e puxador de madeira ---------- */
@@ -204,7 +202,7 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 /* ---------- linha do tempo ---------- */
 #events {
   position: fixed; z-index: 1200; top: 0; right: 0; bottom: 0; width: min(380px, 100vw);
-  background: var(--paper) url(/img/pergaminho.svg) center / cover; box-shadow: -4px 0 18px rgb(0 0 0 / 0.5);
+  background: var(--paper) url(/img/pergaminho.webp) center / cover; box-shadow: -4px 0 18px rgb(0 0 0 / 0.5);
   padding: 22px 22px 40px 26px; overflow-y: auto;
 }
 .x { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: var(--accent); color: #f6e9cc; cursor: pointer; z-index: 2; }
@@ -219,7 +217,7 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 #modal { position: fixed; z-index: 1300; inset: 0; background: rgb(10 6 2 / 0.7); display: grid; place-items: center; padding: 16px; }
 #modal .box {
   position: relative; width: min(680px, 100%); max-height: 88vh; overflow-y: auto; border-radius: 6px;
-  background: var(--paper) url(/img/pergaminho.svg) center / cover; padding: 26px 28px 30px; border: 3px solid var(--accent);
+  background: var(--paper) url(/img/pergaminho.webp) center / cover; padding: 26px 28px 30px; border: 3px solid var(--accent);
   box-shadow: 0 10px 40px rgb(0 0 0 / 0.7);
 }
 #modal h1 { text-align: center; font-size: 3rem !important; }
