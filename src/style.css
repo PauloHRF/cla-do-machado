@@ -136,6 +136,10 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 .prose a { color: var(--accent-2); }
 .prose div[style*="flex"] { gap: 8px; flex-wrap: wrap; justify-content: center; }
 .prose div[style*="flex"] > div { width: auto !important; flex: 0 1 31%; }
+/* bloco com texto + imagem (fichas de deuses): texto primeiro, imagem logo abaixo */
+.prose div[style*="flex"].texto-imagem { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 4px; }
+.prose .texto-imagem > div { flex: none; padding: 0 !important; }
+.prose .texto-imagem img { margin: 8px auto; }
 
 /* botões: placa de madeira avermelhada com filete dourado interno */
 .btn {

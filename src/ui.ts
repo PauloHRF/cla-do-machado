@@ -62,6 +62,10 @@ const modal = $("modal");
 const modalBody = $("modal-body");
 export function openModal(html: string) {
   modalBody.innerHTML = html;
+  // fichas com texto + imagem lado a lado: o CSS empilha (texto primeiro, imagem abaixo)
+  modalBody.querySelectorAll<HTMLElement>('div[style*="flex"]').forEach((d) => {
+    if (Array.from(d.children).some((c) => !c.querySelector("img"))) d.classList.add("texto-imagem");
+  });
   modal.hidden = false;
   modal.querySelector<HTMLElement>(".box")!.scrollTop = 0;
 }
