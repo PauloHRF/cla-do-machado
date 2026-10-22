@@ -49,7 +49,7 @@ export function mountMapa() {
   const map = L.map("map", {
     crs: L.CRS.Simple, minZoom: -2, maxZoom: 2, zoomSnap: 0.25, zoomDelta: 0.5,
     zoomControl: false, attributionControl: false,
-    maxBounds: [[-300, -300], [1997, 2300]], maxBoundsViscosity: 0.6,
+    maxBounds: [[-1200, -1200], [2897, 3200]], maxBoundsViscosity: 0.4,
   });
   L.imageOverlay(asset("/img/mapadomundo.webp"), BOUNDS, { interactive: false }).addTo(map);
   L.control.zoom({ position: "topright", zoomInTitle: "Aproximar", zoomOutTitle: "Afastar" }).addTo(map);
