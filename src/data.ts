@@ -1,5 +1,5 @@
 // Todo o conteúdo vem de src/content/**.json (editável pelo CMS em /admin).
-export type Tipo = "estado" | "grande" | "media" | "pequena";
+export type Tipo = "grande" | "pequena";
 
 export interface Evento { data: string; texto: string }
 
@@ -43,11 +43,9 @@ export const mapasCidade = load<MapaCidade>(
   import.meta.glob("./content/mapas-cidade/*.json", { eager: true, import: "default" }),
 );
 
-export const TIPOS: Record<Tipo, { nome: string; cor: string; tamanho: number }> = {
-  estado: { nome: "Cidade-Estado", cor: "#c0392b", tamanho: 32 },
-  grande: { nome: "Cidade grande", cor: "#d9822b", tamanho: 28 },
-  media: { nome: "Cidade média", cor: "#c9b92b", tamanho: 25 },
-  pequena: { nome: "Cidade pequena", cor: "#2e7fc4", tamanho: 22 },
+export const TIPOS: Record<Tipo, { nome: string; cor: string }> = {
+  grande: { nome: "Cidade grande", cor: "#c0392b" },
+  pequena: { nome: "Cidade pequena", cor: "#2e7fc4" },
 };
 
 export const CATEGORIAS: Record<string, { nome: string; icone: string }> = {
@@ -62,7 +60,7 @@ export const CATEGORIAS: Record<string, { nome: string; icone: string }> = {
 
 // Símbolos da legenda do mapa: cidade grande, cidade pequena, ponto de interesse e PDI itinerante.
 export type Simbolo = "grande" | "pequena" | "pdi" | "itinerante";
-export const simboloTipo = (t: Tipo): Simbolo => (t === "estado" || t === "grande" ? "grande" : "pequena");
+export const simboloTipo = (t: Tipo): Simbolo => t;
 export const simboloCategoria = (cat: string): Simbolo =>
   cat === "assentamento" ? "pequena" : cat === "pdi_itinerante" ? "itinerante" : "pdi";
 

@@ -92,7 +92,7 @@ export function mountMapa() {
   camadas.alcance = L.imageOverlay(asset("/img/mapa-de-atuacao.webp"), BOUNDS, { opacity: 0.5, interactive: false });
   camadas.dominios = L.imageOverlay(asset("/img/mapadedominios.webp"), BOUNDS, { opacity: 1, interactive: false });
 
-  const ligadas: Record<string, boolean> = { estado: true, grande: true, media: true, pequena: true };
+  const ligadas: Record<string, boolean> = { grande: true, pequena: true };
   const toggle = (id: string, on: boolean) => (on ? camadas[id].addTo(map) : camadas[id].remove());
   Object.keys(camadas).forEach((id) => toggle(id, !!ligadas[id]));
 
