@@ -106,7 +106,7 @@ collections:
     sortable_fields: [ordem, nome]
     fields:
       - { name: nome, label: Nome, widget: string }
-      - { name: subtitulo, label: Subtítulo (ex.: A Dama da Vida), widget: string, required: false }
+      - { name: subtitulo, label: "Subtítulo (ex.: A Dama da Vida)", widget: string, required: false }
       - name: tipo
         label: Tipo
         widget: select
@@ -145,6 +145,51 @@ collections:
           - { name: cor, label: Cor, widget: string, default: black }
           - { name: x, label: "Posição X", widget: number, value_type: float }
           - { name: y, label: "Posição Y", widget: number, value_type: float }
-      - { name: oculto, label: "Ocultar do mapa (sem posição no mapa atual)", widget: boolean, required: false, default: false }
           - { name: descricao, label: "Descrição curta", widget: markdown, required: false }
           - { name: detalhe, label: "NPCs e detalhes", widget: markdown, required: false }
+
+  - name: viagem
+    label: Viagem (terreno e estradas)
+    files:
+      - name: ajustes
+        label: Correções do terreno e das estradas
+        file: src/content/viagem/ajustes.json
+        format: json
+        fields:
+          - name: terreno
+            label: "Terreno corrigido (um hexágono por item)"
+            widget: list
+            required: false
+            summary: "{{fields.hex}} → {{fields.terreno}}"
+            fields:
+              - { name: hex, label: "Hexágono (ex.: C45-L32)", widget: string }
+              - name: terreno
+                label: Terreno
+                widget: select
+                options:
+                  - { label: Água (não se atravessa), value: agua }
+                  - { label: Planície, value: planicie }
+                  - { label: Floresta (difícil), value: floresta }
+                  - { label: Montanha (difícil), value: montanha }
+                  - { label: Deserto (difícil), value: deserto }
+                  - { label: Neve (difícil), value: neve }
+          - name: estradas
+            label: "Estradas acrescentadas (lista de hexágonos vizinhos, na ordem do caminho)"
+            widget: list
+            required: false
+            summary: "{{fields.nome}}"
+            fields:
+              - { name: nome, label: "Nome (ex.: Estrada Komora–Erimoor)", widget: string, required: false }
+              - name: hexes
+                label: "Hexágonos em sequência (ex.: C72-L41, C72-L42…)"
+                widget: list
+                field: { name: hex, label: Hexágono, widget: string }
+          - name: remover
+            label: "Ligações de estrada a remover (pares de hexágonos vizinhos)"
+            widget: list
+            required: false
+            summary: "{{fields.de}} ↔ {{fields.ate}}"
+            fields:
+              - { name: de, label: "De (ex.: C72-L41)", widget: string }
+              - { name: ate, label: "Até (ex.: C72-L42)", widget: string }
+

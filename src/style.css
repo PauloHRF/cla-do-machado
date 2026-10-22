@@ -255,3 +255,21 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+/* ---------- viagem ---------- */
+.viagem-campo { margin: 0 0 10px; }
+.viagem-campo label { display: block; font: 1.1rem/1 var(--display); letter-spacing: 0.05em; color: var(--accent); margin-bottom: 4px; }
+.viagem-campo > div { display: flex; gap: 6px; }
+.viagem-campo input { flex: 1; min-width: 0; padding: 8px 10px; border: 2px solid var(--accent); border-radius: 4px; background: rgb(255 255 255 / 0.55); color: var(--ink); }
+.viagem-campo .btn { min-height: 0; padding: 6px 12px; }
+.viagem-campo .btn.on { background: #2f5a2a; filter: brightness(1.15); }
+.modo-pick { cursor: crosshair !important; }
+.viagem-total { margin: 14px 0 4px; font: 2.6rem/1 var(--display); color: var(--accent); }
+.viagem-total strong { font-weight: 400; }
+.viagem-total small { display: block; font: 1rem var(--serif); color: var(--ink-soft); margin-top: 2px; }
+.viagem-aviso { margin-top: 14px; padding: 10px 12px; border: 2px dashed var(--accent); border-radius: 4px; background: rgb(255 255 255 / 0.4); }
+.viagem-tab { width: 100%; border-collapse: collapse; margin: 8px 0; }
+.viagem-tab th { font: 1.05rem/1 var(--display); letter-spacing: 0.05em; color: var(--accent); text-align: left; padding: 4px 6px; border-bottom: 2px solid var(--accent); }
+.viagem-tab td { padding: 5px 6px; border-bottom: 1px solid rgb(104 34 16 / 0.2); }
+.viagem-tab th:not(:first-child), .viagem-tab td:not(:first-child) { text-align: right; }
+.viagem-pino span { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #f6e9cc; border: 2px solid var(--gold); font: 1rem/1 var(--display); box-shadow: 0 2px 5px rgb(0 0 0 / 0.5); }
