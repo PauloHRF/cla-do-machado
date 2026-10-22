@@ -1,7 +1,7 @@
 import L from "leaflet";
 import { locais, norm } from "./data";
-import { centroLatLng, centroTopo, verticesTopo, hexDe, rotulo, MAPA_ALTURA, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, type Hex } from "./hex";
-import { calcularRota, terrenoDe, todasEstradas, TERRENOS, type Perfil, type Terreno } from "./viagem";
+import { centroLatLng, centroTopo, verticesTopo, hexDe, rotulo, linhaHex, MAPA_ALTURA, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, type Hex } from "./hex";
+import { calcularRota, avaliarCaminho, terrenoDe, todasEstradas, TERRENOS, type Perfil, type Terreno } from "./viagem";
 import { esc } from "./ui";
 
 // ---------- camadas de revisão (para a equipe conferir o que foi lido do mapa) ----------
@@ -58,7 +58,15 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     </div>
     <label class="check"><input type="checkbox" id="v-estradas" checked><span class="box"></span><span>Usar estradas</span></label>
     <div class="actions"><button class="btn primary" id="v-calc"><i class="fa-solid fa-route"></i> Calcular</button><button class="btn" id="v-limpar">Limpar</button></div>
-    <div id="v-res"></div>`;
+    <div id="v-res"></div>
+    <h2 class="ribbon">Desenhar caminho</h2>
+    <p class="muted">Clique nos hexágonos do mapa, na ordem do trajeto (ou nos locais). Se o clique não for vizinho do anterior, os hexágonos do meio entram em linha reta.</p>
+    <div class="actions">
+      <button class="btn" id="d-modo"><i class="fa-solid fa-pen"></i> Desenhar</button>
+      <button class="btn" id="d-desfazer"><i class="fa-solid fa-rotate-left"></i> Desfazer</button>
+      <button class="btn" id="d-limpar"><i class="fa-solid fa-eraser"></i> Limpar caminho</button>
+    </div>
+    <div id="d-res"></div>`;
 
   const q = <T extends HTMLElement>(s: string) => painel.querySelector<T>(s)!;
   const pontos: Record<"de" | "ate", Hex | null> = { de: null, ate: null };
@@ -86,7 +94,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
 
   const sair = () => { modo = null; map.getContainer().classList.remove("modo-pick"); painel.querySelectorAll("[data-pick]").forEach((b) => b.classList.remove("on")); };
   painel.querySelectorAll<HTMLElement>("[data-pick]").forEach((b) => b.addEventListener("click", () => {
-    const k = b.dataset.pick as "de" | "ate"; const ligado = modo === k; sair();
+    const k = b.dataset.pick as "de" | "ate"; const ligado = modo === k; sair(); if (desenhando) modoDesenho(false);
     if (!ligado) { modo = k; b.classList.add("on"); map.getContainer().classList.add("modo-pick"); }
   }));
   map.on("click", (e: L.LeafletMouseEvent) => {
@@ -126,10 +134,63 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     map.fitBounds(L.latLngBounds(r.caminho.map((h) => centroLatLng(h.c, h.l))), { paddingTopLeft: [rolagemPainel() + 40, 80], paddingBottomRight: [40, 40], maxZoom: 1.5 });
   });
 
+  // ----- caminho desenhado à mão -----
+  const camadaDes = L.layerGroup().addTo(map);
+  let caminho: Hex[] = [];
+  let desenhando = false;
+  const perfilAtual = (): Perfil => ({
+    montaria: q<HTMLInputElement>("#v-montaria").checked, estradas: q<HTMLInputElement>("#v-estradas").checked,
+    ignora: Array.from(painel.querySelectorAll<HTMLInputElement>("[data-ignora]:checked")).map((i) => i.dataset.ignora as Terreno),
+  });
+  const fmtN = (n: number) => String(Math.round(n * 100) / 100).replace(".", ",");
+  function redesenhar() {
+    camadaDes.clearLayers();
+    const pts = caminho.map((h) => centroLatLng(h.c, h.l));
+    if (pts.length > 1) {
+      L.polyline(pts, { color: "#1b2a38", weight: 8, opacity: 0.55, interactive: false }).addTo(camadaDes);
+      L.polyline(pts, { color: "#35d0c0", weight: 4, opacity: 0.98, lineJoin: "round", interactive: false }).addTo(camadaDes);
+    }
+    caminho.forEach((h, i) => {
+      const agua = terrenoDe(h) === "agua";
+      L.circleMarker(centroLatLng(h.c, h.l), { radius: i === 0 || i === caminho.length - 1 ? 7 : 3.5, color: "#1b2a38", weight: 2, fillColor: agua ? "#ff4d4d" : i === 0 ? "#6be26b" : "#35d0c0", fillOpacity: 1, interactive: false }).addTo(camadaDes);
+    });
+    const res = q("#d-res");
+    if (caminho.length < 2) { res.innerHTML = caminho.length ? `<p class="muted">Início em ${rotulo(caminho[0])}. Clique no próximo hexágono.</p>` : ""; return; }
+    const r = avaliarCaminho(caminho, perfilAtual());
+    const dias = fmtN(r.dias), inteiro = Math.ceil(r.dias - 1e-9);
+    res.innerHTML = `
+      <div class="viagem-total"><strong>${dias}</strong> dia${r.dias === 1 ? "" : "s"}<small>${inteiro !== Math.round(r.dias * 100) / 100 ? `(chegada no ${inteiro}º dia) · ` : ""}${r.passos} hexágono${r.passos === 1 ? "" : "s"} · ${rotulo(caminho[0])} → ${rotulo(caminho[caminho.length - 1])}</small></div>
+      ${r.agua.length ? `<p class="viagem-aviso">O caminho passa por <strong>${r.agua.length}</strong> hexágono${r.agua.length === 1 ? "" : "s"} de água (em vermelho no mapa), que não entram na conta: ${r.agua.slice(0, 6).map(rotulo).join(", ")}${r.agua.length > 6 ? "…" : ""}.</p>` : ""}
+      <table class="viagem-tab"><thead><tr><th>Tipo</th><th>Hexes</th><th>Dias</th></tr></thead><tbody>
+      ${r.detalhe.map((d) => `<tr><td>${esc(d.rotulo)}</td><td>${d.hexes}</td><td>${fmtN(d.dias)}</td></tr>`).join("")}
+      </tbody></table>`;
+  }
+  function adicionar(h: Hex) {
+    const ult = caminho[caminho.length - 1];
+    if (ult && ult.c === h.c && ult.l === h.l) return;
+    caminho.push(...(ult ? linhaHex(ult, h).slice(1) : [h]));
+    redesenhar();
+  }
+  const botaoModo = q<HTMLButtonElement>("#d-modo");
+  function modoDesenho(on: boolean) {
+    desenhando = on; botaoModo.classList.toggle("on", on); botaoModo.innerHTML = on ? `<i class="fa-solid fa-check"></i> Concluir` : `<i class="fa-solid fa-pen"></i> Desenhar`;
+    map.getContainer().classList.toggle("modo-pick", on);
+  }
+  botaoModo.addEventListener("click", () => { sair(); modoDesenho(!desenhando); });
+  q("#d-desfazer").addEventListener("click", () => { caminho.pop(); redesenhar(); });
+  q("#d-limpar").addEventListener("click", () => { caminho = []; redesenhar(); });
+  map.on("click", (e: L.LeafletMouseEvent) => {
+    if (!desenhando) return;
+    const h = hexDe(e.latlng.lng, e.latlng.lat); if (h) adicionar(h);
+  });
+  // o perfil do grupo vale também para o caminho desenhado
+  painel.addEventListener("change", (e) => { if ((e.target as HTMLElement).matches("#v-montaria, #v-estradas, [data-ignora]") && caminho.length > 1) redesenhar(); });
+
   return {
     painel,
     // clique num marcador de local durante a escolha no mapa
     capturar(lat, lng, nome) {
+      if (desenhando) { const h = hexDe(lng, lat); if (h) adicionar(h); return true; }
       if (!modo) return false;
       const h = hexDe(lng, lat); if (!h) return false;
       const k = modo; sair(); definir(k, h, nome); return true;

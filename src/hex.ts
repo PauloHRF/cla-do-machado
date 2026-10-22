@@ -64,3 +64,18 @@ export function verticesTopo(c: number, l: number): [number, number][] {
     return [cx + LADO * Math.cos(a), cy + LADO * ESCALA_Y * Math.sin(a)];
   });
 }
+
+/** Hexágonos em linha reta de a até b (inclui os dois), para ligar cliques não vizinhos. */
+export function linhaHex(a: Hex, b: Hex): Hex[] {
+  const cubo = ({ c, l }: Hex) => ({ x: c, z: l - (c - (c & 1)) / 2 });
+  const A = cubo(a), B = cubo(b), n = distancia(a, b), saida: Hex[] = [];
+  for (let i = 0; i <= n; i++) {
+    const t = n ? i / n : 0;
+    const x = A.x + (B.x - A.x) * t + 1e-6, z = A.z + (B.z - A.z) * t - 1e-6, y = -x - z;
+    let rx = Math.round(x), rz = Math.round(z); const ry = Math.round(y);
+    const dx = Math.abs(rx - x), dy = Math.abs(ry - y), dz = Math.abs(rz - z);
+    if (dx > dy && dx > dz) rx = -ry - rz; else if (dy <= dz) rz = -rx - ry;
+    saida.push({ c: rx, l: rz + (rx - (rx & 1)) / 2 });
+  }
+  return saida;
+}
