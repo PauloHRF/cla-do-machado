@@ -1,18 +1,31 @@
 import L from "leaflet";
-import { TIPOS, type Tipo } from "./data";
+import type { Simbolo } from "./data";
 
-// Pino de cidade: SVG colorido, maior quanto mais importante a cidade.
-export function pin(tipo: Tipo) {
-  const { cor, tamanho: w } = TIPOS[tipo];
-  const h = Math.round(w * 1.4);
+// Símbolos da legenda do mapa (cidade grande, cidade pequena, ponto de interesse, PDI itinerante).
+const TINTA = "#2a1d12", FUNDO = "#f2e6c8";
+const TAMANHOS: Record<Simbolo, number> = { grande: 26, pequena: 18, pdi: 18, itinerante: 22 };
+
+export function htmlSimbolo(s: Simbolo, tam = TAMANHOS[s], classe = "") {
+  if (s === "itinerante")
+    return `<i class="fa-solid fa-shoe-prints ${classe}" style="font-size:${Math.round(tam * 0.8)}px;color:${TINTA}" aria-hidden="true"></i>`;
+  const corpo =
+    s === "grande"
+      ? `<circle cx="12" cy="12" r="9.8" fill="${FUNDO}" stroke="${TINTA}" stroke-width="2.6"/><circle cx="12" cy="12" r="4.6" fill="${TINTA}"/>`
+      : s === "pequena"
+        ? `<circle cx="12" cy="12" r="6.4" fill="${FUNDO}" stroke="${TINTA}" stroke-width="2.8"/><circle cx="12" cy="12" r="1.9" fill="${TINTA}"/>`
+        : `<path d="M12 2.6 21.4 12 12 21.4 2.6 12Z" fill="${TINTA}" stroke="${FUNDO}" stroke-width="1.4" stroke-linejoin="round"/>`;
+  return `<svg class="${classe}" viewBox="0 0 24 24" width="${tam}" height="${tam}" aria-hidden="true">${corpo}</svg>`;
+}
+
+// Marcador no mapa: o símbolo da legenda centrado sobre o ponto, com área de clique um pouco maior.
+export function simbolo(s: Simbolo) {
+  const tam = TAMANHOS[s], caixa = tam + 10;
   return L.divIcon({
-    className: "pin",
-    iconSize: [w, h],
-    iconAnchor: [w / 2, Math.round((h * 34) / 35)], // ponta do pino exatamente sobre o ponto
-    tooltipAnchor: [0, -h + 6],
-    html: `<svg viewBox="0 0 25 35" width="${w}" height="${h}" aria-hidden="true">
-      <path d="M12.5 1C6.2 1 1 6 1 12.2 1 20.6 12.5 34 12.5 34S24 20.6 24 12.2C24 6 18.8 1 12.5 1Z" fill="${cor}" stroke="#fff" stroke-width="1.6"/>
-      <circle cx="12.5" cy="12.3" r="4.4" fill="#fff" fill-opacity=".92"/></svg>`,
+    className: "simbolo",
+    iconSize: [caixa, caixa],
+    iconAnchor: [caixa / 2, caixa / 2],
+    tooltipAnchor: [0, -caixa / 2],
+    html: htmlSimbolo(s, tam),
   });
 }
 

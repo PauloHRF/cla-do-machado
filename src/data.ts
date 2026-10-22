@@ -12,7 +12,7 @@ export interface Cidade {
 
 export interface Ponto {
   slug: string; nome: string; categoria: string; x: number; y: number; oculto?: boolean;
-  icone: string; cor: string; descricao: string; link?: string; eventos?: Evento[];
+  icone?: string; cor?: string; descricao: string; link?: string; eventos?: Evento[];
 }
 
 export interface Panteao {
@@ -56,8 +56,15 @@ export const CATEGORIAS: Record<string, { nome: string; icone: string }> = {
   dungeon: { nome: "Dungeon", icone: "dungeon" },
   mais: { nome: "Mais", icone: "plus" },
   pdi_construcao: { nome: "PDI (Construção)", icone: "landmark" },
+  pdi_itinerante: { nome: "PDI itinerante", icone: "shoe-prints" },
   pdi_natural: { nome: "PDI (Natural)", icone: "tree" },
 };
+
+// Símbolos da legenda do mapa: cidade grande, cidade pequena, ponto de interesse e PDI itinerante.
+export type Simbolo = "grande" | "pequena" | "pdi" | "itinerante";
+export const simboloTipo = (t: Tipo): Simbolo => (t === "estado" || t === "grande" ? "grande" : "pequena");
+export const simboloCategoria = (cat: string): Simbolo =>
+  cat === "assentamento" ? "pequena" : cat === "pdi_itinerante" ? "itinerante" : "pdi";
 
 export type Local = ({ kind: "cidade" } & Cidade) | ({ kind: "ponto" } & Ponto);
 export const locais = new Map<string, Local>();

@@ -32,9 +32,11 @@ button, input { font: inherit; }
 .leaflet-container { font-family: var(--serif); background: var(--sea); }
 
 /* ---------- marcadores ---------- */
-.pin svg { display: block; filter: drop-shadow(0 2px 2px rgb(0 0 0 / 0.45)); transition: transform 0.15s; transform-origin: 50% 100%; }
-.pin:hover svg, .pin.sel svg { transform: scale(1.18); }
-.pin.sel svg { filter: drop-shadow(0 0 5px var(--gold)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.5)); }
+.simbolo { display: grid; place-items: center; }
+.simbolo svg, .simbolo i { display: block; filter: drop-shadow(0 1px 1.5px rgb(0 0 0 / 0.55)); transition: transform 0.15s; }
+.simbolo i { text-shadow: 0 0 3px #f2e6c8, 0 0 3px #f2e6c8; }
+.simbolo:hover svg, .simbolo.sel svg, .simbolo:hover i, .simbolo.sel i { transform: scale(1.25); }
+.simbolo.sel svg, .simbolo.sel i { filter: drop-shadow(0 0 5px var(--gold)) drop-shadow(0 0 2px var(--gold)); }
 .disco span {
   display: flex; align-items: center; justify-content: center; border-radius: 50%;
   border: 2px solid #fff; color: #fff; box-shadow: 0 2px 5px rgb(0 0 0 / 0.5);
