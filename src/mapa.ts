@@ -1,6 +1,7 @@
 import L from "leaflet";
 import { asset, cidades, pontos, TIPOS, CATEGORIAS, locais, simboloTipo, simboloCategoria, type Local, type Tipo } from "./data";
 import { simbolo, htmlSimbolo } from "./icons";
+import { camadaDominios, dominioDe } from "./dominios";
 import { montarViagem, camadaTerreno, camadaEstradas } from "./viagemui";
 import { hexDe, rotulo, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
@@ -26,7 +27,8 @@ export function fichaCidade(c: import("./data").Cidade) {
 function detalheHtml(l: Local) {
   if (l.kind === "cidade") {
     const tag = `<span class="tag" style="--c:${TIPOS[l.tipo].cor}">${TIPOS[l.tipo].nome}</span>`;
-    const dom = l.dominio ? `<span class="tag ghost">Domínio: ${esc(l.dominio)}</span>` : "";
+    const dm = dominioDe(l.x, l.y);
+    const dom = dm ? `<span class="tag ghost">Domínio: ${esc(dm.nome)}</span>` : "";
     const hx = hexDe(l.x, l.y);
     const hexTag = hx ? `<span class="tag ghost">Hex ${rotulo(hx)}</span>` : "";
     const ficha = fichaCidade(l);
@@ -41,7 +43,8 @@ function detalheHtml(l: Local) {
   }
   const cat = CATEGORIAS[l.categoria]?.nome ?? "";
   const hp = hexDe(l.x, l.y);
-  return `<h1>${esc(l.nome)}</h1><p class="tags"><span class="tag ghost">${esc(cat)}</span>${hp ? `<span class="tag ghost">Hex ${rotulo(hp)}</span>` : ""}</p>
+  const dp = dominioDe(l.x, l.y);
+  return `<h1>${esc(l.nome)}</h1><p class="tags"><span class="tag ghost">${esc(cat)}</span>${dp ? `<span class="tag ghost">Domínio: ${esc(dp.nome)}</span>` : ""}${hp ? `<span class="tag ghost">Hex ${rotulo(hp)}</span>` : ""}</p>
     <div class="prose">${md(l.descricao.replace(/^<b>[^<]+<\/b>(<br\s*\/?>)?/, ""))}</div>
     ${l.descricao ? "" : `<p class="muted">Ainda não há informações sobre este lugar.</p>`}
     <div class="actions">
@@ -139,7 +142,7 @@ export function mountMapa() {
   camadas.terreno = camadaTerreno();
   camadas.estradas = camadaEstradas();
   camadas.alcance = L.imageOverlay(asset("/img/mapa-de-atuacao.webp"), BOUNDS, { opacity: 0.5, interactive: false });
-  camadas.dominios = L.imageOverlay(asset("/img/mapadedominios.webp"), BOUNDS, { opacity: 1, interactive: false });
+  camadas.dominios = camadaDominios();
 
   const ligadas: Record<string, boolean> = { grande: true, pequena: true };
   const toggle = (id: string, on: boolean) => (on ? camadas[id].addTo(map) : camadas[id].remove());
