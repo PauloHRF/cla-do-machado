@@ -30,9 +30,7 @@ collections:
         label: Tamanho
         widget: select
         options:
-          - { label: Cidade-Estado, value: estado }
           - { label: Cidade grande, value: grande }
-          - { label: Cidade média, value: media }
           - { label: Cidade pequena, value: pequena }
       - { name: x, label: "Posição X (horizontal)", widget: number, value_type: float, hint: "Segure Shift e clique no mapa do site para copiar 'x, y'." }
       - { name: y, label: "Posição Y (vertical)", widget: number, value_type: float }

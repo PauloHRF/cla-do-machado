@@ -4,9 +4,9 @@ O mapa novo (2000×1697) tem outra geografia. Os pinos foram reposicionados pelo
 
 Para reativar um pino: abra o item em `/admin`, ajuste X/Y (segure **Shift** e clique no mapa para copiar `x, y`) e desmarque *Ocultar do mapa*.
 
-- Posicionados no mapa: 74 (cidades e pontos)
+- Cidades: 74, todas posicionadas no mapa. As 34 de regiões fora do mapa novo foram apagadas.
+- Pontos de interesse visíveis: 62
 - Pontos de interesse ocultos com posição estimada: 22
-- Cidades ocultas (região fora do mapa novo): 34
 
 ## Pontos de interesse ocultos com posição estimada
 
@@ -36,9 +36,3 @@ X/Y abaixo vêm de uma transformação aproximada do mapa antigo e podem errar e
 | pontos | Vila de Triesperança | 1187 | 910 |
 | pontos | Vilarejo de Helvaut | 1114 | 803 |
 | pontos | Voz da Floresta | 1412 | 1018 |
-
-## Cidades ocultas (provavelmente fora da área do mapa novo)
-
-Ficaram com as coordenadas antigas, que não valem para o mapa novo. As cidades que estavam na área do mapa e não existem mais foram apagadas, e as cidades novas do mapa foram cadastradas vazias.
-
-A'Agtra, Abs'kho, Aksaven, Ar'Faren, Ar'Tuad, Artoriel, Bastor, Bor'Siberuth, Bor'Tahal, Boreos, Britium, Costarrubra, Crescentia, Driz'Natar, Edobridge, Fermesiana, Fjorden, Kartik, Kiruna, Lanur, Layxen, Lua Clara, Lúnula, Nar'Jahara, Nar'Zulthar, Novalume, Ouro Verdejante, Porto das Velas, Sorothan, Zedrak'Vo, Zefir, Zur'Pharmis, Zurdan, Éboro
