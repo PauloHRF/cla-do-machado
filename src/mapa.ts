@@ -1,6 +1,7 @@
 import L from "leaflet";
 import { asset, cidades, pontos, TIPOS, CATEGORIAS, locais, simboloTipo, simboloCategoria, type Local, type Tipo } from "./data";
 import { simbolo, htmlSimbolo } from "./icons";
+import { montarViagem, camadaTerreno, camadaEstradas } from "./viagemui";
 import { hexDe, rotulo, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
 
@@ -108,6 +109,8 @@ export function mountMapa() {
   if (!isMobile() && !location.hash.includes("local")) map.panBy([-230, 0], { animate: false });
   showCoords(map);
   
+  const viagem = montarViagem(map, panelWidth);
+
   // ----- camadas -----
   const camadas: Record<string, L.Layer> = {};
   const marcadores = new Map<string, L.Marker>();
@@ -117,7 +120,7 @@ export function mountMapa() {
     const g = L.layerGroup();
     for (const c of cidades.filter((x) => x.tipo === t && !x.oculto)) {
       const m = L.marker([c.y, c.x], { icon: simbolo(simboloTipo(t)), alt: c.nome, riseOnHover: true }).addTo(g);
-      tooltip(m, c.nome).on("click", () => (location.hash = `#/local/${c.slug}`));
+      tooltip(m, c.nome).on("click", () => { if (!viagem.capturar(c.y, c.x, c.nome)) location.hash = `#/local/${c.slug}`; });
       marcadores.set(c.slug, m);
     }
     camadas[t] = g;
@@ -127,12 +130,14 @@ export function mountMapa() {
     const g = L.layerGroup();
     for (const p of pontos.filter((x) => x.categoria === cat && !x.oculto)) {
       const m = L.marker([p.y, p.x], { icon: simbolo(simboloCategoria(cat)), alt: p.nome }).addTo(g);
-      tooltip(m, p.nome).on("click", () => (location.hash = `#/local/${p.slug}`));
+      tooltip(m, p.nome).on("click", () => { if (!viagem.capturar(p.y, p.x, p.nome)) location.hash = `#/local/${p.slug}`; });
       marcadores.set(p.slug, m);
     }
     camadas[cat] = g;
   }
   camadas.hex = gradeHex();
+  camadas.terreno = camadaTerreno();
+  camadas.estradas = camadaEstradas();
   camadas.alcance = L.imageOverlay(asset("/img/mapa-de-atuacao.webp"), BOUNDS, { opacity: 0.5, interactive: false });
   camadas.dominios = L.imageOverlay(asset("/img/mapadedominios.webp"), BOUNDS, { opacity: 1, interactive: false });
 
@@ -159,6 +164,8 @@ export function mountMapa() {
     <h2 class="ribbon">Contribuições</h2>
     ${usadas.map((c) => linha(c, CATEGORIAS[c]?.nome ?? c, htmlSimbolo(simboloCategoria(c), 20, "mini"))).join("")}
     <h2 class="ribbon">Mapas</h2>
+    ${linha("terreno", "Terreno (conferência)", `<i class="fa-solid fa-mountain-sun mini"></i>`)}
+    ${linha("estradas", "Estradas (conferência)", `<i class="fa-solid fa-road mini"></i>`)}
     ${linha("hex", "Grade de hexágonos", `<i class="fa-solid fa-border-all mini"></i>`)}
     ${linha("alcance", "Alcance do Clã", `<i class="fa-solid fa-bullseye mini"></i>`)}
     ${linha("dominios", "Domínios", `<i class="fa-solid fa-flag mini"></i>`)}
@@ -179,6 +186,7 @@ export function mountMapa() {
     <p>Sua aventura também faz parte da história do mundo. Registre suas experiências e ajude a construir o legado do Clã do Machado.</p>
     <div class="actions"><a class="btn primary" href="${FORM_CONTRIBUICAO}" target="_blank" rel="noopener"><i class="fa-solid fa-feather-pointed"></i> Adicionar contribuição</a></div>`;
   setTab("contribuicoes", contrib);
+  setTab("viagem", viagem.painel);
 
   // ----- seleção -----
   let atual: Local | null = null;
@@ -220,7 +228,7 @@ export function mountMapa() {
     selecionar,
     destroy() {
       map.remove();
-      ["inicio", "filtros", "contribuicoes", "detalhe"].forEach(hideTab);
+      ["inicio", "filtros", "viagem", "contribuicoes", "detalhe"].forEach(hideTab);
       document.title = "Clã do Machado — Mapa de Phantyr";
     },
   };

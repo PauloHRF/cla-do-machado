@@ -36,3 +36,15 @@ O mapa do mundo tem uma grade de hexágonos de topo plano. `src/hex.ts` descreve
 - Aparece ao passar o mouse (canto inferior direito), no **Shift+clique**, na etiqueta "Hex ..." da página de cada local, e a grade pode ser ligada em *Mapas → Grade de hexágonos* (números no zoom máximo).
 - `distancia(a, b)` dá a distância em hexágonos (base para o cálculo de tempo de viagem).
 - A grade tem erro de poucos pixels no pior caso (≈7% de um hexágono). Para empurrar a grade inteira, ajuste `AJUSTE_Y` em `src/hex.ts` (positivo = desce).
+
+## Viagem (tempo entre dois pontos)
+Aba **Viagem** no menu: escolha origem e destino (nome do local, `C45-L32` ou clicando no mapa), diga se o grupo tem montaria e o que ela ignora, e o site calcula o menor tempo pela regra do clã:
+- 1 hex = 1 dia a pé; todo o grupo montado = 2 hex por dia.
+- Terreno difícil (floresta, montanha, deserto, neve) divide a velocidade por 2; água não se atravessa.
+- A montaria pode ignorar um terreno difícil (ex.: camelo no deserto, bode na montanha); a estrada ignora o terreno difícil.
+
+Os dados ficam em `src/content/viagem/`:
+- `terreno.json`: o terreno de cada hexágono (uma linha de texto por linha da grade). **Foi lido automaticamente da cor do mapa e pode ter erros.**
+- `estradas.json`: ligações de estrada entre hexágonos vizinhos, detectadas pelo desenho pontilhado do mapa. **Incompleto e com alguns falsos traços.**
+- `ajustes.json`: correções feitas pela equipe (terreno de um hexágono, estradas acrescentadas ou removidas). Editável em `/admin → Viagem`. Para conferir, ligue *Mapas → Terreno (conferência)* e *Estradas (conferência)* e use a grade de hexágonos e o rótulo do mouse para saber a coordenada.
+
