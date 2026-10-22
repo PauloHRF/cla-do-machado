@@ -1,6 +1,7 @@
 {
   "nome": "Imrith",
   "tipo": "pequena",
-  "x": 1211,
-  "y": 1422.8
+  "x": 1040,
+  "y": 1343,
+  "oculto": true
 }

@@ -1,6 +1,7 @@
 {
   "nome": "Elveran",
   "tipo": "pequena",
-  "x": 1432,
-  "y": 1504
+  "x": 1237,
+  "y": 1415,
+  "oculto": true
 }

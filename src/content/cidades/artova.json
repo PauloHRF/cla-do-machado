@@ -1,6 +1,7 @@
 {
   "nome": "Artov'A",
   "tipo": "grande",
-  "x": 841.9,
-  "y": 541
+  "x": 711,
+  "y": 556,
+  "oculto": true
 }

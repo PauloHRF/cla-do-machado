@@ -1,9 +1,10 @@
 {
   "nome": "Porto Melara",
   "categoria": "pdi_construcao",
-  "x": 1474.25,
-  "y": 753,
+  "x": 1275,
+  "y": 745,
   "icone": "landmark",
   "cor": "black",
-  "descricao": "<b>Porto Melara</b></br>É um pequeno porto pesqueiro que por vezes é utilizado de carga e descaga entre Erimoor e as cidades do Bosque Merlara."
+  "descricao": "<b>Porto Melara</b></br>É um pequeno porto pesqueiro que por vezes é utilizado de carga e descaga entre Erimoor e as cidades do Bosque Merlara.",
+  "oculto": true
 }

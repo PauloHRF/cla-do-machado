@@ -2,5 +2,6 @@
   "nome": "Bor'Tahal",
   "tipo": "estado",
   "x": 1207,
-  "y": 1925
+  "y": 1925,
+  "oculto": true
 }

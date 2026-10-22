@@ -1,13 +1,14 @@
 {
   "nome": "Helokva",
   "tipo": "media",
-  "x": 1474,
-  "y": 668,
+  "x": 1275,
+  "y": 670,
   "dominio": "Aguera",
   "governo": "Tyr'son Markolak",
   "populacao": "",
   "clima": "",
   "economia": "Serviços de mercenários e de forja",
   "religiao": "Kurgan",
-  "estabelecimentos": "Taverna Veado Saltitante, Guilda Slayers, Quartel Principal"
+  "estabelecimentos": "Taverna Veado Saltitante, Guilda Slayers, Quartel Principal",
+  "oculto": true
 }

@@ -1,6 +1,7 @@
 {
   "nome": "Zur'Florata",
   "tipo": "pequena",
-  "x": 1417.1,
-  "y": 1586.9
+  "x": 1224,
+  "y": 1489,
+  "oculto": true
 }

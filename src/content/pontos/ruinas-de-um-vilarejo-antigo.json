@@ -1,8 +1,8 @@
 {
   "nome": "Ruínas de um vilarejo antigo",
   "categoria": "pdi_construcao",
-  "x": 1411.5,
-  "y": 1061,
+  "x": 1219,
+  "y": 1020,
   "icone": "landmark",
   "cor": "black",
   "descricao": "Ruínas de um vilarejo muito antigo com uma estátua de uma mulher com irradiações de luz, ambos em processo avançado de intemperismo. Na estátua está gravado os dizeres \"Em homenagem ao ser de Luz que nos abençoou\".<br>",
@@ -19,5 +19,6 @@
       "data": "Primeiro Hitrice de Babel, 2949",
       "texto": "O Clã do Machado descobre que o ser corrompido está se alimentando de energia vital para se libertar. Prevendo que seria inevitável, liberaram por si mesmos o ser."
     }
-  ]
+  ],
+  "oculto": true
 }

@@ -1,6 +1,7 @@
 {
   "nome": "Fortuna",
   "tipo": "pequena",
-  "x": 1022.9,
-  "y": 494.9
+  "x": 872,
+  "y": 515,
+  "oculto": true
 }

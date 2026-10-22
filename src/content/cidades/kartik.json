@@ -2,5 +2,6 @@
   "nome": "Kartik",
   "tipo": "grande",
   "x": 927,
-  "y": 2425
+  "y": 2425,
+  "oculto": true
 }

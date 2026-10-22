@@ -1,8 +1,8 @@
 {
   "nome": "Flormeria",
   "tipo": "media",
-  "x": 1553.1,
-  "y": 1059,
+  "x": 1345,
+  "y": 1018,
   "dominio": "Meride",
   "governo": "Tara Perfuma",
   "populacao": "7786 sendo que 40% mora na floresta (Meio-elfos: 43%, Elfos: 18%, Humanos: 15%, Firbolg: 7%, Hadozee: 6%, Aarakocra: 4%, Feéricos: 3%, Outros: 4%)",
@@ -16,5 +16,6 @@
       "data": "Primeiro Hitrice de Magacia, 2949",
       "texto": "O Clã do Machado de Komora faz uma aliança com Florméria e com os coletores para combater as ameaças na Floresta Kinshale."
     }
-  ]
+  ],
+  "oculto": true
 }

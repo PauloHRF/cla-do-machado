@@ -1,8 +1,8 @@
 {
   "nome": "Siehm",
   "tipo": "media",
-  "x": 1774,
-  "y": 756,
+  "x": 1542,
+  "y": 748,
   "dominio": "Meride",
   "governo": "Frank Winters",
   "populacao": "3500 (Humanos: 75%, Elfos da floresta: 20%, Gnomos: 5%)",
@@ -20,5 +20,6 @@
       "data": "2949",
       "texto": "Osferon Bracken, nobre de Erimoor, investe na cidade com o projeto de estruturar o porto local e trazer o Clã do Machado para Siehm."
     }
-  ]
+  ],
+  "oculto": true
 }

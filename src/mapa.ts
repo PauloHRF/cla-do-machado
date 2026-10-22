@@ -6,7 +6,7 @@ import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth,
 // TODO: trocar pelo link do formulário de contribuições.
 const FORM_CONTRIBUICAO = "#";
 
-const BOUNDS: L.LatLngBoundsExpression = [[0, 0], [2864, 2188]];
+const BOUNDS: L.LatLngBoundsExpression = [[0, 0], [1697, 2000]];
 
 const CAMPOS: [string, keyof import("./data").Cidade][] = [
   ["Governo", "governo"], ["População", "populacao"], ["Clima", "clima"],
@@ -49,11 +49,11 @@ export function mountMapa() {
   const map = L.map("map", {
     crs: L.CRS.Simple, minZoom: -2, maxZoom: 2, zoomSnap: 0.25, zoomDelta: 0.5,
     zoomControl: false, attributionControl: false,
-    maxBounds: [[-400, -400], [3264, 2588]], maxBoundsViscosity: 0.6,
+    maxBounds: [[-300, -300], [1997, 2300]], maxBoundsViscosity: 0.6,
   });
   L.imageOverlay(asset("/img/mapadomundo.webp"), BOUNDS, { interactive: false }).addTo(map);
   L.control.zoom({ position: "topright", zoomInTitle: "Aproximar", zoomOutTitle: "Afastar" }).addTo(map);
-  map.setView([2270.5, 824], isMobile() ? 0 : 1);
+  map.setView([869, 1255], isMobile() ? 0 : 1);
   if (!isMobile() && !location.hash.includes("local")) map.panBy([-230, 0], { animate: false });
   showCoords(map);
   
@@ -64,7 +64,7 @@ export function mountMapa() {
 
   for (const t of Object.keys(TIPOS) as Tipo[]) {
     const g = L.layerGroup();
-    for (const c of cidades.filter((x) => x.tipo === t)) {
+    for (const c of cidades.filter((x) => x.tipo === t && !x.oculto)) {
       const m = L.marker([c.y, c.x], { icon: pin(t), alt: c.nome, riseOnHover: true }).addTo(g);
       tooltip(m, c.nome).on("click", () => (location.hash = `#/local/${c.slug}`));
       marcadores.set(c.slug, m);
@@ -74,7 +74,7 @@ export function mountMapa() {
   const usadas = [...new Set(pontos.map((p) => p.categoria))];
   for (const cat of usadas) {
     const g = L.layerGroup();
-    for (const p of pontos.filter((x) => x.categoria === cat)) {
+    for (const p of pontos.filter((x) => x.categoria === cat && !x.oculto)) {
       const m = L.marker([p.y, p.x], { icon: disco(p.icone || CATEGORIAS[cat]?.icone || "location-dot", p.cor, 28), alt: p.nome }).addTo(g);
       tooltip(m, p.nome).on("click", () => (location.hash = `#/local/${p.slug}`));
       marcadores.set(p.slug, m);
@@ -158,6 +158,7 @@ export function mountMapa() {
     }
     marcado = marcadores.get(l.slug) ?? null;
     marcado?.getElement()?.classList.add("sel");
+    if (l.oculto) return; // sem posição no mapa atual
     const alvo = L.latLngBounds([l.y, l.x], [l.y, l.x]);
     map.fitBounds(alvo, { maxZoom: 1, paddingTopLeft: [panelWidth(), 0], paddingBottomRight: [0, isMobile() ? window.innerHeight * 0.5 : 0] });
   }

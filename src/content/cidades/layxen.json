@@ -2,5 +2,6 @@
   "nome": "Layxen",
   "tipo": "pequena",
   "x": 1507,
-  "y": 2337
+  "y": 2337,
+  "oculto": true
 }

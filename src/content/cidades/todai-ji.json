@@ -1,13 +1,14 @@
 {
   "nome": "Todai Ji",
   "tipo": "pequena",
-  "x": 1397,
-  "y": 626,
+  "x": 1206,
+  "y": 632,
   "dominio": "Aguera",
   "governo": "",
   "populacao": "",
   "clima": "",
   "economia": "",
   "religiao": "",
-  "estabelecimentos": "Grande Templo, Mosteiro"
+  "estabelecimentos": "Grande Templo, Mosteiro",
+  "oculto": true
 }

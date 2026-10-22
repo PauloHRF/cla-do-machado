@@ -2,5 +2,6 @@
   "nome": "Bor'Siberuth",
   "tipo": "pequena",
   "x": 1236,
-  "y": 1855
+  "y": 1855,
+  "oculto": true
 }

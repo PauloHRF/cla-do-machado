@@ -1,6 +1,7 @@
 {
   "nome": "Vila Mor'Kol",
   "tipo": "pequena",
-  "x": 685.1,
-  "y": 1775.9
+  "x": 571,
+  "y": 1658,
+  "oculto": true
 }

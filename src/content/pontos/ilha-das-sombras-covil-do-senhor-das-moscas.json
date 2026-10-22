@@ -1,9 +1,10 @@
 {
   "nome": "Ilha das Sombras - Covil do Senhor das Moscas",
   "categoria": "covil",
-  "x": 1610,
-  "y": 734,
+  "x": 1396,
+  "y": 729,
   "icone": "dragon",
   "cor": "black",
-  "descricao": "<b>Ilha das Sombras - Covil do Senhor das Moscas</b>"
+  "descricao": "<b>Ilha das Sombras - Covil do Senhor das Moscas</b>",
+  "oculto": true
 }

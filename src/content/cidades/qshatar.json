@@ -1,6 +1,7 @@
 {
   "nome": "Qsha'Tar",
   "tipo": "pequena",
-  "x": 1292,
-  "y": 246
+  "x": 1112,
+  "y": 293,
+  "oculto": true
 }

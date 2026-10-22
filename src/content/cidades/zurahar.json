@@ -1,13 +1,14 @@
 {
   "nome": "Zur'Ahar",
   "tipo": "grande",
-  "x": 1110,
-  "y": 760.3,
+  "x": 950,
+  "y": 752,
   "dominio": "Erimoor",
   "governo": "Kondragos Holymace",
   "populacao": "",
   "clima": "",
   "economia": "Produção de vestes sagradas e utensílios de prata",
   "religiao": "Amari",
-  "estabelecimentos": "Taverna Caneca do Cruzado, Guilda Manto Sagrado, Grande Templo de Amari"
+  "estabelecimentos": "Taverna Caneca do Cruzado, Guilda Manto Sagrado, Grande Templo de Amari",
+  "oculto": true
 }

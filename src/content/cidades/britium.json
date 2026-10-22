@@ -3,5 +3,6 @@
   "tipo": "pequena",
   "x": 824,
   "y": 2270.5,
-  "texto": "<img src='/img/bastião_britium.webp' width='250' height='235' class='center'><p>Britium será o ponto seguro para o Clã do Machado enquanto tenta explorar o norte gelado. Porém, atualmente, o local só tem uma pequena torre e alguns chalés abandonados. Os aventureiros terão que coletar recursos e gerenciá-los de forma a criar sua futura base, enquanto o local cresce.</p>"
+  "texto": "<img src='/img/bastião_britium.webp' width='250' height='235' class='center'><p>Britium será o ponto seguro para o Clã do Machado enquanto tenta explorar o norte gelado. Porém, atualmente, o local só tem uma pequena torre e alguns chalés abandonados. Os aventureiros terão que coletar recursos e gerenciá-los de forma a criar sua futura base, enquanto o local cresce.</p>",
+  "oculto": true
 }

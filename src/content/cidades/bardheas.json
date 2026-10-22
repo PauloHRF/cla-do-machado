@@ -1,6 +1,7 @@
 {
   "nome": "Bar'Dheas",
   "tipo": "pequena",
-  "x": 251,
-  "y": 1728
+  "x": 184,
+  "y": 1615,
+  "oculto": true
 }

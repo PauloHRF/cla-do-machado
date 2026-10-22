@@ -1,6 +1,7 @@
 {
   "nome": "Rin Kakiri",
   "tipo": "pequena",
-  "x": 876,
-  "y": 377
+  "x": 741,
+  "y": 410,
+  "oculto": true
 }

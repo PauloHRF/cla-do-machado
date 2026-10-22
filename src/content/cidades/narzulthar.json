@@ -2,5 +2,6 @@
   "nome": "Nar'Zulthar",
   "tipo": "estado",
   "x": 398,
-  "y": 2124
+  "y": 2124,
+  "oculto": true
 }

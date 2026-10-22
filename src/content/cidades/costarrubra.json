@@ -2,5 +2,6 @@
   "nome": "Costarrubra",
   "tipo": "grande",
   "x": 176.2,
-  "y": 2619.9
+  "y": 2619.9,
+  "oculto": true
 }

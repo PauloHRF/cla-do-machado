@@ -1,9 +1,10 @@
 {
   "nome": "Estátua de Kurgan (em construção)",
   "categoria": "pdi_construcao",
-  "x": 1347,
-  "y": 767,
+  "x": 1161,
+  "y": 758,
   "icone": "landmark",
   "cor": "#010cf4",
-  "descricao": "Construção de Estátua de Kurgan no local."
+  "descricao": "Construção de Estátua de Kurgan no local.",
+  "oculto": true
 }

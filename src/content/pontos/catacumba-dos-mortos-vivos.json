@@ -1,9 +1,10 @@
 {
   "nome": "Catacumba dos mortos-vivos",
   "categoria": "dungeon",
-  "x": 1718.25,
-  "y": 737,
+  "x": 1492,
+  "y": 731,
   "icone": "dungeon",
   "cor": "#51b587",
-  "descricao": "<b>Plot:</b> Catacumba dos mortos-vivos</br><b>Mestre:</b> MLB</br><b>Descrição:</b> Dentro da floresta Talaedra, existe uma ruína que parece um antigo cemitério, mas na realidade é uma dungeon repleta de mortos-vivos e tesouros guardados esperando para ser explorada.<img src=\"https://cdn.discordapp.com/attachments/744331326143987732/1163973833930313790/image.png?ex=6541861b&is=652f111b&hm=e667c70c1c752139225d86157467d76ef4a53799a0e0fd53d04d1fe4656a2b6f&\" width=\"200\" height=\"250\">"
+  "descricao": "<b>Plot:</b> Catacumba dos mortos-vivos</br><b>Mestre:</b> MLB</br><b>Descrição:</b> Dentro da floresta Talaedra, existe uma ruína que parece um antigo cemitério, mas na realidade é uma dungeon repleta de mortos-vivos e tesouros guardados esperando para ser explorada.<img src=\"https://cdn.discordapp.com/attachments/744331326143987732/1163973833930313790/image.png?ex=6541861b&is=652f111b&hm=e667c70c1c752139225d86157467d76ef4a53799a0e0fd53d04d1fe4656a2b6f&\" width=\"200\" height=\"250\">",
+  "oculto": true
 }

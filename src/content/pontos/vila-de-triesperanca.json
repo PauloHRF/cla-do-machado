@@ -1,8 +1,8 @@
 {
   "nome": "Vila de Triesperança",
   "categoria": "assentamento",
-  "x": 1375.25,
-  "y": 937,
+  "x": 1187,
+  "y": 910,
   "icone": "tents",
   "cor": "black",
   "descricao": "<b>Vila de Triesperança</b><br>É uma vila de comerciantes abastecida por três rotas de duas grandes cidades. Possui cerca de 410 habitantes, a maioria de jovens, com humanos, anões, elfos, gnomos e halflings predominando. Possui apenas uma estalagem para atender os viajantes, sem templos e diversos estabelecimentos comerciais. Desde sua fundação, os deuses cultuados ali são Gawelin e Hanne. <br>",
@@ -20,5 +20,6 @@
       "data": "Primeiro Tunsblane de Picaro, 2949",
       "texto": "Clã do Machado derrota o grupo de bandidos em sua base na floresta."
     }
-  ]
+  ],
+  "oculto": true
 }

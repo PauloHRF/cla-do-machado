@@ -1,9 +1,10 @@
 {
   "nome": "Ruínas antigas",
   "categoria": "pdi_construcao",
-  "x": 1653,
-  "y": 888,
+  "x": 1434,
+  "y": 866,
   "icone": "landmark",
   "cor": "black",
-  "descricao": "<b>Ruínas antigas</b></br>Vila em ruínas de um povo de tempos imemoriais."
+  "descricao": "<b>Ruínas antigas</b></br>Vila em ruínas de um povo de tempos imemoriais.",
+  "oculto": true
 }

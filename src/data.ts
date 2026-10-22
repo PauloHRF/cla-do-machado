@@ -4,14 +4,14 @@ export type Tipo = "estado" | "grande" | "media" | "pequena";
 export interface Evento { data: string; texto: string }
 
 export interface Cidade {
-  slug: string; nome: string; tipo: Tipo; x: number; y: number;
+  slug: string; nome: string; tipo: Tipo; x: number; y: number; oculto?: boolean;
   dominio?: string; governo?: string; populacao?: string; clima?: string;
   economia?: string; religiao?: string; estabelecimentos?: string;
   texto?: string; pagina?: string; link?: string; eventos?: Evento[];
 }
 
 export interface Ponto {
-  slug: string; nome: string; categoria: string; x: number; y: number;
+  slug: string; nome: string; categoria: string; x: number; y: number; oculto?: boolean;
   icone: string; cor: string; descricao: string; link?: string; eventos?: Evento[];
 }
 

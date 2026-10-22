@@ -2,5 +2,6 @@
   "nome": "Fjorden",
   "tipo": "pequena",
   "x": 976,
-  "y": 2124
+  "y": 2124,
+  "oculto": true
 }

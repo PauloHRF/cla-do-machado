@@ -36,6 +36,7 @@ collections:
           - { label: Cidade pequena, value: pequena }
       - { name: x, label: "Posição X (horizontal)", widget: number, value_type: float, hint: "Segure Shift e clique no mapa do site para copiar 'x, y'." }
       - { name: y, label: "Posição Y (vertical)", widget: number, value_type: float }
+      - { name: oculto, label: "Ocultar do mapa (sem posição no mapa atual)", widget: boolean, required: false, default: false }
       - { name: dominio, label: Domínio, widget: string, required: false }
       - { name: governo, label: Governo, widget: string, required: false }
       - { name: populacao, label: População, widget: text, required: false }
@@ -79,6 +80,7 @@ collections:
           - { label: Mais, value: mais }
       - { name: x, label: "Posição X", widget: number, value_type: float }
       - { name: y, label: "Posição Y", widget: number, value_type: float }
+      - { name: oculto, label: "Ocultar do mapa (sem posição no mapa atual)", widget: boolean, required: false, default: false }
       - { name: icone, label: "Ícone (nome do Font Awesome, ex.: tents, dragon, tree)", widget: string }
       - { name: cor, label: "Cor do ícone (ex.: black, #51b587)", widget: string, default: black }
       - { name: descricao, label: Descrição, widget: markdown }
@@ -144,5 +146,6 @@ collections:
           - { name: cor, label: Cor, widget: string, default: black }
           - { name: x, label: "Posição X", widget: number, value_type: float }
           - { name: y, label: "Posição Y", widget: number, value_type: float }
+      - { name: oculto, label: "Ocultar do mapa (sem posição no mapa atual)", widget: boolean, required: false, default: false }
           - { name: descricao, label: "Descrição curta", widget: markdown, required: false }
           - { name: detalhe, label: "NPCs e detalhes", widget: markdown, required: false }

@@ -1,13 +1,14 @@
 {
   "nome": "Noite Eterna",
   "tipo": "pequena",
-  "x": 1622,
-  "y": 1151,
+  "x": 1407,
+  "y": 1101,
   "dominio": "Meride",
   "governo": "Kavnelis Noc",
   "populacao": "",
   "clima": "",
   "economia": "Extração de gemas produção de joias",
   "religiao": "Hieldy",
-  "estabelecimentos": "Taverna Sopro da Noite, Templo de Hieldy"
+  "estabelecimentos": "Taverna Sopro da Noite, Templo de Hieldy",
+  "oculto": true
 }

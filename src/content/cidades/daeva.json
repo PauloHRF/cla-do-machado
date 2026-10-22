@@ -1,13 +1,14 @@
 {
   "nome": "Daeva",
   "tipo": "pequena",
-  "x": 1583.1,
-  "y": 1231.9,
+  "x": 1372,
+  "y": 1173,
   "dominio": "Meride",
   "governo": "Lia Highwoods",
   "populacao": "",
   "clima": "",
   "economia": "Produção de arcos e flechas",
   "religiao": "Iliynara",
-  "estabelecimentos": "Taverna da Ihala, Guilda Guardiões de Daeva, Copa Alta"
+  "estabelecimentos": "Taverna da Ihala, Guilda Guardiões de Daeva, Copa Alta",
+  "oculto": true
 }

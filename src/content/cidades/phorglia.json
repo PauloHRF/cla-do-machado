@@ -1,6 +1,7 @@
 {
   "nome": "Phorglia",
   "tipo": "pequena",
-  "x": 846,
-  "y": 1652
+  "x": 714,
+  "y": 1547,
+  "oculto": true
 }

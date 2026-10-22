@@ -1,13 +1,14 @@
 {
   "nome": "Taldor",
   "tipo": "pequena",
-  "x": 1697.1,
-  "y": 405.1,
+  "x": 1474,
+  "y": 435,
   "dominio": "Aguera",
   "governo": "Portigas",
   "populacao": "",
   "clima": "",
   "economia": "Pesca, caça e extração de madeira",
   "religiao": "Iliynara e Kurgan",
-  "estabelecimentos": "Taverna Joelho de Peixe, Guilda Névoa Adentro, Entreposto Runas e Raízes"
+  "estabelecimentos": "Taverna Joelho de Peixe, Guilda Névoa Adentro, Entreposto Runas e Raízes",
+  "oculto": true
 }
