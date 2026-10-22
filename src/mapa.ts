@@ -1,6 +1,6 @@
 import L from "leaflet";
-import { asset, cidades, pontos, TIPOS, CATEGORIAS, locais, type Local, type Tipo } from "./data";
-import { pin, disco } from "./icons";
+import { asset, cidades, pontos, TIPOS, CATEGORIAS, locais, simboloTipo, simboloCategoria, type Local, type Tipo } from "./data";
+import { simbolo, htmlSimbolo } from "./icons";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
 
 // TODO: trocar pelo link do formulário de contribuições.
@@ -72,7 +72,7 @@ export function mountMapa() {
   for (const t of Object.keys(TIPOS) as Tipo[]) {
     const g = L.layerGroup();
     for (const c of cidades.filter((x) => x.tipo === t && !x.oculto)) {
-      const m = L.marker([c.y, c.x], { icon: pin(t), alt: c.nome, riseOnHover: true }).addTo(g);
+      const m = L.marker([c.y, c.x], { icon: simbolo(simboloTipo(t)), alt: c.nome, riseOnHover: true }).addTo(g);
       tooltip(m, c.nome).on("click", () => (location.hash = `#/local/${c.slug}`));
       marcadores.set(c.slug, m);
     }
@@ -82,7 +82,7 @@ export function mountMapa() {
   for (const cat of usadas) {
     const g = L.layerGroup();
     for (const p of pontos.filter((x) => x.categoria === cat && !x.oculto)) {
-      const m = L.marker([p.y, p.x], { icon: disco(p.icone || CATEGORIAS[cat]?.icone || "location-dot", p.cor, 28), alt: p.nome }).addTo(g);
+      const m = L.marker([p.y, p.x], { icon: simbolo(simboloCategoria(cat)), alt: p.nome }).addTo(g);
       tooltip(m, p.nome).on("click", () => (location.hash = `#/local/${p.slug}`));
       marcadores.set(p.slug, m);
     }
@@ -110,9 +110,9 @@ export function mountMapa() {
     `<label class="check"><input type="checkbox" data-camada="${id}" ${ligadas[id] ? "checked" : ""}><span class="box"></span>${icone}<span>${rotulo}</span></label>`;
   filtros.innerHTML = `
     <h2 class="ribbon">Cidades</h2>
-    ${(Object.keys(TIPOS) as Tipo[]).map((t) => linha(t, TIPOS[t].nome, `<svg class="mini" viewBox="0 0 25 35"><path d="M12.5 1C6.2 1 1 6 1 12.2 1 20.6 12.5 34 12.5 34S24 20.6 24 12.2C24 6 18.8 1 12.5 1Z" fill="${TIPOS[t].cor}" stroke="#fff" stroke-width="1.6"/></svg>`)).join("")}
+    ${(Object.keys(TIPOS) as Tipo[]).map((t) => linha(t, TIPOS[t].nome, htmlSimbolo(simboloTipo(t), 20, "mini"))).join("")}
     <h2 class="ribbon">Contribuições</h2>
-    ${usadas.map((c) => linha(c, CATEGORIAS[c]?.nome ?? c, `<i class="fa-solid fa-${CATEGORIAS[c]?.icone ?? "location-dot"} mini"></i>`)).join("")}
+    ${usadas.map((c) => linha(c, CATEGORIAS[c]?.nome ?? c, htmlSimbolo(simboloCategoria(c), 20, "mini"))).join("")}
     <h2 class="ribbon">Mapas</h2>
     ${linha("alcance", "Alcance do Clã", `<i class="fa-solid fa-bullseye mini"></i>`)}
     ${linha("dominios", "Domínios", `<i class="fa-solid fa-flag mini"></i>`)}

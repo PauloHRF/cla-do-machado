@@ -77,12 +77,13 @@ collections:
           - { label: Dungeon, value: dungeon }
           - { label: PDI (construção), value: pdi_construcao }
           - { label: PDI (natural), value: pdi_natural }
+          - { label: PDI itinerante, value: pdi_itinerante }
           - { label: Mais, value: mais }
       - { name: x, label: "Posição X", widget: number, value_type: float }
       - { name: y, label: "Posição Y", widget: number, value_type: float }
       - { name: oculto, label: "Ocultar do mapa (sem posição no mapa atual)", widget: boolean, required: false, default: false }
-      - { name: icone, label: "Ícone (nome do Font Awesome, ex.: tents, dragon, tree)", widget: string }
-      - { name: cor, label: "Cor do ícone (ex.: black, #51b587)", widget: string, default: black }
+      - { name: icone, label: "Ícone (não usado no mapa do mundo, que segue a legenda)", widget: string, required: false }
+      - { name: cor, label: "Cor (não usada no mapa do mundo)", widget: string, required: false }
       - { name: descricao, label: Descrição, widget: markdown }
       - { name: link, label: "Link externo de mapa", widget: string, required: false }
       - name: eventos
