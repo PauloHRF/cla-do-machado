@@ -75,6 +75,29 @@ export interface Rota {
   detalhe: { rotulo: string; hexes: number; dias: number }[];
 }
 
+function resumirCaminho(caminho: Hex[], p: Perfil): Rota["detalhe"] {
+  const mapa = new Map<string, { rotulo: string; hexes: number; dias: number }>();
+  for (let i = 1; i < caminho.length; i++) {
+    const t = terrenoDe(caminho[i]);
+    if (t === "agua") continue; // água não tem custo definido (ver aviso na tela)
+    const noEstrada = p.estradas && temEstrada(caminho[i - 1], caminho[i]);
+    const rotulo = `${TERRENOS[t].nome}${noEstrada ? " (estrada)" : ""}`;
+    const e = mapa.get(rotulo) ?? { rotulo, hexes: 0, dias: 0 };
+    e.hexes++; e.dias += custoPasso(caminho[i - 1], caminho[i], p); mapa.set(rotulo, e);
+  }
+  return [...mapa.values()].sort((a, b) => b.dias - a.dias);
+}
+
+/** Tempo de um caminho desenhado à mão (sequência de hexágonos vizinhos). `agua` = hexágonos de água no trajeto. */
+export function avaliarCaminho(caminho: Hex[], p: Perfil): { dias: number; passos: number; detalhe: Rota["detalhe"]; agua: Hex[] } {
+  let dias = 0; const agua: Hex[] = [];
+  for (let i = 1; i < caminho.length; i++) {
+    if (terrenoDe(caminho[i]) === "agua") { agua.push(caminho[i]); continue; }
+    dias += custoPasso(caminho[i - 1], caminho[i], p);
+  }
+  return { dias, passos: caminho.length - 1, detalhe: resumirCaminho(caminho, p), agua };
+}
+
 class Heap {
   private a: [number, number][] = [];
   get tamanho() { return this.a.length; }
@@ -112,13 +135,6 @@ export function calcularRota(de: Hex, ate: Hex, p: Perfil): Rota | null {
   const caminho: Hex[] = []; let u = id(ate);
   while (u !== -1) { caminho.push({ c: (u % NC) + 1, l: Math.floor(u / NC) + 1 }); u = ant[u]; }
   caminho.reverse();
-  const mapa = new Map<string, { rotulo: string; hexes: number; dias: number }>();
-  for (let i = 1; i < caminho.length; i++) {
-    const noEstrada = p.estradas && temEstrada(caminho[i - 1], caminho[i]);
-    const t = terrenoDe(caminho[i]);
-    const rotulo = `${TERRENOS[t].nome}${noEstrada ? " (estrada)" : ""}`;
-    const e = mapa.get(rotulo) ?? { rotulo, hexes: 0, dias: 0 };
-    e.hexes++; e.dias += custoPasso(caminho[i - 1], caminho[i], p); mapa.set(rotulo, e);
-  }
-  return { caminho, dias: dist[id(ate)], passos: caminho.length - 1, direta: distancia(de, ate), detalhe: [...mapa.values()].sort((a, b) => b.dias - a.dias) };
+  const detalhe = resumirCaminho(caminho, p);
+  return { caminho, dias: dist[id(ate)], passos: caminho.length - 1, direta: distancia(de, ate), detalhe };
 }
