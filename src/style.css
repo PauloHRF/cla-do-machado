@@ -273,3 +273,11 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 .viagem-tab td { padding: 5px 6px; border-bottom: 1px solid rgb(104 34 16 / 0.2); }
 .viagem-tab th:not(:first-child), .viagem-tab td:not(:first-child) { text-align: right; }
 .viagem-pino span { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #f6e9cc; border: 2px solid var(--gold); font: 1rem/1 var(--display); box-shadow: 0 2px 5px rgb(0 0 0 / 0.5); }
+
+/* nomes dos domínios sobre o mapa */
+.rotulo-dominio { pointer-events: none; }
+.rotulo-dominio span {
+  display: block; transform: translate(-50%, -50%); white-space: nowrap; text-align: center;
+  font: 700 1.25rem/1 var(--display); letter-spacing: 0.1em; text-transform: uppercase; color: #fff;
+  text-shadow: 0 0 3px var(--c), 0 0 6px var(--c), 0 1px 2px rgb(0 0 0 / 0.7);
+}
