@@ -28,3 +28,11 @@ Para descobrir coordenadas: segure **Shift** e clique no mapa (copia `x, y`).
 1. Em `public/admin/config.yml`, troque `SEU-USUARIO/cla-do-machado` pelo repositório.
 2. Acesse `/admin`, entre com GitHub (quem edita precisa de acesso de escrita ao repositório). Cada “Salvar” vira um commit e o Netlify republica.
 3. Em desenvolvimento, `local_backend: true` edita os arquivos locais.
+
+## Hexágonos (coordenadas do mapa)
+O mapa do mundo tem uma grade de hexágonos de topo plano. `src/hex.ts` descreve essa grade (medida sobre a arte de 8192 px) e converte entre pontos do mapa e hexágonos.
+
+- Numeração: colunas **C01–C114** (esquerda → direita) e linhas **L01–L83** (de cima para baixo). Colunas ímpares ficam meio hexágono mais abaixo. Exemplo: `C72-L41`.
+- Aparece ao passar o mouse (canto inferior direito), no **Shift+clique**, na etiqueta "Hex ..." da página de cada local, e a grade pode ser ligada em *Mapas → Grade de hexágonos* (números no zoom máximo).
+- `distancia(a, b)` dá a distância em hexágonos (base para o cálculo de tempo de viagem).
+- A grade tem erro de poucos pixels no pior caso (≈7% de um hexágono). Para empurrar a grade inteira, ajuste `AJUSTE_Y` em `src/hex.ts` (positivo = desce).

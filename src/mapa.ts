@@ -1,6 +1,7 @@
 import L from "leaflet";
 import { asset, cidades, pontos, TIPOS, CATEGORIAS, locais, simboloTipo, simboloCategoria, type Local, type Tipo } from "./data";
 import { simbolo, htmlSimbolo } from "./icons";
+import { hexDe, rotulo, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
 
 // TODO: trocar pelo link do formulário de contribuições.
@@ -25,9 +26,11 @@ function detalheHtml(l: Local) {
   if (l.kind === "cidade") {
     const tag = `<span class="tag" style="--c:${TIPOS[l.tipo].cor}">${TIPOS[l.tipo].nome}</span>`;
     const dom = l.dominio ? `<span class="tag ghost">Domínio: ${esc(l.dominio)}</span>` : "";
+    const hx = hexDe(l.x, l.y);
+    const hexTag = hx ? `<span class="tag ghost">Hex ${rotulo(hx)}</span>` : "";
     const ficha = fichaCidade(l);
     const vazio = !ficha && !l.texto ? `<p class="muted">Ainda não há informações sobre este lugar.</p>` : "";
-    return `<h1>${esc(l.nome)}</h1><p class="tags">${tag}${dom}</p>${ficha}<div class="prose">${md(l.texto)}</div>${vazio}
+    return `<h1>${esc(l.nome)}</h1><p class="tags">${tag}${dom}${hexTag}</p>${ficha}<div class="prose">${md(l.texto)}</div>${vazio}
       <div class="actions">
         ${l.pagina ? `<a class="btn primary" href="#/cidade/${l.pagina}"><i class="fa-solid fa-map"></i> Mapa da cidade</a>` : ""}
         ${l.link ? `<a class="btn" href="${esc(l.link)}" target="_blank" rel="noopener"><i class="fa-solid fa-image"></i> Mapa</a>` : ""}
@@ -36,7 +39,8 @@ function detalheHtml(l: Local) {
       </div>`;
   }
   const cat = CATEGORIAS[l.categoria]?.nome ?? "";
-  return `<h1>${esc(l.nome)}</h1><p class="tags"><span class="tag ghost">${esc(cat)}</span></p>
+  const hp = hexDe(l.x, l.y);
+  return `<h1>${esc(l.nome)}</h1><p class="tags"><span class="tag ghost">${esc(cat)}</span>${hp ? `<span class="tag ghost">Hex ${rotulo(hp)}</span>` : ""}</p>
     <div class="prose">${md(l.descricao.replace(/^<b>[^<]+<\/b>(<br\s*\/?>)?/, ""))}</div>
     ${l.descricao ? "" : `<p class="muted">Ainda não há informações sobre este lugar.</p>`}
     <div class="actions">
@@ -44,6 +48,45 @@ function detalheHtml(l: Local) {
       ${l.eventos?.length ? `<button class="btn" data-act="eventos"><i class="fa-solid fa-timeline"></i> Eventos</button>` : ""}
       <button class="btn" data-act="copiar"><i class="fa-solid fa-link"></i> Copiar link</button>
     </div>`;
+}
+
+// Grade de hexágonos desenhada em canvas, um ladrilho por vez; mostra a coordenada (C·L) no zoom máximo.
+function gradeHex() {
+  const Grade = L.GridLayer.extend({
+    createTile(this: L.GridLayer, coords: L.Coords) {
+      const t = this.getTileSize(), tile = L.DomUtil.create("canvas", "grade-hex") as HTMLCanvasElement;
+      const dpr = window.devicePixelRatio || 1;
+      tile.width = t.x * dpr; tile.height = t.y * dpr;
+      const ctx = tile.getContext("2d")!;
+      ctx.scale(dpr, dpr);
+      const esc = 2 ** coords.z;                       // pixels por unidade do mapa
+      const nw = (this as unknown as { _map: L.Map })._map.unproject(coords.scaleBy(t), coords.z);
+      const x0 = nw.lng, y0 = MAPA_ALTURA - nw.lat;    // canto superior esquerdo do ladrilho (y a partir do topo)
+      const larg = t.x / esc, alt = t.y / esc;
+      const cMin = Math.max(1, Math.floor((x0 - centroTopo(1, 1)[0]) / (1.5 * HEX_LADO)) - 1);
+      const cMax = Math.min(HEX_COLUNAS, Math.ceil((x0 + larg - centroTopo(1, 1)[0]) / (1.5 * HEX_LADO)) + 2);
+      ctx.beginPath(); ctx.rect((0 - x0) * esc, (0 - y0) * esc, 2000 * esc, MAPA_ALTURA * esc); ctx.clip(); // só dentro da arte
+      ctx.strokeStyle = "rgba(255,255,255,0.42)"; ctx.lineWidth = coords.z >= 1 ? 1.3 : 1;
+      ctx.fillStyle = "rgba(255,255,255,0.9)"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.font = "700 11px sans-serif";
+      ctx.shadowColor = "rgba(0,0,0,0.85)";
+      for (let c = cMin; c <= cMax; c++) {
+        for (let l = 1; l <= HEX_LINHAS; l++) {
+          const [cx, cy] = centroTopo(c, l);
+          if (cx < x0 - HEX_LADO || cx > x0 + larg + HEX_LADO || cy < y0 - HEX_LADO || cy > y0 + alt + HEX_LADO) continue;
+          ctx.beginPath();
+          verticesTopo(c, l).forEach(([vx, vy], i) => {
+            const px = (vx - x0) * esc, py = (vy - y0) * esc;
+            if (i) ctx.lineTo(px, py); else ctx.moveTo(px, py);
+          });
+          ctx.closePath(); ctx.stroke();
+          if (coords.z >= 2) { ctx.shadowBlur = 3; ctx.fillText(`${String(c).padStart(2, "0")}·${String(l).padStart(2, "0")}`, (cx - x0) * esc, (cy - y0) * esc); ctx.shadowBlur = 0; }
+        }
+      }
+      return tile;
+    },
+  });
+  return new (Grade as unknown as new (o: L.GridLayerOptions) => L.GridLayer)({ tileSize: 256, minZoom: -2, maxZoom: 2, zIndex: 3 });
 }
 
 export function mountMapa() {
@@ -89,6 +132,7 @@ export function mountMapa() {
     }
     camadas[cat] = g;
   }
+  camadas.hex = gradeHex();
   camadas.alcance = L.imageOverlay(asset("/img/mapa-de-atuacao.webp"), BOUNDS, { opacity: 0.5, interactive: false });
   camadas.dominios = L.imageOverlay(asset("/img/mapadedominios.webp"), BOUNDS, { opacity: 1, interactive: false });
 
@@ -115,6 +159,7 @@ export function mountMapa() {
     <h2 class="ribbon">Contribuições</h2>
     ${usadas.map((c) => linha(c, CATEGORIAS[c]?.nome ?? c, htmlSimbolo(simboloCategoria(c), 20, "mini"))).join("")}
     <h2 class="ribbon">Mapas</h2>
+    ${linha("hex", "Grade de hexágonos", `<i class="fa-solid fa-border-all mini"></i>`)}
     ${linha("alcance", "Alcance do Clã", `<i class="fa-solid fa-bullseye mini"></i>`)}
     ${linha("dominios", "Domínios", `<i class="fa-solid fa-flag mini"></i>`)}
     <p class="muted dica">Dica: segure <kbd>Shift</kbd> e clique no mapa para copiar as coordenadas (úteis ao cadastrar um local).</p>`;

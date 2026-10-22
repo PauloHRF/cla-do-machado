@@ -1,5 +1,6 @@
 import { marked } from "marked";
 import { panteao, asset, type Evento } from "./data";
+import { hexDe, rotulo } from "./hex";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -129,12 +130,14 @@ const coords = $("coords");
 export function showCoords(map: L.Map) {
   map.on("mousemove", (e: L.LeafletMouseEvent) => {
     coords.hidden = false;
-    coords.textContent = `x: ${Math.round(e.latlng.lng)}  y: ${Math.round(e.latlng.lat)}`;
+    const h = hexDe(e.latlng.lng, e.latlng.lat);
+    coords.textContent = `${h ? rotulo(h) + "  ·  " : ""}x: ${Math.round(e.latlng.lng)}  y: ${Math.round(e.latlng.lat)}`;
   });
   map.on("mouseout", () => (coords.hidden = true));
   map.on("click", (e: L.LeafletMouseEvent) => {
     if (!(e.originalEvent as MouseEvent).shiftKey) return;
     const t = `${Math.round(e.latlng.lng)}, ${Math.round(e.latlng.lat)}`;
-    navigator.clipboard?.writeText(t).then(() => toast(`Coordenadas copiadas: ${t}`));
+    const h = hexDe(e.latlng.lng, e.latlng.lat);
+    navigator.clipboard?.writeText(t).then(() => toast(`Coordenadas copiadas: ${t}${h ? " (" + rotulo(h) + ")" : ""}`));
   });
 }
