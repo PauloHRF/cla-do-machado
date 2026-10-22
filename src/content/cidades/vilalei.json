@@ -1,6 +1,7 @@
 {
   "nome": "Vilalei",
   "tipo": "pequena",
-  "x": 376,
-  "y": 1447
+  "x": 295,
+  "y": 1365,
+  "oculto": true
 }

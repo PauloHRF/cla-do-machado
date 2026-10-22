@@ -1,8 +1,8 @@
 {
   "nome": "Monastério do Vento Norte",
   "tipo": "pequena",
-  "x": 1526.78,
-  "y": 991.93,
+  "x": 1322,
+  "y": 959,
   "eventos": [
     {
       "data": "Segundo Shaedy de Pugna, 2949",
@@ -16,5 +16,6 @@
       "data": "Segundo Tremera de Pujan, 2949",
       "texto": "O Clã acha túneis que os monges estão construindo e começa a mapeá-los."
     }
-  ]
+  ],
+  "oculto": true
 }

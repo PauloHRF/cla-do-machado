@@ -2,5 +2,6 @@
   "nome": "Zurdan",
   "tipo": "pequena",
   "x": 324,
-  "y": 2320
+  "y": 2320,
+  "oculto": true
 }

@@ -1,8 +1,8 @@
 {
   "nome": "Pittenas",
   "tipo": "pequena",
-  "x": 1401,
-  "y": 1035,
+  "x": 1209,
+  "y": 997,
   "dominio": "Erimoor",
   "governo": "Plima Pema",
   "populacao": "(Halflings: 20%, Gnomos: 20%, Kobolds: 20%, Goblins: 20%, Outras raças pequenas: 15%, Outros: 5%)",
@@ -16,5 +16,6 @@
       "data": "Eventos em processo de documentação.",
       "texto": ""
     }
-  ]
+  ],
+  "oculto": true
 }

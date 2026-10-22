@@ -2,5 +2,6 @@
   "nome": "Ouro Verdejante",
   "tipo": "media",
   "x": 578.9,
-  "y": 1844.9
+  "y": 1844.9,
+  "oculto": true
 }

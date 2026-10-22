@@ -1,6 +1,7 @@
 {
   "nome": "Ame'Treez",
   "tipo": "pequena",
-  "x": 1890,
-  "y": 1353
+  "x": 1646,
+  "y": 1281,
+  "oculto": true
 }

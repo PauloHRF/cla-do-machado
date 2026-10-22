@@ -1,9 +1,10 @@
 {
   "nome": "Vila Draynor",
   "categoria": "assentamento",
-  "x": 1603,
-  "y": 746,
+  "x": 1390,
+  "y": 739,
   "icone": "tents",
   "cor": "black",
-  "descricao": "<b>Vila Draynor</b></br><b>População:</b> Vazia</br>"
+  "descricao": "<b>Vila Draynor</b></br><b>População:</b> Vazia</br>",
+  "oculto": true
 }

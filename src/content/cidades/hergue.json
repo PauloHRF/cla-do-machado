@@ -1,13 +1,14 @@
 {
   "nome": "Hergue",
   "tipo": "media",
-  "x": 1051,
-  "y": 842,
+  "x": 897,
+  "y": 825,
   "dominio": "Erimoor",
   "governo": "Ifer Luzalva",
   "populacao": "",
   "clima": "",
   "economia": "Cultivo de flores do campo e produção de perfumes florais",
   "religiao": "Hanne",
-  "estabelecimentos": "Taverna Coroa de Hanne, Companhia Flowers"
+  "estabelecimentos": "Taverna Coroa de Hanne, Companhia Flowers",
+  "oculto": true
 }

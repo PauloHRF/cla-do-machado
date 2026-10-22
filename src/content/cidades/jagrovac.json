@@ -1,13 +1,14 @@
 {
   "nome": "Jagrovac",
   "tipo": "media",
-  "x": 1630,
-  "y": 1273,
+  "x": 1414,
+  "y": 1209,
   "dominio": "Meride",
   "governo": "",
   "populacao": "",
   "clima": "",
   "economia": "Produção de alimentos, cerveja e joias",
   "religiao": "",
-  "estabelecimentos": ""
+  "estabelecimentos": "",
+  "oculto": true
 }

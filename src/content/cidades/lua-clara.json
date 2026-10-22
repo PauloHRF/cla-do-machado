@@ -2,5 +2,6 @@
   "nome": "Lua Clara",
   "tipo": "pequena",
   "x": 356.9,
-  "y": 2698.1
+  "y": 2698.1,
+  "oculto": true
 }

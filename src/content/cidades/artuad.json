@@ -2,5 +2,6 @@
   "nome": "Ar'Tuad",
   "tipo": "pequena",
   "x": 216,
-  "y": 2226
+  "y": 2226,
+  "oculto": true
 }

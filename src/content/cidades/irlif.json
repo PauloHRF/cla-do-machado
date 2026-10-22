@@ -1,6 +1,7 @@
 {
   "nome": "Irlif",
   "tipo": "pequena",
-  "x": 1334.9,
-  "y": 1286.9
+  "x": 1151,
+  "y": 1222,
+  "oculto": true
 }

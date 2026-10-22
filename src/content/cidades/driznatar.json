@@ -2,5 +2,6 @@
   "nome": "Driz'Natar",
   "tipo": "grande",
   "x": 662,
-  "y": 2045
+  "y": 2045,
+  "oculto": true
 }

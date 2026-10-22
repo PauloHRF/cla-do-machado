@@ -1,9 +1,10 @@
 {
   "nome": "Covil de Dragão",
   "categoria": "covil",
-  "x": 1595,
-  "y": 734,
+  "x": 1383,
+  "y": 729,
   "icone": "dragon",
   "cor": "black",
-  "descricao": "<b>Covil de Dragão </b>(Subsolo)</br>The Deep</br>"
+  "descricao": "<b>Covil de Dragão </b>(Subsolo)</br>The Deep</br>",
+  "oculto": true
 }

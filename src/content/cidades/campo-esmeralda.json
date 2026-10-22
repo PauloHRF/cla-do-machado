@@ -1,6 +1,7 @@
 {
   "nome": "Campo Esmeralda",
   "tipo": "pequena",
-  "x": 689,
-  "y": 1634
+  "x": 574,
+  "y": 1531,
+  "oculto": true
 }

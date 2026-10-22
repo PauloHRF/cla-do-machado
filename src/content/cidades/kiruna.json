@@ -2,5 +2,6 @@
   "nome": "Kiruna",
   "tipo": "pequena",
   "x": 1271,
-  "y": 2353
+  "y": 2353,
+  "oculto": true
 }

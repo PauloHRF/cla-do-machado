@@ -1,6 +1,7 @@
 {
   "nome": "Zur'Neto",
   "tipo": "pequena",
-  "x": 1820,
-  "y": 1591
+  "x": 1583,
+  "y": 1493,
+  "oculto": true
 }

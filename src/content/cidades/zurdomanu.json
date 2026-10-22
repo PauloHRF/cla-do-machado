@@ -1,6 +1,7 @@
 {
   "nome": "Zur'Domanu",
   "tipo": "pequena",
-  "x": 1465,
-  "y": 1264
+  "x": 1267,
+  "y": 1201,
+  "oculto": true
 }

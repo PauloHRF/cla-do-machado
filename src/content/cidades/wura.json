@@ -1,6 +1,7 @@
 {
   "nome": "Wúrà",
   "tipo": "pequena",
-  "x": 1494.9,
-  "y": 353.1
+  "x": 1293,
+  "y": 389,
+  "oculto": true
 }

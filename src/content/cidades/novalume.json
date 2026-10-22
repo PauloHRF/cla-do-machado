@@ -2,5 +2,6 @@
   "nome": "Novalume",
   "tipo": "pequena",
   "x": 510.1,
-  "y": 2585.1
+  "y": 2585.1,
+  "oculto": true
 }

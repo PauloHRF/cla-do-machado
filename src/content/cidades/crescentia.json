@@ -2,5 +2,6 @@
   "nome": "Crescentia",
   "tipo": "pequena",
   "x": 289.1,
-  "y": 2642.9
+  "y": 2642.9,
+  "oculto": true
 }

@@ -1,6 +1,7 @@
 {
   "nome": "Ishanthyr",
   "tipo": "pequena",
-  "x": 1268.8,
-  "y": 1353
+  "x": 1092,
+  "y": 1281,
+  "oculto": true
 }

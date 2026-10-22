@@ -2,5 +2,6 @@
   "nome": "Lúnula",
   "tipo": "media",
   "x": 448,
-  "y": 2659
+  "y": 2659,
+  "oculto": true
 }

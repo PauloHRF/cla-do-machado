@@ -9,5 +9,6 @@
   "clima": "Clima temperado. As estações são bem definidas e características, com uma primavera um pouco mais quente e longa.",
   "economia": "Coleta e comércio de produtos na floresta, como raízes, frutos, com destaque para as raras poções e balsamos.",
   "religiao": "Ilynara e Hieldy.",
-  "estabelecimentos": "Biblioteca de Zefir, Taverna Garra de Dragão, Mercado Caminho das Águas, Coroa Vazia, Jardim das Acácias, Templo Berço das Estações, Templo Espelho da Noite."
+  "estabelecimentos": "Biblioteca de Zefir, Taverna Garra de Dragão, Mercado Caminho das Águas, Coroa Vazia, Jardim das Acácias, Templo Berço das Estações, Templo Espelho da Noite.",
+  "oculto": true
 }

@@ -1,6 +1,7 @@
 {
   "nome": "Barium",
   "tipo": "pequena",
-  "x": 681.1,
-  "y": 1710.9
+  "x": 567,
+  "y": 1600,
+  "oculto": true
 }

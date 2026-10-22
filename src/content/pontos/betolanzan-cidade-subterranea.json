@@ -1,9 +1,10 @@
 {
   "nome": "Betolanzan (cidade subterrânea)",
   "categoria": "assentamento",
-  "x": 1450,
-  "y": 917,
+  "x": 1253,
+  "y": 892,
   "icone": "tents",
   "cor": "black",
-  "descricao": "<b>Betolanzan (cidade subterrânea)</b></br><b>População:</b> 2999 (Drow: 75%, Deep Gnome: 25%)</br>A cidade de Betolanzan é uma cidade militar e religiosa. Os edifícios se erguem esculpidos na rocha escura, exibindo uma arquitetura elegante, porém sinistra. Torres altas se elevam em espiral, adornadas por detalhes que reverenciam a Rainha das Aranhas, Velatha, em cada fachada. Essa cidade emana uma aura de malevolência e mistério, onde luzes mágicas lançam sombras ameaçadoras pelas estreitas e pavimentadas ruas. As residências são dispostas em vários níveis, com as mansões das famílias nobres posicionadas nos pontos mais elevados da cidade. Dali, desfrutam de uma vista deslumbrante sobre o reino subterrâneo. Pontes suspensas e passagens elevadas entrelaçam os diferentes distritos, oferecendo aos drows uma maneira ágil de se locomoverem entre as seções da cidade."
+  "descricao": "<b>Betolanzan (cidade subterrânea)</b></br><b>População:</b> 2999 (Drow: 75%, Deep Gnome: 25%)</br>A cidade de Betolanzan é uma cidade militar e religiosa. Os edifícios se erguem esculpidos na rocha escura, exibindo uma arquitetura elegante, porém sinistra. Torres altas se elevam em espiral, adornadas por detalhes que reverenciam a Rainha das Aranhas, Velatha, em cada fachada. Essa cidade emana uma aura de malevolência e mistério, onde luzes mágicas lançam sombras ameaçadoras pelas estreitas e pavimentadas ruas. As residências são dispostas em vários níveis, com as mansões das famílias nobres posicionadas nos pontos mais elevados da cidade. Dali, desfrutam de uma vista deslumbrante sobre o reino subterrâneo. Pontes suspensas e passagens elevadas entrelaçam os diferentes distritos, oferecendo aos drows uma maneira ágil de se locomoverem entre as seções da cidade.",
+  "oculto": true
 }

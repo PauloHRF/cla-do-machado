@@ -1,9 +1,10 @@
 {
   "nome": "Círculo Druídico",
   "categoria": "pdi_construcao",
-  "x": 1497,
-  "y": 1038,
+  "x": 1295,
+  "y": 1000,
   "icone": "landmark",
   "cor": "black",
-  "descricao": "<b>Círculo Druídico</b></br>Dentro de uma clareira desmatada, nove pilares de pedra estão dispostos em um círculo e neles estão gravadas inscrições em língua druídica."
+  "descricao": "<b>Círculo Druídico</b></br>Dentro de uma clareira desmatada, nove pilares de pedra estão dispostos em um círculo e neles estão gravadas inscrições em língua druídica.",
+  "oculto": true
 }

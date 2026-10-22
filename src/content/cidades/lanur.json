@@ -2,5 +2,6 @@
   "nome": "Lanur",
   "tipo": "grande",
   "x": 434,
-  "y": 2230
+  "y": 2230,
+  "oculto": true
 }

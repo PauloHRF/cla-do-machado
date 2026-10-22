@@ -1,6 +1,7 @@
 {
   "nome": "Baia dos Naufragos",
   "tipo": "pequena",
-  "x": 711,
-  "y": 188
+  "x": 594,
+  "y": 242,
+  "oculto": true
 }

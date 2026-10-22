@@ -10,5 +10,6 @@
   "economia": "Mineração, pecuária adaptada, agricultura subterrânea, artesanato, comércio de passagem e venda de poções e balsamos.",
   "religiao": "Skadoff, Iliynara e Hanne.",
   "estabelecimentos": "Salão de Tumunzar, Templo da Chama dos Lares, Caneca Congelada, Casa dos Cogumelos de Mirla, Mercado Coberto, Ferraria dos Vangrim e Estação do Comércio Sul.",
-  "pagina": "eboro"
+  "pagina": "eboro",
+  "oculto": true
 }

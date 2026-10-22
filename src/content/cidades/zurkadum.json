@@ -1,6 +1,7 @@
 {
   "nome": "Zurkadum",
   "tipo": "media",
-  "x": 1659,
-  "y": 1547
+  "x": 1440,
+  "y": 1454,
+  "oculto": true
 }

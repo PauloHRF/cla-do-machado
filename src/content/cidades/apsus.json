@@ -1,6 +1,7 @@
 {
   "nome": "Apsus",
   "tipo": "pequena",
-  "x": 2020,
-  "y": 1462
+  "x": 1762,
+  "y": 1378,
+  "oculto": true
 }

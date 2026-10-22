@@ -1,6 +1,7 @@
 {
   "nome": "Walpurgis",
   "tipo": "pequena",
-  "x": 1414,
-  "y": 1237
+  "x": 1221,
+  "y": 1177,
+  "oculto": true
 }

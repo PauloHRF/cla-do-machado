@@ -1,9 +1,10 @@
 {
   "nome": "Assentamento de Gnomos",
   "categoria": "assentamento",
-  "x": 1503,
-  "y": 883,
+  "x": 1300,
+  "y": 861,
   "icone": "tents",
   "cor": "black",
-  "descricao": "<b>Assentamento de Gnomos</b></br><b>População:</b> 50 (Deep Gnome)</br>"
+  "descricao": "<b>Assentamento de Gnomos</b></br><b>População:</b> 50 (Deep Gnome)</br>",
+  "oculto": true
 }
