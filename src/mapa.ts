@@ -51,7 +51,14 @@ export function mountMapa() {
     zoomControl: false, attributionControl: false,
     maxBounds: [[-300, -300], [1997, 2300]], maxBoundsViscosity: 0.6,
   });
-  L.imageOverlay(asset("/img/mapadomundo.webp"), BOUNDS, { interactive: false }).addTo(map);
+  // mapa em ladrilhos (scripts/gerar-tiles.mjs). Em CRS.Simple a linha 0 do Leaflet fica acima de lat 0 e as de baixo
+  // são negativas; os arquivos contam de baixo para cima a partir de 0, então y_arquivo = -y - 1.
+  const ladrilhos = L.tileLayer(asset("/img/mapa/{z}/{x}/{y}.webp"), {
+    tileSize: 256, bounds: BOUNDS, noWrap: true, minZoom: -2, maxZoom: 2, minNativeZoom: -2, maxNativeZoom: 2, keepBuffer: 4,
+  });
+  const urlOriginal = ladrilhos.getTileUrl.bind(ladrilhos);
+  ladrilhos.getTileUrl = (c) => urlOriginal({ x: c.x, y: -c.y - 1, z: c.z } as unknown as L.Coords);
+  ladrilhos.addTo(map);
   L.control.zoom({ position: "topright", zoomInTitle: "Aproximar", zoomOutTitle: "Afastar" }).addTo(map);
   map.setView([869, 1255], isMobile() ? 0 : 1);
   if (!isMobile() && !location.hash.includes("local")) map.panBy([-230, 0], { animate: false });

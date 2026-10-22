@@ -14,6 +14,8 @@ npm run build   # gera dist/
 - `src/content/panteao` – história e deuses (abrem em janela)
 - `src/content/mapas-cidade` – mapas internos de cidade (`#/cidade/komora`), com NPCs
 - `public/img` – imagens (use WebP)
+- `public/img/mapa` – mapa do mundo em ladrilhos (não editar à mão). Para trocar o mapa, gere de novo a partir da imagem em alta resolução (proporção 2000:1697):
+  `node scripts/gerar-tiles.mjs "caminho/do/mapa.webp"` (usa o `sharp`, já instalado com `npm install`).
 
 Links: `#/local/<arquivo-da-cidade>` abre um local; `#/cidade/<mapa>` abre o mapa da cidade.
 Para descobrir coordenadas: segure **Shift** e clique no mapa (copia `x, y`).
