@@ -38,6 +38,7 @@ function detalheHtml(l: Local) {
   const cat = CATEGORIAS[l.categoria]?.nome ?? "";
   return `<h1>${esc(l.nome)}</h1><p class="tags"><span class="tag ghost">${esc(cat)}</span></p>
     <div class="prose">${md(l.descricao.replace(/^<b>[^<]+<\/b>(<br\s*\/?>)?/, ""))}</div>
+    ${l.descricao ? "" : `<p class="muted">Ainda não há informações sobre este lugar.</p>`}
     <div class="actions">
       ${l.link ? `<a class="btn" href="${esc(l.link)}" target="_blank" rel="noopener"><i class="fa-solid fa-image"></i> Mapa</a>` : ""}
       ${l.eventos?.length ? `<button class="btn" data-act="eventos"><i class="fa-solid fa-timeline"></i> Eventos</button>` : ""}
