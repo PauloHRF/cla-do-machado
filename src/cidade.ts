@@ -3,11 +3,13 @@ import { asset, mapasCidade, cidades } from "./data";
 import { disco } from "./icons";
 import { esc, md, setTab, openTab, hideTab, panelWidth, showCoords, isMobile, closeEvents } from "./ui";
 import { fichaCidade } from "./mapa";
+import { dominioDe } from "./dominios";
 
 export function mountCidade(slug: string) {
   const m = mapasCidade.find((x) => x.slug === slug);
   if (!m) return null;
   const cidade = cidades.find((c) => c.pagina === slug || c.slug === slug);
+  const regiao = cidade ? dominioDe(cidade.x, cidade.y) : null;
 
   const bounds: L.LatLngBoundsExpression = [[0, 0], [m.altura, m.largura]];
   const map = L.map("map", {
@@ -26,7 +28,7 @@ export function mountCidade(slug: string) {
   inicio.innerHTML = `
     <a class="btn voltar" href="#/${cidade ? "local/" + cidade.slug : ""}"><i class="fa-solid fa-arrow-left"></i> Mapa de Phantyr</a>
     <h1>${esc(m.nome)}</h1>
-    ${cidade?.dominio ? `<p class="tags"><span class="tag ghost">Domínio: ${esc(cidade.dominio)}</span></p>` : ""}
+    ${regiao ? `<p class="tags"><span class="tag ghost">Região: ${esc(regiao.nome)}</span></p>` : ""}
     ${cidade ? fichaCidade(cidade) : ""}
     <div class="prose">${md(m.texto)}</div>`;
   setTab("inicio", inicio);
@@ -66,10 +68,18 @@ export function mountCidade(slug: string) {
     if (b) selecionar(+b.dataset.i!);
   });
 
+  // botão sempre visível para voltar ao mapa de Phantyr (além do que fica dentro do painel)
+  const voltar = document.createElement("a");
+  voltar.id = "voltar-mapa"; voltar.className = "btn";
+  voltar.href = `#/${cidade ? "local/" + cidade.slug : ""}`;
+  voltar.innerHTML = `<i class="fa-solid fa-arrow-left"></i> Mapa de Phantyr`;
+  document.body.append(voltar);
+
   openTab("inicio");
   map.fitBounds(bounds, { paddingTopLeft: [panelWidth(), isMobile() ? 60 : 0], paddingBottomRight: [0, isMobile() ? window.innerHeight * 0.5 : 0] });
   return {
     destroy() {
+      voltar.remove();
       map.remove();
       ["inicio", "filtros", "detalhe"].forEach(hideTab);
       document.title = "Clã do Machado — Mapa de Phantyr";
