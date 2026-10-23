@@ -277,7 +277,7 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 /* nomes dos domínios sobre o mapa */
 .rotulo-dominio { pointer-events: none; }
 .rotulo-dominio span {
-  display: block; transform: translate(-50%, -50%); white-space: nowrap; text-align: center;
+  display: block; width: max-content; transform: translate(-50%, -50%); white-space: nowrap; text-align: center;
   font: 700 1.25rem/1.05 var(--display); letter-spacing: 0.1em; text-transform: uppercase; color: #fff;
   text-shadow: 0 0 3px var(--c), 0 0 6px var(--c), 0 1px 2px rgb(0 0 0 / 0.7);
 }
