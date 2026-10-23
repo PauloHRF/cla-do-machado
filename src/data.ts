@@ -15,6 +15,10 @@ export interface Ponto {
   icone?: string; cor?: string; descricao: string; link?: string; eventos?: Evento[];
 }
 
+export interface Jornal {
+  slug: string; nome: string; edicao: number; data?: string; manchete?: string; imagem: string;
+}
+
 export interface Panteao {
   slug: string; nome: string; subtitulo: string; tipo: "deus" | "historia"; ordem: number; corpo: string;
 }
@@ -36,6 +40,9 @@ const load = <T>(files: Record<string, unknown>) =>
 
 export const cidades = load<Cidade>(import.meta.glob("./content/cidades/*.json", { eager: true, import: "default" }));
 export const pontos = load<Ponto>(import.meta.glob("./content/pontos/*.json", { eager: true, import: "default" }));
+export const jornais = load<Jornal>(import.meta.glob("./content/jornais/*.json", { eager: true, import: "default" })).sort(
+  (a, b) => b.edicao - a.edicao,
+);
 export const panteao = load<Panteao>(import.meta.glob("./content/panteao/*.json", { eager: true, import: "default" })).sort(
   (a, b) => a.ordem - b.ordem,
 );

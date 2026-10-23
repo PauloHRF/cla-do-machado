@@ -12,6 +12,10 @@ import { locais, norm, TIPOS } from "./data";
 import { mountMapa } from "./mapa";
 import { mountCidade } from "./cidade";
 import { openTab, isMobile } from "./ui";
+import { montarJornais } from "./jornais";
+
+// aba de jornais: vale para o mapa e para os mapas de cidade
+montarJornais();
 
 // ---------- rotas: #/  ·  #/local/<slug>  ·  #/cidade/<slug> ----------
 type View = { destroy(): void; selecionar?(slug: string | null): void };
