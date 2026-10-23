@@ -1,6 +1,18 @@
 {
   "nome": "Sheidrost",
   "tipo": "grande",
-  "x": 644.0,
-  "y": 916.0
+  "x": 644,
+  "y": 916,
+  "oculto": false,
+  "dominio": "",
+  "governo": "Oligarquia (Barão Shadowbreeze)",
+  "populacao": "63.953 (humanos 51%, zongari 15%, anões 14%, elfos 9%, draconatos 5%, outros 6%)",
+  "clima": "Temperado",
+  "economia": "",
+  "religiao": "Shalanis",
+  "estabelecimentos": "",
+  "texto": "",
+  "pagina": "sheidrost",
+  "link": "",
+  "eventos": []
 }
