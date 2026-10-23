@@ -287,3 +287,12 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 h2.ribbon a { color: inherit; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 4px; }
 h2.ribbon a:hover { text-decoration-style: solid; }
 h2.ribbon .ast { font-size: 0.7em; margin-left: -6px; align-self: flex-start; }
+
+/* botão fixo "Mapa de Phantyr" nos mapas de cidade */
+#voltar-mapa { position: fixed; z-index: 1000; bottom: 16px; left: calc(var(--rail) + 14px); transition: left 0.25s ease; }
+@media (min-width: 721px) {
+  body:has(#panel:not(.closed)) #voltar-mapa { left: calc(var(--rail) + var(--panel) + 14px); }
+}
+@media (max-width: 720px) {
+  #voltar-mapa { top: 58px; bottom: auto; left: 10px; min-height: 0; padding: 7px 12px 5px; font-size: 1.05rem; }
+}
