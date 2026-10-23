@@ -2,6 +2,7 @@ import L from "leaflet";
 import { asset, cidades, pontos, TIPOS, CATEGORIAS, CATEGORIAS_COMUNIDADE, locais, simboloTipo, simboloCategoria, type Local, type Tipo } from "./data";
 import { simbolo, htmlSimbolo, disco } from "./icons";
 import { camadaDominios, dominioDe } from "./dominios";
+import { camadaAlcance } from "./alcance";
 import { montarViagem, camadaTerreno, camadaEstradas } from "./viagemui";
 import { hexDe, rotulo, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
@@ -141,7 +142,7 @@ export function mountMapa() {
   camadas.hex = gradeHex();
   camadas.terreno = camadaTerreno();
   camadas.estradas = camadaEstradas();
-  camadas.alcance = L.imageOverlay(asset("/img/mapa-de-atuacao.webp"), BOUNDS, { opacity: 0.5, interactive: false });
+  camadas.alcance = camadaAlcance();
   camadas.dominios = camadaDominios();
 
   const ligadas: Record<string, boolean> = { grande: true, pequena: true };
