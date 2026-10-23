@@ -1,0 +1,12 @@
+{
+  "nome": "Mamuta",
+  "categoria": "fauna_flora",
+  "x": 1634,
+  "y": 1107,
+  "oculto": false,
+  "icone": "",
+  "cor": "",
+  "descricao": "Encontrado em regiões frias ou em criadouros da cidade de Maelk, este grande animal quadrúpede possui pele grossa e escura, coberta por uma pelagem azul-clara. Seu couro espesso lhe garante grande resistência ao frio e funciona como uma espécie de armadura natural. Possui duas presas grandes, curvadas para baixo e polidas como espelhos, além de uma tromba comprida e uma pequena cauda.\n\nDe comportamento geralmente neutro, é um animal herbívoro que costuma ser avistado em grupos de dois a cinco indivíduos. Embora permita a aproximação em condições normais, pode atacar caso se sinta ameaçado, utilizando tanto as presas quanto a tromba. Quando dispõe de espaço para correr, é capaz de atropelar seus inimigos com força considerável. Curiosamente, pode ser acalmado e aceitar a aproximação de quem reproduza um tipo específico de música, **um conhecimento raro que poucos possuem.**\n\nO animal também oferece matérias-primas valiosas. Seu leite pode ser utilizado para consumo, enquanto seu couro grosso é excelente para a confecção de vestimentas resistentes ao frio. Já suas presas, além de servirem como objetos decorativos devido ao seu polimento peculiar, podem ser empregadas como ingredientes na criação de itens mágicos.\n\n_Gravura ilustrativa de uma mamuta._\n![](/img/mamuta.png)",
+  "link": "",
+  "eventos": []
+}
