@@ -10,7 +10,7 @@ export const DOMINIOS = arquivo.dominios;
 const porLetra = new Map(DOMINIOS.map((d) => [d.letra, d]));
 
 /** Deslocamento da camada de domínios em hexágonos (colunas, linhas), para acertar o encaixe com o mapa.
- *  Positivo = domínios andam para a direita / para baixo. O arquivo já está registrado em +4 colunas, +1 linha. */
+ *  Positivo = domínios andam para a direita / para baixo. O arquivo já está registrado sobre a grade do mapa (deixe 0,0). */
 export const DESLOCA = { c: 0, l: 0 };
 export const dominioDeHex = (h: Hex): Dominio | null => {
   const c = h.c - DESLOCA.c, l = h.l - DESLOCA.l;

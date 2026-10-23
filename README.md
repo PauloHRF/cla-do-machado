@@ -49,7 +49,7 @@ Os dados ficam em `src/content/viagem/`:
 - `ajustes.json`: correções feitas pela equipe (terreno de um hexágono, estradas acrescentadas ou removidas). Editável em `/admin → Viagem`. Para conferir, ligue *Mapas → Terreno (conferência)* e *Estradas (conferência)* e use a grade de hexágonos e o rótulo do mouse para saber a coordenada.
 
 ## Domínios
-Os domínios são definidos por hexágono em `src/content/viagem/dominios.json` (mesma grade do terreno: uma linha de texto por linha L01–L83, uma letra por coluna; `.` = sem domínio; as letras ligam à lista de domínios com nome e cor). Foi registrado a partir da arte dos domínios com um deslocamento de +4 colunas e +1 linha.
+Os domínios são definidos por hexágono em `src/content/viagem/dominios.json` (mesma grade do terreno: uma linha de texto por linha L01–L83, uma letra por coluna; `.` = sem domínio; as letras ligam à lista de domínios com nome e cor). Foi lido do desenho dos domínios por registro de imagem: o desenho foi encaixado sobre a imagem de referência (domínios sobre o mapa) e o centro de cada hexágono do mapa lê a cor do desenho naquele ponto (os hexágonos do desenho são ~3% maiores que os do mapa, então não há correspondência 1 para 1).
 - Ligue *Mapas → Domínios* para ver o preenchimento, as fronteiras e os nomes.
 - A etiqueta "Domínio: ..." da página de cada cidade e ponto agora é calculada pelo hexágono onde ele está (o campo antigo `dominio` dos cadastros não é mais usado).
 - Para mudar um domínio, edite a letra do hexágono no arquivo (a coluna é a posição na linha).
