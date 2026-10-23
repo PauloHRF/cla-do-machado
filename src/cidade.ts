@@ -13,7 +13,8 @@ export function mountCidade(slug: string) {
   const map = L.map("map", {
     crs: L.CRS.Simple, minZoom: m.zoomMin ?? -2, maxZoom: 2, zoomSnap: 0.25, zoomDelta: 0.5,
     zoomControl: false, attributionControl: false,
-    maxBounds: [[-m.altura * 0.2, -m.largura * 0.2], [m.altura * 1.2, m.largura * 1.2]], maxBoundsViscosity: 0.6,
+    // folga grande em volta da imagem (uma imagem inteira de cada lado), para poder arrastar mesmo com o painel aberto e em qualquer zoom
+    maxBounds: [[-m.altura, -m.largura], [m.altura * 2, m.largura * 2]], maxBoundsViscosity: 0.3,
   });
   L.imageOverlay(asset(m.imagem), bounds, { interactive: false }).addTo(map);
   L.control.zoom({ position: "topright", zoomInTitle: "Aproximar", zoomOutTitle: "Afastar" }).addTo(map);
