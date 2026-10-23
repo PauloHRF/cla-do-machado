@@ -48,21 +48,27 @@ export const TIPOS: Record<Tipo, { nome: string; cor: string }> = {
   pequena: { nome: "Cidade pequena", cor: "#2e7fc4" },
 };
 
-export const CATEGORIAS: Record<string, { nome: string; icone: string }> = {
-  assentamento: { nome: "Assentamentos", icone: "tents" },
-  covil: { nome: "Covil de Criatura", icone: "dragon" },
-  dungeon: { nome: "Dungeon", icone: "dungeon" },
-  mais: { nome: "Mais", icone: "plus" },
-  pdi_construcao: { nome: "PDI (Construção)", icone: "landmark" },
-  pdi_itinerante: { nome: "PDI itinerante", icone: "shoe-prints" },
-  pdi_natural: { nome: "PDI (Natural)", icone: "tree" },
+// Categorias dos pontos. "oficial" = marcos do mapa oficial (símbolo da legenda); as demais são contribuições da comunidade.
+export const CATEGORIAS: Record<string, { nome: string; icone: string; cor: string; oficial?: boolean }> = {
+  pdi_fixo: { nome: "PDI (Fixo)", icone: "location-dot", cor: "#2a1d12", oficial: true },
+  pdi_itinerante: { nome: "PDI (Itinerante)", icone: "shoe-prints", cor: "#2a1d12", oficial: true },
+  assentamento: { nome: "Assentamentos/Vilas", icone: "tents", cor: "#8a5a2b" },
+  boato: { nome: "Boatos", icone: "comment-dots", cor: "#b5527a" },
+  construcao_humana: { nome: "Construções Humanas", icone: "landmark", cor: "#5b6f8f" },
+  covil: { nome: "Covil de Criatura", icone: "dragon", cor: "#a23b2a" },
+  estrutura_natural: { nome: "Estruturas Naturais", icone: "tree", cor: "#2f7a3f" },
+  fauna_flora: { nome: "Fauna e Flora Phantyriana", icone: "paw", cor: "#7a6a1f" },
+  historia: { nome: "Histórias/Contos/Marcos Artísticos", icone: "book-open", cor: "#6d4a9c" },
+  masmorra: { nome: "Masmorras", icone: "dungeon", cor: "#3d3d46" },
+  mais: { nome: "Mais", icone: "plus", cor: "#5c5c5c" },
 };
+export const CATEGORIAS_OFICIAIS = Object.keys(CATEGORIAS).filter((k) => CATEGORIAS[k].oficial);
+export const CATEGORIAS_COMUNIDADE = Object.keys(CATEGORIAS).filter((k) => !CATEGORIAS[k].oficial);
 
 // Símbolos da legenda do mapa: cidade grande, cidade pequena, ponto de interesse e PDI itinerante.
 export type Simbolo = "grande" | "pequena" | "pdi" | "itinerante";
 export const simboloTipo = (t: Tipo): Simbolo => t;
-export const simboloCategoria = (cat: string): Simbolo =>
-  cat === "assentamento" ? "pequena" : cat === "pdi_itinerante" ? "itinerante" : "pdi";
+export const simboloCategoria = (cat: string): Simbolo | null => (cat === "pdi_fixo" ? "pdi" : cat === "pdi_itinerante" ? "itinerante" : null);
 
 export type Local = ({ kind: "cidade" } & Cidade) | ({ kind: "ponto" } & Ponto);
 export const locais = new Map<string, Local>();

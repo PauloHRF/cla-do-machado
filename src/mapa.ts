@@ -1,6 +1,6 @@
 import L from "leaflet";
-import { asset, cidades, pontos, TIPOS, CATEGORIAS, locais, simboloTipo, simboloCategoria, type Local, type Tipo } from "./data";
-import { simbolo, htmlSimbolo } from "./icons";
+import { asset, cidades, pontos, TIPOS, CATEGORIAS, CATEGORIAS_COMUNIDADE, locais, simboloTipo, simboloCategoria, type Local, type Tipo } from "./data";
+import { simbolo, htmlSimbolo, disco } from "./icons";
 import { camadaDominios, dominioDe } from "./dominios";
 import { montarViagem, camadaTerreno, camadaEstradas } from "./viagemui";
 import { hexDe, rotulo, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
@@ -28,7 +28,7 @@ function detalheHtml(l: Local) {
   if (l.kind === "cidade") {
     const tag = `<span class="tag" style="--c:${TIPOS[l.tipo].cor}">${TIPOS[l.tipo].nome}</span>`;
     const dm = dominioDe(l.x, l.y);
-    const dom = dm ? `<span class="tag ghost">Domínio: ${esc(dm.nome)}</span>` : "";
+    const dom = dm ? `<span class="tag ghost">Região: ${esc(dm.nome)}</span>` : "";
     const hx = hexDe(l.x, l.y);
     const hexTag = hx ? `<span class="tag ghost">Hex ${rotulo(hx)}</span>` : "";
     const ficha = fichaCidade(l);
@@ -44,7 +44,7 @@ function detalheHtml(l: Local) {
   const cat = CATEGORIAS[l.categoria]?.nome ?? "";
   const hp = hexDe(l.x, l.y);
   const dp = dominioDe(l.x, l.y);
-  return `<h1>${esc(l.nome)}</h1><p class="tags"><span class="tag ghost">${esc(cat)}</span>${dp ? `<span class="tag ghost">Domínio: ${esc(dp.nome)}</span>` : ""}${hp ? `<span class="tag ghost">Hex ${rotulo(hp)}</span>` : ""}</p>
+  return `<h1>${esc(l.nome)}</h1><p class="tags"><span class="tag ghost">${esc(cat)}</span>${dp ? `<span class="tag ghost">Região: ${esc(dp.nome)}</span>` : ""}${hp ? `<span class="tag ghost">Hex ${rotulo(hp)}</span>` : ""}</p>
     <div class="prose">${md(l.descricao.replace(/^<b>[^<]+<\/b>(<br\s*\/?>)?/, ""))}</div>
     ${l.descricao ? "" : `<p class="muted">Ainda não há informações sobre este lugar.</p>`}
     <div class="actions">
@@ -128,11 +128,11 @@ export function mountMapa() {
     }
     camadas[t] = g;
   }
-  const usadas = [...new Set(pontos.map((p) => p.categoria))];
-  for (const cat of usadas) {
+  for (const cat of Object.keys(CATEGORIAS)) {
     const g = L.layerGroup();
+    const sim = simboloCategoria(cat);   // marcos oficiais usam o símbolo da legenda; contribuições, um disco com ícone
     for (const p of pontos.filter((x) => x.categoria === cat && !x.oculto)) {
-      const m = L.marker([p.y, p.x], { icon: simbolo(simboloCategoria(cat)), alt: p.nome }).addTo(g);
+      const m = L.marker([p.y, p.x], { icon: sim ? simbolo(sim) : disco(p.icone || CATEGORIAS[cat].icone, p.cor || CATEGORIAS[cat].cor, 28), alt: p.nome }).addTo(g);
       tooltip(m, p.nome).on("click", () => { if (!viagem.capturar(p.y, p.x, p.nome)) location.hash = `#/local/${p.slug}`; });
       marcadores.set(p.slug, m);
     }
@@ -161,18 +161,28 @@ export function mountMapa() {
   const filtros = document.createElement("section");
   const linha = (id: string, rotulo: string, icone: string) =>
     `<label class="check"><input type="checkbox" data-camada="${id}" ${ligadas[id] ? "checked" : ""}><span class="box"></span>${icone}<span>${rotulo}</span></label>`;
+  const iconeCat = (c: string) => { const sim = simboloCategoria(c); return sim ? htmlSimbolo(sim, 20, "mini") : `<i class="fa-solid fa-${CATEGORIAS[c].icone} mini" style="color:${CATEGORIAS[c].cor}"></i>`; };
   filtros.innerHTML = `
-    <h2 class="ribbon">Cidades</h2>
+    <h2 class="ribbon">Marcos Oficiais</h2>
     ${(Object.keys(TIPOS) as Tipo[]).map((t) => linha(t, TIPOS[t].nome, htmlSimbolo(simboloTipo(t), 20, "mini"))).join("")}
-    <h2 class="ribbon">Contribuições</h2>
-    ${usadas.map((c) => linha(c, CATEGORIAS[c]?.nome ?? c, htmlSimbolo(simboloCategoria(c), 20, "mini"))).join("")}
-    <h2 class="ribbon">Mapas</h2>
-    ${linha("terreno", "Terreno (conferência)", `<i class="fa-solid fa-mountain-sun mini"></i>`)}
-    ${linha("estradas", "Estradas (conferência)", `<i class="fa-solid fa-road mini"></i>`)}
+    ${linha("pdi_fixo", "PDI* (Fixo)", iconeCat("pdi_fixo"))}
+    ${linha("pdi_itinerante", "PDI* (Itinerante)", iconeCat("pdi_itinerante"))}
+    <p class="muted nota">* Pontos de Interesse</p>
+    <h2 class="ribbon"><a href="#" data-abrir="contribuicoes" title="Abrir a aba Contribuições">Contribuições</a><span class="ast">**</span></h2>
+    ${CATEGORIAS_COMUNIDADE.map((c) => linha(c, CATEGORIAS[c].nome, iconeCat(c))).join("")}
+    <p class="muted nota">** Contribuições da comunidade do Clã do Machado. De mestres a jogadores.</p>
+    <h2 class="ribbon">Filtros</h2>
+    ${linha("alcance", "Alcance do Clã (temporada 4)", `<i class="fa-solid fa-bullseye mini"></i>`)}
+    ${linha("dominios", "Regiões", `<i class="fa-solid fa-flag mini"></i>`)}
+    <h2 class="ribbon">Conferência</h2>
     ${linha("hex", "Grade de hexágonos", `<i class="fa-solid fa-border-all mini"></i>`)}
-    ${linha("alcance", "Alcance do Clã", `<i class="fa-solid fa-bullseye mini"></i>`)}
-    ${linha("dominios", "Domínios", `<i class="fa-solid fa-flag mini"></i>`)}
+    ${linha("terreno", "Terreno (viagem)", `<i class="fa-solid fa-mountain-sun mini"></i>`)}
+    ${linha("estradas", "Estradas (viagem)", `<i class="fa-solid fa-road mini"></i>`)}
     <p class="muted dica">Dica: segure <kbd>Shift</kbd> e clique no mapa para copiar as coordenadas (úteis ao cadastrar um local).</p>`;
+  filtros.addEventListener("click", (e) => {
+    const a = (e.target as HTMLElement).closest<HTMLElement>("[data-abrir]");
+    if (a) { e.preventDefault(); openTab(a.dataset.abrir!); }
+  });
   filtros.addEventListener("change", (e) => {
     const i = e.target as HTMLInputElement;
     toggle(i.dataset.camada!, i.checked);

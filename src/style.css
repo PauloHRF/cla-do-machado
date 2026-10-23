@@ -281,3 +281,9 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
   font: 700 1.25rem/1.05 var(--display); letter-spacing: 0.1em; text-transform: uppercase; color: #fff;
   text-shadow: 0 0 3px var(--c), 0 0 6px var(--c), 0 1px 2px rgb(0 0 0 / 0.7);
 }
+
+/* filtros: notas e título de seção com link */
+.nota { font-size: 0.95rem; margin: 4px 0 0; }
+h2.ribbon a { color: inherit; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 4px; }
+h2.ribbon a:hover { text-decoration-style: solid; }
+h2.ribbon .ast { font-size: 0.7em; margin-left: -6px; align-self: flex-start; }
