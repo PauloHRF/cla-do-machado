@@ -39,7 +39,7 @@
     {
       "nome": "Minas Emberglyph",
       "icone": "Gem",
-      "cor": "black",
+      "cor": "sandybrown",
       "x": 594,
       "y": 2644,
       "descricao": "",
@@ -48,7 +48,7 @@
     {
       "nome": "Cemitério Mercybound",
       "icone": "skull",
-      "cor": "dark-gray",
+      "cor": "darkgray",
       "x": 2242,
       "y": 2612,
       "descricao": "",
@@ -57,7 +57,7 @@
     {
       "nome": "Torre do Vórtice Oculto",
       "icone": "spiral",
-      "cor": "dark-blue",
+      "cor": "darkblue",
       "x": 2946,
       "y": 1850,
       "descricao": "",
@@ -66,7 +66,7 @@
     {
       "nome": "Taverna do Sapo Luminoso",
       "icone": "beer-mug-empty",
-      "cor": "cyan",
+      "cor": "skyblue",
       "x": 2806,
       "y": 2412,
       "descricao": "",
@@ -75,7 +75,7 @@
     {
       "nome": "Torre de Água",
       "icone": "water",
-      "cor": "light-blue",
+      "cor": "lightblue",
       "x": 2402,
       "y": 1728,
       "descricao": "",
@@ -84,7 +84,7 @@
     {
       "nome": "Exportações Shadowbreeze",
       "icone": "dolly",
-      "cor": "orange",
+      "cor": "darkorange",
       "x": 2506,
       "y": 2140,
       "descricao": "",
@@ -111,7 +111,7 @@
     {
       "nome": "Fazendas Estância do Sol",
       "icone": "seedling",
-      "cor": "red",
+      "cor": "yellow",
       "x": 3064,
       "y": 3630,
       "descricao": "",
