@@ -1,0 +1,22 @@
+{
+  "nome": "Sheidrost",
+  "imagem": "/img/sheidrost.jpg",
+  "largura": 4682,
+  "altura": 4093,
+  "centroX": 2125,
+  "centroY": 1524,
+  "zoom": 0,
+  "zoomMin": -2,
+  "texto": "",
+  "pois": [
+    {
+      "nome": "Bastião do Baronato",
+      "icone": "hammer",
+      "cor": "purple",
+      "x": 0,
+      "y": 0,
+      "descricao": "",
+      "detalhe": ""
+    }
+  ]
+}
