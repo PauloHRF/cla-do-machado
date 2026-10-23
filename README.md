@@ -54,3 +54,6 @@ Os domínios são definidos por hexágono em `src/content/viagem/dominios.json` 
 - A etiqueta "Região: ..." da página de cada cidade e ponto agora é calculada pelo hexágono onde ele está (o campo antigo `dominio` dos cadastros não é mais usado).
 - Para mudar um domínio, edite a letra do hexágono no arquivo (a coluna é a posição na linha).
 
+## Alcance do Clã
+Camada *Filtros → Alcance do Clã (temporada 4)*: todos os hexágonos a até **10 passos** do hexágono de Sheidrost (`src/alcance.ts`: `RAIO` e `CENTRO_SLUG`). É calculada pela grade de hexágonos, sem imagem.
+
