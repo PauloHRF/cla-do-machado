@@ -77,17 +77,32 @@ export function camadaDominios(): L.LayerGroup {
       while (pilha.length) { const u = pilha.pop()!; comp.push(u); for (const v of vizinhos(u.c, u.l)) if (pertence.has(chave(v)) && !visto.has(chave(v))) { visto.add(chave(v)); pilha.push(v); } }
       if (comp.length > melhor.length) melhor = comp;
     }
-    // hexágono mais "interior" (mais longe da borda do bloco), desempatando pela proximidade do centro de massa
-    const dist = new Map<number, number>(), fila: Hex[] = [];
-    for (const h of melhor) if (vizinhos(h.c, h.l).some((v) => !melhor.some((m) => m.c === v.c && m.l === v.l))) { dist.set(chave(h), 0); fila.push(h); }
-    const noBloco = new Set(melhor.map(chave));
-    for (let i = 0; i < fila.length; i++) { const u = fila[i]; for (const v of vizinhos(u.c, u.l)) if (noBloco.has(chave(v)) && !dist.has(chave(v))) { dist.set(chave(v), dist.get(chave(u))! + 1); fila.push(v); } }
+    // nome em 2 linhas (divisão mais equilibrada entre as palavras)
+    const pal = d.nome.split(" ");
+    let corte = 1, melhorDif = Infinity;
+    for (let i = 1; i < pal.length; i++) {
+      const a = pal.slice(0, i).join(" ").length, b = pal.slice(i).join(" ").length, m = Math.max(a, b);
+      if (m < melhorDif) { melhorDif = m; corte = i; }
+    }
+    const linha1 = pal.slice(0, corte).join(" "), linha2 = pal.slice(corte).join(" ");
+    // centro "de verdade": o ponto mais distante da borda do maior bloco do domínio; entre os quase empatados, o mais perto do centro de massa
     const mx = melhor.reduce((s, h) => s + centroTopo(h.c, h.l)[0], 0) / melhor.length, my = melhor.reduce((s, h) => s + centroTopo(h.c, h.l)[1], 0) / melhor.length;
-    const maxD = Math.max(...melhor.map((h) => dist.get(chave(h)) ?? 0));
-    const ancora = melhor.filter((h) => (dist.get(chave(h)) ?? 0) >= maxD - 1)
-      .reduce((a, b) => { const [ax, ay] = centroTopo(a.c, a.l), [bx, by] = centroTopo(b.c, b.l); return Math.hypot(ax - mx, ay - my) <= Math.hypot(bx - mx, by - my) ? a : b; });
-    L.marker(centroLatLng(ancora.c, ancora.l), {
-      icon: L.divIcon({ className: "rotulo-dominio", html: `<span style="--c:${d.cor}">${esc(d.nome)}</span>`, iconSize: [0, 0] }), interactive: false, keyboard: false,
+    const noBloco = new Set(melhor.map(chave));
+    const fora = new Map<number, [number, number]>();   // centros dos hexágonos vizinhos que não pertencem ao bloco
+    for (const h of melhor) for (const v of vizinhos(h.c, h.l)) if (!noBloco.has(chave(v))) fora.set(chave(v), centroTopo(v.c, v.l));
+    for (const h of melhor) if (vizinhos(h.c, h.l).length < 6) fora.set(-chave(h), centroTopo(h.c, h.l));   // borda do mapa conta como fora
+    const bordas = [...fora.values()];
+    const folga = (cx: number, cy: number) => { let m = Infinity; for (const [bx, by] of bordas) { const d = Math.hypot(bx - cx, by - cy); if (d < m) m = d; } return m; };
+    const cand: { x: number; y: number; f: number }[] = [];
+    for (const h of melhor) {
+      const [hx, hy] = centroTopo(h.c, h.l);
+      for (const [dx, dy] of [[0, 0], [0.5, 0], [-0.5, 0], [0, 0.5], [0, -0.5]]) { const x = hx + dx * HEX_LADO, y = hy + dy * HEX_LADO; cand.push({ x, y, f: folga(x, y) }); }
+    }
+    const fMax = Math.max(...cand.map((c) => c.f));
+    const melhorPt = cand.filter((c) => c.f >= fMax * 0.93).reduce((a, b) => (Math.hypot(a.x - mx, a.y - my) <= Math.hypot(b.x - mx, b.y - my) ? a : b));
+    const pt: [number, number] = [melhorPt.x, melhorPt.y];
+    L.marker([MAPA_ALTURA - pt[1], pt[0]], {
+      icon: L.divIcon({ className: "rotulo-dominio", html: `<span style="--c:${d.cor}">${esc(linha1)}<br>${esc(linha2)}</span>`, iconSize: [0, 0] }), interactive: false, keyboard: false,
     }).addTo(grupo);
   }
   return grupo;
