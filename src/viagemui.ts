@@ -2,7 +2,7 @@ import L from "leaflet";
 import { locais, norm } from "./data";
 import { centroLatLng, centroTopo, verticesTopo, hexDe, rotulo, linhaHex, MAPA_ALTURA, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, type Hex } from "./hex";
 import { calcularRota, avaliarCaminho, terrenoDe, todasEstradas, TERRENOS, type Perfil, type Terreno } from "./viagem";
-import { esc } from "./ui";
+import { esc, copiaCliquePausada, toast } from "./ui";
 
 // ---------- camadas de revisão (para a equipe conferir o que foi lido do mapa) ----------
 export function camadaTerreno() {
@@ -66,7 +66,15 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
       <button class="btn" id="d-desfazer"><i class="fa-solid fa-rotate-left"></i> Desfazer</button>
       <button class="btn" id="d-limpar"><i class="fa-solid fa-eraser"></i> Limpar caminho</button>
     </div>
-    <div id="d-res"></div>`;
+    <div id="d-res"></div>
+    <h2 class="ribbon">Selecionar hexágonos</h2>
+    <p class="muted">Para corrigir terreno ou estradas em vários hexágonos de uma vez: ligue a seleção, clique nos hexágonos (clique de novo para tirar) e copie a lista. <strong>Ctrl + arrastar</strong> pinta vários de uma vez; <strong>Ctrl + Alt + arrastar</strong> apaga.</p>
+    <div class="actions">
+      <button class="btn" id="s-modo"><i class="fa-solid fa-hand-pointer"></i> Selecionar</button>
+      <button class="btn" id="s-copiar"><i class="fa-solid fa-copy"></i> Copiar lista</button>
+      <button class="btn" id="s-limpar"><i class="fa-solid fa-eraser"></i> Limpar seleção</button>
+    </div>
+    <div id="s-res"></div>`;
 
   const q = <T extends HTMLElement>(s: string) => painel.querySelector<T>(s)!;
   const pontos: Record<"de" | "ate", Hex | null> = { de: null, ate: null };
@@ -94,7 +102,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
 
   const sair = () => { modo = null; map.getContainer().classList.remove("modo-pick"); painel.querySelectorAll("[data-pick]").forEach((b) => b.classList.remove("on")); };
   painel.querySelectorAll<HTMLElement>("[data-pick]").forEach((b) => b.addEventListener("click", () => {
-    const k = b.dataset.pick as "de" | "ate"; const ligado = modo === k; sair(); if (desenhando) modoDesenho(false);
+    const k = b.dataset.pick as "de" | "ate"; const ligado = modo === k; sair(); if (desenhando) modoDesenho(false); if (selecionando) modoSelecao(false);
     if (!ligado) { modo = k; b.classList.add("on"); map.getContainer().classList.add("modo-pick"); }
   }));
   map.on("click", (e: L.LeafletMouseEvent) => {
@@ -176,7 +184,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     desenhando = on; botaoModo.classList.toggle("on", on); botaoModo.innerHTML = on ? `<i class="fa-solid fa-check"></i> Concluir` : `<i class="fa-solid fa-pen"></i> Desenhar`;
     map.getContainer().classList.toggle("modo-pick", on);
   }
-  botaoModo.addEventListener("click", () => { sair(); modoDesenho(!desenhando); });
+  botaoModo.addEventListener("click", () => { sair(); if (selecionando) modoSelecao(false); modoDesenho(!desenhando); });
   q("#d-desfazer").addEventListener("click", () => { caminho.pop(); redesenhar(); });
   q("#d-limpar").addEventListener("click", () => { caminho = []; redesenhar(); });
   map.on("click", (e: L.LeafletMouseEvent) => {
@@ -186,11 +194,71 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   // o perfil do grupo vale também para o caminho desenhado
   painel.addEventListener("change", (e) => { if ((e.target as HTMLElement).matches("#v-montaria, #v-estradas, [data-ignora]") && caminho.length > 1) redesenhar(); });
 
+  // ----- seleção de vários hexágonos (copiar a lista de códigos) -----
+  const camadaSel = L.layerGroup().addTo(map);
+  const selecionados = new Map<string, Hex>();
+  let selecionando = false, pintando: "add" | "del" | null = null;
+  const chaveHex = (h: Hex) => `${h.c},${h.l}`;
+  const botaoSel = q<HTMLButtonElement>("#s-modo");
+  function listaCodigos(): string[] {
+    return [...selecionados.values()].sort((a, b) => a.l - b.l || a.c - b.c).map(rotulo);
+  }
+  function redesenharSel() {
+    camadaSel.clearLayers();
+    for (const h of selecionados.values()) {
+      const pts = verticesTopo(h.c, h.l).map(([x, y]) => [MAPA_ALTURA - y, x] as [number, number]);
+      L.polygon(pts, { color: "#ffffff", weight: 2, fillColor: "#e8412c", fillOpacity: 0.45, interactive: false }).addTo(camadaSel);
+    }
+    const cods = listaCodigos();
+    const por = new Map<string, number>();
+    for (const h of selecionados.values()) { const t = TERRENOS[terrenoDe(h)].nome; por.set(t, (por.get(t) ?? 0) + 1); }
+    q("#s-res").innerHTML = cods.length
+      ? `<p class="muted"><strong>${cods.length}</strong> hexágono${cods.length === 1 ? "" : "s"} selecionado${cods.length === 1 ? "" : "s"} (terreno atual: ${[...por].map(([t, n]) => `${esc(t)} ${n}`).join(", ")}).</p><textarea id="s-lista" readonly rows="4">${cods.join(", ")}</textarea>`
+      : "";
+  }
+  function alternar(h: Hex, modo: "toggle" | "add" | "del") {
+    const k = chaveHex(h), tem = selecionados.has(k);
+    if (modo === "del" || (modo === "toggle" && tem)) selecionados.delete(k); else selecionados.set(k, h);
+    redesenharSel();
+  }
+  function modoSelecao(on: boolean) {
+    selecionando = on; copiaCliquePausada.valor = on;
+    botaoSel.classList.toggle("on", on); botaoSel.innerHTML = on ? `<i class="fa-solid fa-check"></i> Concluir` : `<i class="fa-solid fa-hand-pointer"></i> Selecionar`;
+    map.getContainer().classList.toggle("modo-pick", on);
+  }
+  botaoSel.addEventListener("click", () => { sair(); if (desenhando) modoDesenho(false); modoSelecao(!selecionando); });
+  q("#s-limpar").addEventListener("click", () => { selecionados.clear(); redesenharSel(); });
+  q("#s-copiar").addEventListener("click", () => {
+    const t = listaCodigos().join(", ");
+    if (!t) { toast("Nada selecionado"); return; }
+    navigator.clipboard?.writeText(t).then(() => toast(`${selecionados.size} hexágonos copiados`), () => toast("Copie pela caixa de texto"));
+  });
+  map.on("click", (e: L.LeafletMouseEvent) => {
+    if (!selecionando || pintando) return;
+    const o = e.originalEvent as MouseEvent; if (o.ctrlKey) return;
+    const h = hexDe(e.latlng.lng, e.latlng.lat); if (h) alternar(h, "toggle");
+  });
+  // Ctrl + arrastar: pinta (ou apaga com Alt) sem mover o mapa
+  map.on("mousedown", (e: L.LeafletMouseEvent) => {
+    const o = e.originalEvent as MouseEvent;
+    if (!selecionando || !o.ctrlKey) return;
+    pintando = o.altKey ? "del" : "add"; map.dragging.disable();
+    const h = hexDe(e.latlng.lng, e.latlng.lat); if (h) alternar(h, pintando);
+  });
+  map.on("mousemove", (e: L.LeafletMouseEvent) => {
+    if (!pintando) return;
+    const h = hexDe(e.latlng.lng, e.latlng.lat); if (h) { const k = chaveHex(h); if (selecionados.has(k) !== (pintando === "add")) alternar(h, pintando); }
+  });
+  const soltar = () => { if (pintando) { pintando = null; map.dragging.enable(); } };
+  document.addEventListener("mouseup", soltar);
+  map.on("unload", () => document.removeEventListener("mouseup", soltar));
+
   return {
     painel,
     // clique num marcador de local durante a escolha no mapa
     capturar(lat, lng, nome) {
       if (desenhando) { const h = hexDe(lng, lat); if (h) adicionar(h); return true; }
+      if (selecionando) { const h = hexDe(lng, lat); if (h) alternar(h, "toggle"); return true; }
       if (!modo) return false;
       const h = hexDe(lng, lat); if (!h) return false;
       const k = modo; sair(); definir(k, h, nome); return true;
