@@ -288,11 +288,8 @@ h2.ribbon a { color: inherit; text-decoration: underline; text-decoration-style:
 h2.ribbon a:hover { text-decoration-style: solid; }
 h2.ribbon .ast { font-size: 0.7em; margin-left: -6px; align-self: flex-start; }
 
-/* botão fixo "Mapa de Phantyr" nos mapas de cidade */
-#voltar-mapa { position: fixed; z-index: 1000; bottom: 16px; left: calc(var(--rail) + 14px); transition: left 0.25s ease; }
-@media (min-width: 721px) {
-  body:has(#panel:not(.closed)) #voltar-mapa { left: calc(var(--rail) + var(--panel) + 14px); }
-}
+/* botão fixo "Mapa de Phantyr" nos mapas de cidade: lado direito, logo abaixo dos botões de zoom */
+#voltar-mapa { position: fixed; z-index: 1000; top: 92px; right: 10px; }
 @media (max-width: 720px) {
-  #voltar-mapa { top: 58px; bottom: auto; left: 10px; min-height: 0; padding: 7px 12px 5px; font-size: 1.05rem; }
+  #voltar-mapa { min-height: 0; padding: 7px 12px 5px; font-size: 1.05rem; }
 }
