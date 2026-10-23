@@ -6,8 +6,8 @@ import { montarViagem, camadaTerreno, camadaEstradas } from "./viagemui";
 import { hexDe, rotulo, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
 
-// TODO: trocar pelo link do formulário de contribuições.
-const FORM_CONTRIBUICAO = "#";
+// Formulário de contribuições (Google Forms).
+const FORM_CONTRIBUICAO = "https://docs.google.com/forms/d/e/1FAIpQLScDq7qH77lk4I6lwNW2wzyADpi5Il3siH3i_UqCB7jpfem08w/viewform";
 
 const BOUNDS: L.LatLngBoundsExpression = [[0, 0], [1697, 2000]];
 
