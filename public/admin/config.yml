@@ -70,18 +70,22 @@ collections:
         label: Categoria
         widget: select
         options:
-          - { label: Assentamento, value: assentamento }
-          - { label: Covil de criatura, value: covil }
-          - { label: Dungeon, value: dungeon }
-          - { label: PDI (construção), value: pdi_construcao }
-          - { label: PDI (natural), value: pdi_natural }
-          - { label: PDI itinerante, value: pdi_itinerante }
+          - { label: "PDI (Fixo)", value: pdi_fixo }
+          - { label: "PDI (Itinerante)", value: pdi_itinerante }
+          - { label: "Assentamentos/Vilas", value: assentamento }
+          - { label: Boatos, value: boato }
+          - { label: "Construções Humanas", value: construcao_humana }
+          - { label: "Covil de Criatura", value: covil }
+          - { label: "Estruturas Naturais", value: estrutura_natural }
+          - { label: "Fauna e Flora Phantyriana", value: fauna_flora }
+          - { label: "Histórias/Contos/Marcos Artísticos", value: historia }
+          - { label: Masmorras, value: masmorra }
           - { label: Mais, value: mais }
       - { name: x, label: "Posição X", widget: number, value_type: float }
       - { name: y, label: "Posição Y", widget: number, value_type: float }
       - { name: oculto, label: "Ocultar do mapa (sem posição no mapa atual)", widget: boolean, required: false, default: false }
-      - { name: icone, label: "Ícone (não usado no mapa do mundo, que segue a legenda)", widget: string, required: false }
-      - { name: cor, label: "Cor (não usada no mapa do mundo)", widget: string, required: false }
+      - { name: icone, label: "Ícone (só contribuições; Font Awesome, ex.: tents, paw. Vazio = padrão da categoria)", widget: string, required: false }
+      - { name: cor, label: "Cor do ícone (só contribuições; vazio = padrão da categoria)", widget: string, required: false }
       - { name: descricao, label: Descrição, widget: markdown }
       - { name: link, label: "Link externo de mapa", widget: string, required: false }
       - name: eventos
