@@ -17,6 +17,105 @@
       "y": 1599,
       "descricao": "",
       "detalhe": ""
+    },
+    {
+      "nome": "Forja de Granito",
+      "icone": "hammer",
+      "cor": "gray",
+      "x": 1618,
+      "y": 2428,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Caminho do Artesão",
+      "icone": "road",
+      "cor": "black",
+      "x": 2016,
+      "y": 2288,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Minas Emberglyph",
+      "icone": "Gem",
+      "cor": "black",
+      "x": 594,
+      "y": 2644,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Cemitério Mercybound",
+      "icone": "skull",
+      "cor": "dark-gray",
+      "x": 2242,
+      "y": 2612,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Torre do Vórtice Oculto",
+      "icone": "spiral",
+      "cor": "dark-blue",
+      "x": 2946,
+      "y": 1850,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Taverna do Sapo Luminoso",
+      "icone": "beer-mug-empty",
+      "cor": "cyan",
+      "x": 2806,
+      "y": 2412,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Torre de Água",
+      "icone": "water",
+      "cor": "light-blue",
+      "x": 2402,
+      "y": 1728,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Exportações Shadowbreeze",
+      "icone": "dolly",
+      "cor": "orange",
+      "x": 2506,
+      "y": 2140,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Poções, Runas e Maravilhas",
+      "icone": "wand-sparkles",
+      "cor": "blue",
+      "x": 2298,
+      "y": 1934,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Esquina das Misturas",
+      "icone": "flask",
+      "cor": "green",
+      "x": 2408,
+      "y": 2324,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Fazendas Estância do Sol",
+      "icone": "seedling",
+      "cor": "red",
+      "x": 3064,
+      "y": 3630,
+      "descricao": "",
+      "detalhe": ""
     }
   ]
 }
