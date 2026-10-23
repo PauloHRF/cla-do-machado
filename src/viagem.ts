@@ -63,7 +63,8 @@ export interface Perfil { montaria: boolean; ignora: Terreno[]; estradas: boolea
 /** Dias para entrar no hexágono b vindo do vizinho a. */
 export function custoPasso(a: Hex, b: Hex, p: Perfil): number {
   const t = terrenoDe(b);
-  if (t === "agua") return Infinity;
+  // água não se atravessa, exceto onde há estrada (ponte ou vau): a estrada que cruza um rio vale como terreno normal
+  if (t === "agua") return p.estradas && temEstrada(a, b) ? 1 / (p.montaria ? 2 : 1) : Infinity;
   let vel = p.montaria ? 2 : 1;
   if (TERRENOS[t].dificil && !(p.montaria && p.ignora.includes(t)) && !(p.estradas && temEstrada(a, b))) vel /= 2;
   return 1 / vel;
@@ -79,9 +80,9 @@ function resumirCaminho(caminho: Hex[], p: Perfil): Rota["detalhe"] {
   const mapa = new Map<string, { rotulo: string; hexes: number; dias: number }>();
   for (let i = 1; i < caminho.length; i++) {
     const t = terrenoDe(caminho[i]);
-    if (t === "agua") continue; // água não tem custo definido (ver aviso na tela)
     const noEstrada = p.estradas && temEstrada(caminho[i - 1], caminho[i]);
-    const rotulo = `${TERRENOS[t].nome}${noEstrada ? " (estrada)" : ""}`;
+    if (t === "agua" && !noEstrada) continue; // água sem estrada não tem custo definido (ver aviso na tela)
+    const rotulo = t === "agua" ? "Ponte/vau (estrada sobre água)" : `${TERRENOS[t].nome}${noEstrada ? " (estrada)" : ""}`;
     const e = mapa.get(rotulo) ?? { rotulo, hexes: 0, dias: 0 };
     e.hexes++; e.dias += custoPasso(caminho[i - 1], caminho[i], p); mapa.set(rotulo, e);
   }
@@ -92,8 +93,9 @@ function resumirCaminho(caminho: Hex[], p: Perfil): Rota["detalhe"] {
 export function avaliarCaminho(caminho: Hex[], p: Perfil): { dias: number; passos: number; detalhe: Rota["detalhe"]; agua: Hex[] } {
   let dias = 0; const agua: Hex[] = [];
   for (let i = 1; i < caminho.length; i++) {
-    if (terrenoDe(caminho[i]) === "agua") { agua.push(caminho[i]); continue; }
-    dias += custoPasso(caminho[i - 1], caminho[i], p);
+    const c = custoPasso(caminho[i - 1], caminho[i], p);
+    if (!isFinite(c)) { agua.push(caminho[i]); continue; }   // água sem estrada: fora da conta
+    dias += c;
   }
   return { dias, passos: caminho.length - 1, detalhe: resumirCaminho(caminho, p), agua };
 }
