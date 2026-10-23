@@ -11,10 +11,10 @@
   "pois": [
     {
       "nome": "Bastião do Baronato",
-      "icone": "hammer",
+      "icone": "chess-rook",
       "cor": "purple",
-      "x": 0,
-      "y": 0,
+      "x": 3071,
+      "y": 1599,
       "descricao": "",
       "detalhe": ""
     }
