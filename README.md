@@ -40,7 +40,7 @@ O mapa do mundo tem uma grade de hexágonos de topo plano. `src/hex.ts` descreve
 ## Viagem (tempo entre dois pontos)
 Aba **Viagem** no menu: escolha origem e destino (nome do local, `C45-L32` ou clicando no mapa), diga se o grupo tem montaria e o que ela ignora, e o site calcula o menor tempo pela regra do clã:
 - 1 hex = 1 dia a pé; todo o grupo montado = 2 hex por dia.
-- Terreno difícil (floresta, montanha, deserto, neve) divide a velocidade por 2; água não se atravessa.
+- Terreno difícil (floresta, montanha, deserto, neve) divide a velocidade por 2; água não se atravessa, exceto onde há estrada (ponte ou vau): a estrada sobre a água vale como terreno normal.
 - A montaria pode ignorar um terreno difícil (ex.: camelo no deserto, bode na montanha); a estrada ignora o terreno difícil.
 
 Os dados ficam em `src/content/viagem/`:
