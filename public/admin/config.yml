@@ -152,6 +152,23 @@ collections:
           - { name: descricao, label: "Descrição curta", widget: markdown, required: false }
           - { name: detalhe, label: "NPCs e detalhes", widget: markdown, required: false }
 
+  - name: jornais
+    label: Jornais
+    label_singular: Jornal
+    folder: src/content/jornais
+    extension: json
+    format: json
+    create: true
+    slug: "{{nome}}-{{edicao}}"
+    summary: "{{nome}} · edição {{edicao}}"
+    sortable_fields: [edicao, nome]
+    fields:
+      - { name: nome, label: "Nome do jornal", widget: string, default: "O Koboldiário" }
+      - { name: edicao, label: "Edição (número)", widget: number, value_type: int }
+      - { name: data, label: "Data no mundo (ex.: 21º dia de Decarion, ano 1497)", widget: string, required: false }
+      - { name: manchete, label: "Manchete (descrição da imagem)", widget: string, required: false }
+      - { name: imagem, label: "Imagem da edição", widget: image }
+
   - name: viagem
     label: Viagem (terreno e estradas)
     files:

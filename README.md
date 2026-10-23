@@ -57,3 +57,6 @@ Os domínios são definidos por hexágono em `src/content/viagem/dominios.json` 
 ## Alcance do Clã
 Camada *Filtros → Alcance do Clã (temporada 4)*: todos os hexágonos a até **10 passos** do hexágono de Sheidrost (`src/alcance.ts`: `RAIO` e `CENTRO_SLUG`). É calculada pela grade de hexágonos, sem imagem.
 
+## Jornais
+Aba **Jornais** no menu: lista as edições (`src/content/jornais`, mais recentes primeiro). Cada edição é um arquivo JSON com `nome`, `edicao`, `data`, `manchete` e `imagem` (em `public/img/jornais/`). Clicar na miniatura abre a imagem em tamanho grande. Também dá para cadastrar pelo `/admin → Jornais`. Use imagens grandes (ex.: 1200 px de largura, WebP) para o texto ficar legível.
+
