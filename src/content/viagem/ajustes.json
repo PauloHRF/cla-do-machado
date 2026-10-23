@@ -1,10 +1,5 @@
 {
-  "terreno": [
-    {
-      "hex": "C25-L20",
-      "terreno": "planicie"
-    }
-  ],
+  "terreno": [],
   "estradas": [],
   "remover": []
 }
