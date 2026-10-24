@@ -39,7 +39,7 @@
     {
       "nome": "Minas Emberglyph",
       "icone": "gem",
-      "cor": "sandybrown",
+      "cor": "peru",
       "x": 594,
       "y": 2644,
       "descricao": "",
@@ -111,7 +111,7 @@
     {
       "nome": "Fazendas Estância do Sol",
       "icone": "seedling",
-      "cor": "yellow",
+      "cor": "orange",
       "x": 3064,
       "y": 3630,
       "descricao": "",
