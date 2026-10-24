@@ -66,7 +66,7 @@
     {
       "nome": "Taverna do Sapo Luminoso",
       "icone": "beer-mug-empty",
-      "cor": "peachpuff",
+      "cor": "tan",
       "x": 2806,
       "y": 2412,
       "descricao": "",
@@ -111,7 +111,7 @@
     {
       "nome": "Fazendas Estância do Sol",
       "icone": "seedling",
-      "cor": "orange",
+      "cor": "gold",
       "x": 3064,
       "y": 3630,
       "descricao": "",
