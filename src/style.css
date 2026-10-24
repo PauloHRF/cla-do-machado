@@ -288,10 +288,18 @@ h2.ribbon a { color: inherit; text-decoration: underline; text-decoration-style:
 h2.ribbon a:hover { text-decoration-style: solid; }
 h2.ribbon .ast { font-size: 0.7em; margin-left: -6px; align-self: flex-start; }
 
-/* botão fixo "Mapa de Phantyr" nos mapas de cidade: lado direito, logo abaixo dos botões de zoom */
-#voltar-mapa { position: fixed; z-index: 1000; top: 92px; right: 10px; }
+/* botões flutuantes na mesma linha da busca (voltar ao mapa de Phantyr, desligar ferramenta) */
+:root { --busca-w: min(380px, calc(100vw - 150px)); --busca-cx: 50%; }
+@media (min-width: 721px) { body:has(#panel:not(.closed)) { --busca-cx: calc(50% + (var(--panel) + var(--rail)) / 2); } }
+.btn-busca { position: fixed; z-index: 1000; top: 12px; left: calc(var(--busca-cx) - var(--busca-w) / 2 - 12px); transform: translateX(-100%); min-height: 44px; white-space: nowrap; }
+.btn-busca:active { transform: translateX(-100%) translateY(1px); }
+@media (min-width: 721px) and (max-width: 1150px) {
+  body:has(#panel:not(.closed)) .btn-busca { top: 62px; left: calc(var(--busca-cx) - var(--busca-w) / 2); transform: none; }
+  body:has(#panel:not(.closed)) .btn-busca:active { transform: translateY(1px); }
+}
 @media (max-width: 720px) {
-  #voltar-mapa { min-height: 0; padding: 7px 12px 5px; font-size: 1.05rem; }
+  .btn-busca { top: 62px; left: 10px; transform: none; min-height: 0; padding: 7px 12px 5px; font-size: 1.05rem; }
+  .btn-busca:active { transform: translateY(1px); }
 }
 
 #s-res textarea { width: 100%; margin-top: 6px; padding: 8px 10px; border: 2px solid var(--accent); border-radius: 4px; background: rgb(255 255 255 / 0.55); color: var(--ink); font: 0.95rem/1.3 monospace; resize: vertical; }

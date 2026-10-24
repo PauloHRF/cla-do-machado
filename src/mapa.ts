@@ -7,9 +7,6 @@ import { montarViagem, camadaTerreno, camadaEstradas } from "./viagemui";
 import { hexDe, rotulo, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
 
-// Formulário de contribuições (Google Forms).
-const FORM_CONTRIBUICAO = "https://docs.google.com/forms/d/e/1FAIpQLScDq7qH77lk4I6lwNW2wzyADpi5Il3siH3i_UqCB7jpfem08w/viewform";
-
 const BOUNDS: L.LatLngBoundsExpression = [[0, 0], [1697, 2000]];
 
 const CAMPOS: [string, keyof import("./data").Cidade][] = [
@@ -25,6 +22,12 @@ export function fichaCidade(c: import("./data").Cidade) {
   return linhas ? `<dl class="ficha">${linhas}</dl>` : "";
 }
 
+// Botão do link externo: texto personalizável ("link_texto"); sem texto, continua sendo "Mapa".
+function botaoLink(l: { link?: string; link_texto?: string }) {
+  const texto = l.link_texto?.trim();
+  return `<a class="btn" href="${esc(l.link!)}" target="_blank" rel="noopener"><i class="fa-solid ${texto ? "fa-arrow-up-right-from-square" : "fa-image"}"></i> ${esc(texto || "Mapa")}</a>`;
+}
+
 function detalheHtml(l: Local) {
   if (l.kind === "cidade") {
     const tag = `<span class="tag" style="--c:${TIPOS[l.tipo].cor}">${TIPOS[l.tipo].nome}</span>`;
@@ -37,7 +40,7 @@ function detalheHtml(l: Local) {
     return `<h1>${esc(l.nome)}</h1><p class="tags">${tag}${dom}${hexTag}</p>${ficha}<div class="prose">${md(l.texto)}</div>${vazio}
       <div class="actions">
         ${l.pagina ? `<a class="btn primary" href="#/cidade/${l.pagina}"><i class="fa-solid fa-map"></i> Mapa da cidade</a>` : ""}
-        ${l.link ? `<a class="btn" href="${esc(l.link)}" target="_blank" rel="noopener"><i class="fa-solid fa-image"></i> Mapa</a>` : ""}
+        ${l.link && !l.pagina ? botaoLink(l) : ""}
         ${l.eventos?.length ? `<button class="btn" data-act="eventos"><i class="fa-solid fa-timeline"></i> Eventos</button>` : ""}
         <button class="btn" data-act="copiar"><i class="fa-solid fa-link"></i> Copiar link</button>
       </div>`;
@@ -49,7 +52,7 @@ function detalheHtml(l: Local) {
     <div class="prose">${md(l.descricao.replace(/^<b>[^<]+<\/b>(<br\s*\/?>)?/, ""))}</div>
     ${l.descricao ? "" : `<p class="muted">Ainda não há informações sobre este lugar.</p>`}
     <div class="actions">
-      ${l.link ? `<a class="btn" href="${esc(l.link)}" target="_blank" rel="noopener"><i class="fa-solid fa-image"></i> Mapa</a>` : ""}
+      ${l.link ? botaoLink(l) : ""}
       ${l.eventos?.length ? `<button class="btn" data-act="eventos"><i class="fa-solid fa-timeline"></i> Eventos</button>` : ""}
       <button class="btn" data-act="copiar"><i class="fa-solid fa-link"></i> Copiar link</button>
     </div>`;
@@ -190,16 +193,6 @@ export function mountMapa() {
   });
   setTab("filtros", filtros);
 
-  // ----- painel: contribuições -----
-  const contrib = document.createElement("section");
-  contrib.innerHTML = `
-    <h1>Aventurando-se no Clã do Machado</h1>
-    <p class="destaque">Phantyr é feito das histórias de quem o explora.</p>
-    <p>Cada aventura deixa marcas, revela segredos e dá vida a novos lugares. E quem melhor para contar essas histórias do que aqueles que as vivenciaram?</p>
-    <p>Compartilhe suas descobertas, relate acontecimentos marcantes e registre localidades que merecem ser conhecidas. Seja uma vila visitada, um personagem importante, um evento memorável ou um mistério desvendado.</p>
-    <p>Sua aventura também faz parte da história do mundo. Registre suas experiências e ajude a construir o legado do Clã do Machado.</p>
-    <div class="actions"><a class="btn primary" href="${FORM_CONTRIBUICAO}" target="_blank" rel="noopener"><i class="fa-solid fa-feather-pointed"></i> Adicionar contribuição</a></div>`;
-  setTab("contribuicoes", contrib);
   setTab("viagem", viagem.painel);
 
   // ----- seleção -----
@@ -242,7 +235,7 @@ export function mountMapa() {
     selecionar,
     destroy() {
       map.remove();
-      ["inicio", "filtros", "viagem", "contribuicoes", "detalhe"].forEach(hideTab);
+      ["inicio", "filtros", "viagem", "detalhe"].forEach(hideTab);
       document.title = "Clã do Machado — Mapa de Phantyr";
     },
   };
