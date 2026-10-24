@@ -27,7 +27,6 @@ export function mountCidade(slug: string) {
   // ----- início: descrição da cidade -----
   const inicio = document.createElement("section");
   inicio.innerHTML = `
-    <a class="btn voltar" href="#/${cidade ? "local/" + cidade.slug : ""}"><i class="fa-solid fa-arrow-left"></i> Mapa de Phantyr</a>
     <h1>${esc(m.nome)}</h1>
     ${regiao ? `<p class="tags"><span class="tag ghost">Região: ${esc(regiao.nome)}</span></p>` : ""}
     ${cidade ? fichaCidade(cidade) : ""}
@@ -69,9 +68,13 @@ export function mountCidade(slug: string) {
     if (b) selecionar(+b.dataset.i!);
   });
 
+  // a aba Viagem só vale para o mapa-múndi
+  const abaViagem = document.querySelector<HTMLElement>('#rail [data-tab="viagem"]');
+  if (abaViagem) abaViagem.hidden = true;
+
   // botão sempre visível para voltar ao mapa de Phantyr (além do que fica dentro do painel)
   const voltar = document.createElement("a");
-  voltar.id = "voltar-mapa"; voltar.className = "btn";
+  voltar.id = "voltar-mapa"; voltar.className = "btn btn-busca";
   voltar.href = `#/${cidade ? "local/" + cidade.slug : ""}`;
   voltar.innerHTML = `<i class="fa-solid fa-arrow-left"></i> Mapa de Phantyr`;
   document.body.append(voltar);
@@ -81,6 +84,7 @@ export function mountCidade(slug: string) {
   return {
     destroy() {
       voltar.remove();
+      if (abaViagem) abaViagem.hidden = false;
       map.remove();
       ["inicio", "filtros", "detalhe"].forEach(hideTab);
       document.title = "Clã do Machado — Mapa de Phantyr";

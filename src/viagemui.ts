@@ -253,6 +253,20 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   document.addEventListener("mouseup", soltar);
   map.on("unload", () => document.removeEventListener("mouseup", soltar));
 
+  // ----- botão flutuante para desligar a ferramenta ativa (mesma posição do "voltar ao mapa de Phantyr") -----
+  const desligar = document.createElement("button");
+  desligar.id = "desligar-ferramenta"; desligar.className = "btn btn-busca"; desligar.hidden = true;
+  document.body.append(desligar);
+  function atualizarDesligar() {
+    const txt = desenhando ? "Desligar desenho" : selecionando ? "Desligar seleção" : modo ? "Cancelar escolha no mapa" : "";
+    desligar.hidden = !txt; desligar.innerHTML = txt ? `<i class="fa-solid fa-xmark"></i> ${txt}` : "";
+  }
+  desligar.addEventListener("click", () => { sair(); if (desenhando) modoDesenho(false); if (selecionando) modoSelecao(false); atualizarDesligar(); });
+  // reavalia depois de qualquer clique no painel ou no mapa (os modos mudam nesses cliques)
+  painel.addEventListener("click", () => setTimeout(atualizarDesligar, 0));
+  map.on("click", () => setTimeout(atualizarDesligar, 0));
+  map.on("unload", () => desligar.remove());
+
   return {
     painel,
     // clique num marcador de local durante a escolha no mapa
