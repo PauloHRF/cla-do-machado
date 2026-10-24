@@ -38,7 +38,7 @@
     },
     {
       "nome": "Minas Emberglyph",
-      "icone": "Gem",
+      "icone": "gem",
       "cor": "sandybrown",
       "x": 594,
       "y": 2644,
@@ -56,7 +56,7 @@
     },
     {
       "nome": "Torre do Vórtice Oculto",
-      "icone": "spiral",
+      "icone": "hand-sparkles",
       "cor": "darkblue",
       "x": 2946,
       "y": 1850,
@@ -66,7 +66,7 @@
     {
       "nome": "Taverna do Sapo Luminoso",
       "icone": "beer-mug-empty",
-      "cor": "skyblue",
+      "cor": "peachpuff",
       "x": 2806,
       "y": 2412,
       "descricao": "",
@@ -75,7 +75,7 @@
     {
       "nome": "Torre de Água",
       "icone": "water",
-      "cor": "lightblue",
+      "cor": "skyblue",
       "x": 2402,
       "y": 1728,
       "descricao": "",
@@ -84,7 +84,7 @@
     {
       "nome": "Exportações Shadowbreeze",
       "icone": "dolly",
-      "cor": "darkorange",
+      "cor": "orange",
       "x": 2506,
       "y": 2140,
       "descricao": "",
