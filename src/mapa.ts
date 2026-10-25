@@ -22,10 +22,10 @@ export function fichaCidade(c: import("./data").Cidade) {
   return linhas ? `<dl class="ficha">${linhas}</dl>` : "";
 }
 
-// Botão do link externo: texto personalizável ("link_texto"); sem texto, continua sendo "Mapa".
+// Botão do link externo: texto personalizável ("link_texto"); sem texto, mostra "Abrir link".
 function botaoLink(l: { link?: string; link_texto?: string }) {
   const texto = l.link_texto?.trim();
-  return `<a class="btn" href="${esc(l.link!)}" target="_blank" rel="noopener"><i class="fa-solid ${texto ? "fa-arrow-up-right-from-square" : "fa-image"}"></i> ${esc(texto || "Mapa")}</a>`;
+  return `<a class="btn" href="${esc(l.link!)}" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> ${esc(texto || "Abrir link")}</a>`;
 }
 
 function detalheHtml(l: Local) {

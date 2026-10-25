@@ -45,7 +45,7 @@ collections:
       - { name: texto, label: "Texto livre (história, descrição)", widget: markdown, required: false }
       - { name: pagina, label: "Mapa da cidade (código do mapa, ex.: komora)", widget: string, required: false }
       - { name: link, label: "Link externo (vira um botão)", widget: string, required: false }
-      - { name: link_texto, label: "Texto do botão do link (vazio = Mapa)", widget: string, required: false }
+      - { name: link_texto, label: "Texto do botão do link (vazio = Abrir link)", widget: string, required: false }
       - name: eventos
         label: Linha do tempo
         widget: list
@@ -89,7 +89,7 @@ collections:
       - { name: cor, label: "Cor do ícone (só contribuições; vazio = padrão da categoria)", widget: string, required: false }
       - { name: descricao, label: Descrição, widget: markdown }
       - { name: link, label: "Link externo (vira um botão)", widget: string, required: false }
-      - { name: link_texto, label: "Texto do botão do link (vazio = Mapa)", widget: string, required: false }
+      - { name: link_texto, label: "Texto do botão do link (vazio = Abrir link)", widget: string, required: false }
       - name: eventos
         label: Linha do tempo
         widget: list

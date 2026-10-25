@@ -61,5 +61,5 @@ Camada *Filtros → Alcance do Clã (temporada 4)*: todos os hexágonos a até *
 Aba **Jornais** no menu: lista as edições (`src/content/jornais`, mais recentes primeiro). Cada edição é um arquivo JSON com `nome`, `edicao`, `data`, `manchete` e `imagem` (em `public/img/jornais/`). Clicar na miniatura abre a imagem em tamanho grande. Também dá para cadastrar pelo `/admin → Jornais`. Use imagens grandes (ex.: 1200 px de largura, WebP) para o texto ficar legível.
 
 ## Botão do link de um local
-Cidades e pontos podem ter um **link externo** (vira um botão na página do local). O campo **"Texto do botão do link"** (`link_texto`, no `/admin`) personaliza o texto (ex.: "Ouvir a música"); vazio = "Mapa". Em cidades que têm mapa de cidade, o botão "Mapa" externo não aparece (só o "Mapa da cidade", em verde).
+Cidades e pontos podem ter um **link externo** (vira um botão na página do local). O campo **"Texto do botão do link"** (`link_texto`, no `/admin`) personaliza o texto (ex.: "Ouvir a música"); vazio = "Abrir link". Em cidades que têm mapa de cidade, o botão "Mapa" externo não aparece (só o "Mapa da cidade", em verde).
 
