@@ -73,6 +73,8 @@ collections:
         options:
           - { label: "PDI (Fixo)", value: pdi_fixo }
           - { label: "PDI (Itinerante)", value: pdi_itinerante }
+          - { label: Portos, value: porto }
+          - { label: "Docas (portos fluviais)", value: doca }
           - { label: "Assentamentos/Vilas", value: assentamento }
           - { label: Boatos, value: boato }
           - { label: "Construções Humanas", value: construcao_humana }
