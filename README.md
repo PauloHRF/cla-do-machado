@@ -63,3 +63,6 @@ Aba **Jornais** no menu: lista as edições (`src/content/jornais`, mais recente
 ## Botão do link de um local
 Cidades e pontos podem ter um **link externo** (vira um botão na página do local). O campo **"Texto do botão do link"** (`link_texto`, no `/admin`) personaliza o texto (ex.: "Ouvir a música"); vazio = "Abrir link". Em cidades que têm mapa de cidade, o botão "Mapa" externo não aparece (só o "Mapa da cidade", em verde).
 
+## Rotas aquáticas
+Em `src/content/viagem/rotas-aquaticas.json`: 33 rotas entre portos e docas (conjuntos de hexágonos conectados, com os dois portos nas pontas). Na aba **Viagem**, a caixa **"Usar rotas aquáticas (passagem de barco)"** deixa o grupo andar por esses hexágonos a `BARCO_HEX_POR_DIA` (2) hexágonos por dia (`src/viagem.ts`), pegando o barco em qualquer porto ou doca e descendo em qualquer outro; o caminho mais rápido mistura terra, estrada e barco. A passagem paga não entra na conta (só o tempo). *Filtros → Rotas aquáticas* mostra as rotas no mapa.
+
