@@ -204,7 +204,7 @@ export function mountMapa() {
     if (!b || !atual) return;
     if (b.dataset.act === "eventos" && atual.eventos) openEvents(atual.nome, atual.eventos);
     if (b.dataset.act === "copiar")
-      navigator.clipboard?.writeText(`${location.origin}/#/local/${atual.slug}`).then(() => toast("Link copiado"));
+      navigator.clipboard?.writeText(`${location.origin}${location.pathname}#/local/${atual.slug}`).then(() => toast("Link copiado"));
   });
 
   function selecionar(slug: string | null) {
