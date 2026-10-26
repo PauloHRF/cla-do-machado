@@ -30,7 +30,8 @@ export function mountCidade(slug: string) {
     <h1>${esc(m.nome)}</h1>
     ${regiao ? `<p class="tags"><span class="tag ghost">Região: ${esc(regiao.nome)}</span></p>` : ""}
     ${cidade ? fichaCidade(cidade) : ""}
-    <div class="prose">${md(m.texto)}</div>`;
+    ${cidade?.texto ? `<div class="prose">${md(cidade.texto)}</div>` : ""}
+    ${m.texto && m.texto !== cidade?.texto ? `<div class="prose">${md(m.texto)}</div>` : ""}`;
   setTab("inicio", inicio);
 
   // ----- locais -----
