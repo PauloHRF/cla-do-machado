@@ -16,7 +16,7 @@
       "x": 3071,
       "y": 1599,
       "descricao": "Uma imponente fortificação de pedra que serve como sede do governo de Sheidrost e residência de Valrion Shadowbreeze e sua filha, Zallerya. Abriga espaços administrativos, reuniões políticas e o quartel-general dos Capas Púrpuras, responsáveis pela defesa da cidade.",
-      "detalhe": "<h3>Barão Valrion Shadowbreeze</h3>\n\nFundador de Sheidrost, Valrion é um elfo com quase mil anos, conhecido por sua habilidade política e capacidade de negociação. Após sobreviver à epidemia das necrochagas, sua aparência ficou profundamente marcada pela doença, tornando-o mais reservado. Pragmático e severo ao lidar com rivais, busca transformar Sheidrost em uma potência comercial e arcana, fortalecendo alianças diante da ameaça da Soberania Poente. Sua maior fraqueza é a filha, Zallerya, por quem faria qualquer coisa.\n\n![](/img/valrion_shadowbreeze.png)\n\n<h3>Zallerya Shadowbreeze, a Baronesa Perene</h3>\n\nFilha de Valrion Shadowbreeze, Zallerya é uma elfa com mais de oito séculos de vida, mas mantém a aparência de uma menina de doze anos devido a um ritual arcano que a salvou de uma doença. Mestra-ocultista do Círculo dos Ossos, possui grande talento mágico e habilidade política. Fria e calculista, enxerga as pessoas como ferramentas para alcançar seus objetivos, embora mantenha uma imagem pública sofisticada e admirada. Ao lado do pai, governa Sheidrost e foi fundamental para salvar o baronato da peste das necrochagas e enfrentar a Soberania Poente.\n![](/img/zallerya_shadowbreeze.png)"
+      "detalhe": "<h3>Barão Valrion Shadowbreeze</h3>\n\nFundador de Sheidrost, Valrion é um elfo com quase mil anos, conhecido por sua habilidade política e capacidade de negociação. Após sobreviver à epidemia das necrochagas, sua aparência ficou profundamente marcada pela doença, tornando-o mais reservado. Pragmático e severo ao lidar com rivais, busca transformar Sheidrost em uma potência comercial e arcana, fortalecendo alianças diante da ameaça da Soberania Poente. Sua maior fraqueza é a filha, Zallerya, por quem faria qualquer coisa.\n\n![](/img/valrion_shadowbreeze.png)\n\n<h3>Zallerya Shadowbreeze, a Baronesa Perene</h3>\n\nFilha de Valrion Shadowbreeze, Zallerya é uma elfa com mais de oito séculos de vida, mas mantém a aparência de uma menina de doze anos devido a um ritual arcano que a salvou de uma doença. Mestra-ocultista do Círculo dos Ossos, possui grande talento mágico e habilidade política. Fria e calculista, enxerga as pessoas como ferramentas para alcançar seus objetivos, embora mantenha uma imagem pública sofisticada e admirada. Ao lado do pai, governa Sheidrost e foi fundamental para salvar o baronato da peste das necrochagas e enfrentar a Soberania Poente.\n![](/img/zallerya_shadowbreeze.png)\n\n\n<h3>Kael Marthis</h3>\n\nHumano natural de Meride e coberto de tatuagens meridianas, Kael é o principal administrador de Sheidrost e um dos subordinados diretos de Valrion Shadowbreeze. Experiente nos jogos políticos da nobreza, cuida do cotidiano da cidade e sempre mantem a coroa em segurança estatal.\n\n![](/img/pasted-image-1793117983564.png)"
     },
     {
       "nome": "Forja de Granito",
@@ -116,6 +116,15 @@
       "y": 3630,
       "descricao": "",
       "detalhe": ""
+    },
+    {
+      "nome": "Quartel dos Capas Púrpuras",
+      "icone": "person-military-pointing",
+      "cor": "black",
+      "x": 3177,
+      "y": 1590,
+      "descricao": "Os Capas Púrpuras são a força militar de Sheidrost, responsáveis tanto pela defesa do baronato quanto pela segurança de suas ruas. Liderados por Vaerok, atuam a partir de um quartel-general anexo ao Bastião do Baronato.",
+      "detalhe": "<h3>Vaerok, o Comandante dos Capas Púrpuras</h3>\n\nGoliath sem marca elemental, Vaerok foi banido das Volakas e hoje comanda os Capas Púrpuras, responsáveis pela defesa do baronato e pela segurança das ruas de Sheidrost. Sua enorme figura e sua perna arcanomecânica fazem dele uma presença marcante. \n![](/img/pasted-image-1793118712838.png)"
     }
   ]
 }
