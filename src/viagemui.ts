@@ -1,6 +1,6 @@
 import L from "leaflet";
 import { centroLatLng, centroTopo, verticesTopo, hexDe, rotulo, linhaHex, MAPA_ALTURA, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, type Hex } from "./hex";
-import { calcularRota, VOOS, type Voo, avaliarCaminho, terrenoDe, todasEstradas, rotasAquaticas, BARCO_HEX_POR_DIA, TELEPORTE_DIAS, eTeleporte, TERRENOS, type Perfil, type Terreno } from "./viagem";
+import { calcularRota, diasInteiros, VOOS, type Voo, avaliarCaminho, terrenoDe, todasEstradas, rotasAquaticas, BARCO_HEX_POR_DIA, TELEPORTE_DIAS, eTeleporte, TERRENOS, type Perfil, type Terreno } from "./viagem";
 import { esc, toast } from "./ui";
 // ---------- camadas de revisão (para a equipe conferir o que foi lido do mapa) ----------
 export function camadaTerreno() {
@@ -138,9 +138,9 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     if (semCaminho) { res.innerHTML = `<p class="viagem-aviso">Não há caminho entre esses pontos com as opções escolhidas.</p>`; return; }
     if (caminho.length < 2) { res.innerHTML = extremos.length ? `<p class="muted">Origem em ${rotulo(extremos[0])}. Clique no destino.</p>` : ""; return; }
     const r = avaliarCaminho(caminho, perfilAtual());
-    const dias = fmtN(r.dias), inteiro = Math.ceil(r.dias - 1e-9);
+    const inteiro = diasInteiros(r.dias), soma = Math.round(r.dias * 100) / 100;
     res.innerHTML = `
-      <div class="viagem-total"><strong>${dias}</strong> dia${r.dias === 1 ? "" : "s"}<small>${inteiro !== Math.round(r.dias * 100) / 100 ? `(chegada no ${inteiro}º dia) · ` : ""}${r.passos} hexágono${r.passos === 1 ? "" : "s"} · ${rotulo(caminho[0])} → ${rotulo(caminho[caminho.length - 1])}</small></div>
+      <div class="viagem-total"><strong>${inteiro}</strong> dia${inteiro === 1 ? "" : "s"}<small>${inteiro !== soma ? `(soma: ${fmtN(soma)} dia${soma === 1 ? "" : "s"}, arredondada para cima) · ` : ""}${r.passos} hexágono${r.passos === 1 ? "" : "s"} · ${rotulo(caminho[0])} → ${rotulo(caminho[caminho.length - 1])}</small></div>
       ${r.agua.length ? `<p class="viagem-aviso">O caminho passa por <strong>${r.agua.length}</strong> hexágono${r.agua.length === 1 ? "" : "s"} de água (em vermelho no mapa), que não entram na conta: ${r.agua.slice(0, 6).map(rotulo).join(", ")}${r.agua.length > 6 ? "…" : ""}.</p>` : ""}
       <table class="viagem-tab"><thead><tr><th>Tipo</th><th>Hexes</th><th>Dias</th></tr></thead><tbody>
       ${r.detalhe.map((d) => `<tr><td>${esc(d.rotulo)}</td><td>${d.hexes}</td><td>${fmtN(d.dias)}</td></tr>`).join("")}

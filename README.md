@@ -64,7 +64,7 @@ Aba **Jornais** no menu: lista as edições (`src/content/jornais`, mais recente
 Cidades e pontos podem ter um **link externo** (vira um botão na página do local). O campo **"Texto do botão do link"** (`link_texto`, no `/admin`) personaliza o texto (ex.: "Ouvir a música"); vazio = "Abrir link". Em cidades que têm mapa de cidade, o botão "Mapa" externo não aparece (só o "Mapa da cidade", em verde).
 
 ## Rotas aquáticas
-Em `src/content/viagem/rotas-aquaticas.json`: 39 rotas, cada uma ligando **dois** portos/docas (`de` → `ate`) pelos hexágonos listados. Na aba **Viagem**: **"Usar passagens de barco"** só deixa embarcar numa ponta e descer na outra, pelo trajeto da rota, a `BARCO_HEX_POR_DIA` (4, arredondando cada trecho para cima em dias inteiros) hexágonos por dia (`src/viagem.ts`); rotas se encadeiam pelos portos em comum. **"Tenho barco próprio"** navega por qualquer hexágono de água (portos e docas incluídos). Nos dois casos o tempo de cada trecho de barco é arredondado para cima em dias inteiros. Ao clicar num porto ou doca no mapa, o painel lista as rotas que saem dele (destino, hexágonos e dias) e desenha as rotas no mapa. A passagem paga não entra na conta. *Filtros → Rotas aquáticas* mostra as rotas no mapa.
+Em `src/content/viagem/rotas-aquaticas.json`: 39 rotas, cada uma ligando **dois** portos/docas (`de` → `ate`) pelos hexágonos listados. Na aba **Viagem**: **"Usar passagens de barco"** só deixa embarcar numa ponta e descer na outra, pelo trajeto da rota, a `BARCO_HEX_POR_DIA` (4) hexágonos por dia (`src/viagem.ts`); rotas se encadeiam pelos portos em comum. **"Tenho barco próprio"** navega por qualquer hexágono de água (portos e docas incluídos). Ao clicar num porto ou doca no mapa, o painel lista as rotas que saem dele (destino, hexágonos e dias) e desenha as rotas no mapa. A passagem paga não entra na conta. *Filtros → Rotas aquáticas* mostra as rotas no mapa.
 
 **Água a pé:** 1 hexágono de água entre dois hexágonos de terra pode ser atravessado sem barco, custando como terreno normal ("Travessia de 1 hex de água"). Dois ou mais hexágonos de água seguidos continuam exigindo estrada (ponte/vau), barco ou voo.
 
@@ -72,3 +72,5 @@ Em `src/content/viagem/rotas-aquaticas.json`: 39 rotas, cada uma ligando **dois*
 
 **Teleportes:** a caixa **"Usar teleportes"** liga os 15 pontos de teleporte entre si (todos com todos), a `TELEPORTE_DIAS` (0) dias por salto (`src/viagem.ts`, valor a confirmar). O cálculo escolhe sozinho se compensa teleportar; no desenho à mão, clique num ponto de teleporte e depois em outro para fazer o salto.
 
+
+**Arredondamento:** todos os tempos são somados exatamente (barco = 0,25 dia por hexágono, voo etc.) e só o total da viagem é arredondado para cima; toda viagem leva no mínimo **1 dia**.
