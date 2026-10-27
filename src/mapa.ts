@@ -172,6 +172,7 @@ export function mountMapa() {
     ${(Object.keys(TIPOS) as Tipo[]).map((t) => linha(t, TIPOS[t].nome, htmlSimbolo(simboloTipo(t), 20, "mini"))).join("")}
     ${linha("pdi_fixo", "PDI* (Fixo)", iconeCat("pdi_fixo"))}
     ${linha("pdi_itinerante", "PDI* (Itinerante)", iconeCat("pdi_itinerante"))}
+    ${linha("teleporte", "Teleportes", iconeCat("teleporte"))}
     ${linha("porto", "Portos", iconeCat("porto"))}
     ${linha("doca", "Docas (portos fluviais)", iconeCat("doca"))}
     <p class="muted nota">* Pontos de Interesse</p>
