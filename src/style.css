@@ -334,3 +334,9 @@ details.grupo > summary.ribbon::after { content: ""; flex: 1; height: 2px; backg
 .rotas-lista li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .rotas-lista li > button:first-child { flex: 1 1 100%; justify-content: flex-start; }
 .rotas-lista li > .muted { flex: 1; }
+
+/* aba secreta de ferramentas: sem ícone nem destaque, só ocupa um cantinho acima do Discord */
+#rail button.secreta { height: 28px; background: none; opacity: 0; }
+#rail button.secreta:hover, #rail button.secreta:focus-visible, #rail button.secreta.active { opacity: 1; }
+#rail button.secreta.active { background: none; }
+@media (max-width: 720px) { #rail button.secreta { flex: 0 0 28px; width: 28px; height: auto; } }
