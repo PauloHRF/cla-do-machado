@@ -4,7 +4,8 @@ import { simbolo, htmlSimbolo, disco } from "./icons";
 import { camadaDominios, dominioDe } from "./dominios";
 import { camadaAlcance } from "./alcance";
 import { montarViagem, camadaTerreno, camadaEstradas, camadaRotasAquaticas } from "./viagemui";
-import { hexDe, rotulo, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
+import { rotasDoHex } from "./viagem";
+import { hexDe, rotulo, centroLatLng, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
 
 const BOUNDS: L.LatLngBoundsExpression = [[0, 0], [1697, 2000]];
@@ -26,6 +27,22 @@ export function fichaCidade(c: import("./data").Cidade) {
 function botaoLink(l: { link?: string; link_texto?: string }) {
   const texto = l.link_texto?.trim();
   return `<a class="btn" href="${esc(l.link!)}" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> ${esc(texto || "Abrir link")}</a>`;
+}
+
+/** Rotas aquáticas que saem de um porto/doca. */
+function rotasDoLocal(l: Local) {
+  if (l.kind === "cidade" || (l.categoria !== "porto" && l.categoria !== "doca")) return [];
+  const h = hexDe(l.x, l.y);
+  return h ? rotasDoHex(h) : [];
+}
+function rotasHtml(l: Local) {
+  const rs = rotasDoLocal(l);
+  if (!rs.length) return "";
+  const nomeDe = (h: { c: number; l: number }) => [...locais.values()].find((x) => x.kind !== "cidade" && (x.categoria === "porto" || x.categoria === "doca") && !x.oculto && (() => { const k = hexDe(x.x, x.y); return k && k.c === h.c && k.l === h.l; })());
+  return `<h2 class="ribbon">Rotas aquáticas</h2><ul class="rotas-lista">${rs.map((r, i) => {
+    const d = nomeDe(r.destino);
+    return `<li><button class="btn" data-rota="${i}" title="Mostrar no mapa"><i class="fa-solid fa-route"></i> ${esc(d?.nome ?? rotulo(r.destino))}</button> <span class="muted">${r.trajeto.length - 1} hex · ${r.dias} dia${r.dias === 1 ? "" : "s"}</span>${d ? ` <button class="btn" data-ir="${d.slug}" title="Abrir ${esc(d.nome)}"><i class="fa-solid fa-arrow-right"></i></button>` : ""}</li>`;
+  }).join("")}</ul>`;
 }
 
 function detalheHtml(l: Local) {
@@ -51,6 +68,7 @@ function detalheHtml(l: Local) {
   return `<h1>${esc(l.nome)}</h1><p class="tags"><span class="tag ghost">${esc(cat)}</span>${dp ? `<span class="tag ghost">Região: ${esc(dp.nome)}</span>` : ""}${hp ? `<span class="tag ghost">Hex ${rotulo(hp)}</span>` : ""}</p>
     <div class="prose">${md(l.descricao.replace(/^<b>[^<]+<\/b>(<br\s*\/?>)?/, ""))}</div>
     ${l.descricao ? "" : `<p class="muted">Ainda não há informações sobre este lugar.</p>`}
+    ${rotasHtml(l)}
     <div class="actions">
       ${l.link ? botaoLink(l) : ""}
       ${l.eventos?.length ? `<button class="btn" data-act="eventos"><i class="fa-solid fa-timeline"></i> Eventos</button>` : ""}
@@ -214,20 +232,40 @@ export function mountMapa() {
   let marcado: L.Marker | null = null;
   const detalhe = document.createElement("section");
   detalhe.addEventListener("click", (e) => {
-    const b = (e.target as HTMLElement).closest<HTMLElement>("[data-act]");
+    const alvo = e.target as HTMLElement;
+    const br = alvo.closest<HTMLElement>("[data-rota]"), bi = alvo.closest<HTMLElement>("[data-ir]");
+    if (bi) { location.hash = `#/local/${bi.dataset.ir}`; return; }
+    if (br && atual) { const r = rotasDoLocal(atual)[+br.dataset.rota!]; if (r) desenharRotas([r], true); return; }
+    const b = alvo.closest<HTMLElement>("[data-act]");
     if (!b || !atual) return;
     if (b.dataset.act === "eventos" && atual.eventos) openEvents(atual.nome, atual.eventos);
     if (b.dataset.act === "copiar")
       navigator.clipboard?.writeText(`${location.origin}${location.pathname}#/local/${atual.slug}`).then(() => toast("Link copiado"));
   });
 
+  // rotas aquáticas do porto selecionado (destacadas no mapa)
+  const rotasSel = L.layerGroup().addTo(map);
+  function desenharRotas(rs: ReturnType<typeof rotasDoHex>, ajustar = false) {
+    rotasSel.clearLayers();
+    const todos: L.LatLngExpression[] = [];
+    for (const r of rs) {
+      const pts = r.trajeto.map((h) => centroLatLng(h.c, h.l));
+      L.polyline(pts, { color: "#0e4d66", weight: 7, opacity: 0.55, interactive: false }).addTo(rotasSel);
+      L.polyline(pts, { color: "#27d3e6", weight: 4, opacity: 1, interactive: false }).addTo(rotasSel);
+      todos.push(...pts);
+    }
+    if (ajustar && todos.length) map.fitBounds(L.latLngBounds(todos), { maxZoom: 1, paddingTopLeft: [panelWidth() + 30, 30], paddingBottomRight: [30, isMobile() ? window.innerHeight * 0.5 : 30] });
+  }
+
   function selecionar(slug: string | null) {
     marcado?.getElement()?.classList.remove("sel");
+    rotasSel.clearLayers();
     closeEvents();
     const l = slug ? locais.get(slug) : undefined;
     if (!l) { atual = null; hideTab("detalhe"); return; }
     atual = l;
     detalhe.innerHTML = detalheHtml(l);
+    desenharRotas(rotasDoLocal(l));
     setTab("detalhe", detalhe);
     openTab("detalhe");
     document.title = `${l.nome} — Clã do Machado`;

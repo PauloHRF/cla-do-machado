@@ -329,3 +329,8 @@ details.grupo > summary.ribbon::before { content: "▾"; font-size: 0.8em; trans
 details.grupo:not([open]) > summary.ribbon::before { transform: rotate(-90deg); }
 details.grupo > summary.ribbon::after { content: ""; flex: 1; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); order: 5; }
 #panel-body > section > details.grupo:first-child > summary.ribbon { margin-top: 6px; }
+
+.rotas-lista { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.rotas-lista li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rotas-lista li > button:first-child { flex: 1 1 100%; justify-content: flex-start; }
+.rotas-lista li > .muted { flex: 1; }
