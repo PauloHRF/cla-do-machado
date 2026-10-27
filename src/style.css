@@ -313,3 +313,11 @@ h2.ribbon .ast { font-size: 0.7em; margin-left: -6px; align-self: flex-start; }
 .jornal-ed { font-size: 0.9rem; line-height: 1.2; color: var(--ink-soft); }
 .jornal-grande { width: 100%; height: auto; display: block; margin: 8px auto 0; border-radius: 3px; box-shadow: 0 2px 10px rgb(0 0 0 / 0.4); }
 #modal .box:has(.jornal-grande) { width: min(560px, 100%); }
+
+/* leitor de jornal em tela cheia */
+.leitor { position: fixed; inset: 0; z-index: 3000; display: flex; flex-direction: column; background: rgb(12 8 4 / 0.94); }
+.leitor-barra { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: rgb(0 0 0 / 0.5); }
+.leitor-titulo { flex: 1; min-width: 0; font: 1.2rem/1.1 var(--display); letter-spacing: 0.05em; color: #f3e3bd; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.leitor-area { flex: 1; position: relative; overflow: hidden; touch-action: none; cursor: grab; }
+.leitor-area:active { cursor: grabbing; }
+.leitor-area img { position: absolute; left: 0; top: 0; max-width: none; transform-origin: 0 0; user-select: none; box-shadow: 0 4px 24px rgb(0 0 0 / 0.6); }
