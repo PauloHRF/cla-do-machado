@@ -55,7 +55,7 @@ export function camadaRotasAquaticas() {
 }
 
 // ---------- painel "Viagem" ----------
-export interface Viagem { painel: HTMLElement; capturar(lat: number, lng: number, nome?: string): boolean }
+export interface Viagem { painel: HTMLElement; ferramentas: HTMLElement; capturar(lat: number, lng: number, nome?: string): boolean }
 
 export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   const painel = document.createElement("section");
@@ -91,7 +91,12 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
       <button class="btn" id="d-desfazer"><i class="fa-solid fa-rotate-left"></i> Desfazer</button>
       <button class="btn" id="d-limpar"><i class="fa-solid fa-eraser"></i> Limpar caminho</button>
     </div>
-    <div id="d-res"></div>
+    <div id="d-res"></div>`;
+
+  // ferramentas de conferência: aba discreta, sem ícone, acima do Discord
+  const ferramentas = document.createElement("section");
+  ferramentas.innerHTML = `
+    <h1>Ferramentas</h1>
     <h2 class="ribbon">Selecionar hexágonos</h2>
     <p class="muted">Para corrigir terreno ou estradas em vários hexágonos de uma vez: ligue a seleção, clique nos hexágonos (clique de novo para tirar) e copie a lista. <strong>Ctrl + arrastar</strong> pinta vários de uma vez; <strong>Ctrl + Alt + arrastar</strong> apaga.</p>
     <div class="actions">
@@ -101,7 +106,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     </div>
     <div id="s-res"></div>`;
 
-  const q = <T extends HTMLElement>(s: string) => painel.querySelector<T>(s)!;
+  const q = <T extends HTMLElement>(s: string) => (painel.querySelector<T>(s) ?? ferramentas.querySelector<T>(s))!;
   const pontos: Record<"de" | "ate", Hex | null> = { de: null, ate: null };
   let modo: "de" | "ate" | null = null;
   const camada = L.layerGroup().addTo(map);
@@ -299,7 +304,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   map.on("unload", () => desligar.remove());
 
   return {
-    painel,
+    painel, ferramentas,
     // clique num marcador de local durante a escolha no mapa
     capturar(lat, lng, nome) {
       if (desenhando) { const h = hexDe(lng, lat); if (h) adicionar(h); return true; }
