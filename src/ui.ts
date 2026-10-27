@@ -127,8 +127,6 @@ document.addEventListener("keydown", (e) => {
 
 // ---------- coordenadas (útil para quem cadastra locais) ----------
 const coords = $("coords");
-/** Enquanto verdadeiro, o clique simples não copia o código do hexágono (a seleção de hexágonos usa o clique). */
-export const copiaCliquePausada = { valor: false };
 export function showCoords(map: L.Map) {
   map.on("mousemove", (e: L.LeafletMouseEvent) => {
     coords.hidden = false;
@@ -137,13 +135,7 @@ export function showCoords(map: L.Map) {
   });
   map.on("mouseout", () => (coords.hidden = true));
   map.on("click", (e: L.LeafletMouseEvent) => {
-    // TEMPORÁRIO (remover depois): clique simples copia o código do hexágono (ex.: C72-L41) para a área de transferência
-    if (!(e.originalEvent as MouseEvent).shiftKey) {
-      if (copiaCliquePausada.valor) return;
-      const hx = hexDe(e.latlng.lng, e.latlng.lat);
-      if (hx) { const cod = rotulo(hx); navigator.clipboard?.writeText(cod).then(() => toast(`${cod} copiado`), () => toast(cod)); }
-      return;
-    }
+    if (!(e.originalEvent as MouseEvent).shiftKey) return;
     const t = `${Math.round(e.latlng.lng)}, ${Math.round(e.latlng.lat)}`;
     const h = hexDe(e.latlng.lng, e.latlng.lat);
     navigator.clipboard?.writeText(t).then(() => toast(`Coordenadas copiadas: ${t}${h ? " (" + rotulo(h) + ")" : ""}`));
