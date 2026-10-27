@@ -3,7 +3,7 @@ import { asset, cidades, pontos, TIPOS, CATEGORIAS, CATEGORIAS_COMUNIDADE, locai
 import { simbolo, htmlSimbolo, disco } from "./icons";
 import { camadaDominios, dominioDe } from "./dominios";
 import { camadaAlcance } from "./alcance";
-import { montarViagem, camadaTerreno, camadaEstradas } from "./viagemui";
+import { montarViagem, camadaTerreno, camadaEstradas, camadaRotasAquaticas } from "./viagemui";
 import { hexDe, rotulo, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
 import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
 
@@ -145,6 +145,7 @@ export function mountMapa() {
   camadas.hex = gradeHex();
   camadas.terreno = camadaTerreno();
   camadas.estradas = camadaEstradas();
+  camadas.rotas = camadaRotasAquaticas();
   camadas.alcance = camadaAlcance();
   camadas.dominios = camadaDominios();
 
@@ -180,6 +181,7 @@ export function mountMapa() {
     <h2 class="ribbon">Filtros</h2>
     ${linha("alcance", "Alcance do Clã (temporada 4)", `<i class="fa-solid fa-bullseye mini"></i>`)}
     ${linha("dominios", "Regiões", `<i class="fa-solid fa-flag mini"></i>`)}
+    ${linha("rotas", "Rotas aquáticas", `<i class="fa-solid fa-ship mini"></i>`)}
     <h2 class="ribbon">Conferência</h2>
     ${linha("hex", "Grade de hexágonos", `<i class="fa-solid fa-border-all mini"></i>`)}
     ${linha("terreno", "Terreno (viagem)", `<i class="fa-solid fa-mountain-sun mini"></i>`)}

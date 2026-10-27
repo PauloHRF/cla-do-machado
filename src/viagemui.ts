@@ -1,7 +1,7 @@
 import L from "leaflet";
 import { locais, norm } from "./data";
 import { centroLatLng, centroTopo, verticesTopo, hexDe, rotulo, linhaHex, MAPA_ALTURA, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, type Hex } from "./hex";
-import { calcularRota, avaliarCaminho, terrenoDe, todasEstradas, TERRENOS, type Perfil, type Terreno } from "./viagem";
+import { calcularRota, avaliarCaminho, terrenoDe, todasEstradas, rotasAquaticas, BARCO_HEX_POR_DIA, TERRENOS, type Perfil, type Terreno } from "./viagem";
 import { esc, copiaCliquePausada, toast } from "./ui";
 
 // ---------- camadas de revisão (para a equipe conferir o que foi lido do mapa) ----------
@@ -36,6 +36,22 @@ export function camadaEstradas() {
   return g;
 }
 
+export function camadaRotasAquaticas() {
+  const g = L.layerGroup();
+  const vizinho = (c: number, l: number) => c & 1
+    ? [[c, l + 1], [c + 1, l], [c + 1, l + 1], [c - 1, l], [c - 1, l + 1]]
+    : [[c, l + 1], [c + 1, l - 1], [c + 1, l], [c - 1, l - 1], [c - 1, l]];
+  for (const r of rotasAquaticas) {
+    const tem = new Set(r.hexes.map((h) => `${h.c},${h.l}`));
+    for (const h of r.hexes) {
+      L.circleMarker(centroLatLng(h.c, h.l), { radius: 3, color: "#0e4d66", weight: 1, fillColor: "#27d3e6", fillOpacity: 1, interactive: false }).addTo(g);
+      for (const [c, l] of vizinho(h.c, h.l)) if (tem.has(`${c},${l}`))
+        L.polyline([centroLatLng(h.c, h.l), centroLatLng(c, l)], { color: "#27d3e6", weight: 3, opacity: 0.9, dashArray: "6 5", interactive: false }).addTo(g);
+    }
+  }
+  return g;
+}
+
 // ---------- painel "Viagem" ----------
 export interface Viagem { painel: HTMLElement; capturar(lat: number, lng: number, nome?: string): boolean }
 
@@ -57,6 +73,8 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
       <p class="muted">Ex.: camelo → deserto; bode → montanha.</p>
     </div>
     <label class="check"><input type="checkbox" id="v-estradas" checked><span class="box"></span><span>Usar estradas</span></label>
+    <label class="check"><input type="checkbox" id="v-barco"><span class="box"></span><span>Usar rotas aquáticas (passagem de barco)</span></label>
+    <p class="muted nota" id="v-barco-nota" hidden>Entre portos e docas, pelas rotas do mapa: ${BARCO_HEX_POR_DIA} hexágonos por dia. Ligue <em>Filtros → Rotas aquáticas</em> para ver.</p>
     <div class="actions"><button class="btn primary" id="v-calc"><i class="fa-solid fa-route"></i> Calcular</button><button class="btn" id="v-limpar">Limpar</button></div>
     <div id="v-res"></div>
     <h2 class="ribbon">Desenhar caminho</h2>
@@ -111,6 +129,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     const k = modo; sair(); definir(k, h);
   });
 
+  q<HTMLInputElement>("#v-barco").addEventListener("change", (e) => (q("#v-barco-nota").hidden = !(e.target as HTMLInputElement).checked));
   q<HTMLInputElement>("#v-montaria").addEventListener("change", (e) => (q("#v-ignora").hidden = !(e.target as HTMLInputElement).checked));
 
   function limparRota() { camada.clearLayers(); (["de", "ate"] as const).forEach((k) => (marcadores[k] = undefined)); (["de", "ate"] as const).forEach((k) => pontos[k] && definir(k, pontos[k], campo(k).value)); q("#v-res").innerHTML = ""; }
@@ -122,7 +141,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     if (!pontos.de || !pontos.ate) { res.innerHTML = `<p class="viagem-aviso">Escolha a origem e o destino (pelo nome, pelo hexágono ou clicando no mapa).</p>`; return; }
     const montaria = q<HTMLInputElement>("#v-montaria").checked;
     const perfil: Perfil = {
-      montaria, estradas: q<HTMLInputElement>("#v-estradas").checked,
+      montaria, estradas: q<HTMLInputElement>("#v-estradas").checked, barco: q<HTMLInputElement>("#v-barco").checked,
       ignora: Array.from(painel.querySelectorAll<HTMLInputElement>("[data-ignora]:checked")).map((i) => i.dataset.ignora as Terreno),
     };
     limparRota();
@@ -147,7 +166,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   let caminho: Hex[] = [];
   let desenhando = false;
   const perfilAtual = (): Perfil => ({
-    montaria: q<HTMLInputElement>("#v-montaria").checked, estradas: q<HTMLInputElement>("#v-estradas").checked,
+    montaria: q<HTMLInputElement>("#v-montaria").checked, estradas: q<HTMLInputElement>("#v-estradas").checked, barco: q<HTMLInputElement>("#v-barco").checked,
     ignora: Array.from(painel.querySelectorAll<HTMLInputElement>("[data-ignora]:checked")).map((i) => i.dataset.ignora as Terreno),
   });
   const fmtN = (n: number) => String(Math.round(n * 100) / 100).replace(".", ",");
@@ -192,7 +211,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     const h = hexDe(e.latlng.lng, e.latlng.lat); if (h) adicionar(h);
   });
   // o perfil do grupo vale também para o caminho desenhado
-  painel.addEventListener("change", (e) => { if ((e.target as HTMLElement).matches("#v-montaria, #v-estradas, [data-ignora]") && caminho.length > 1) redesenhar(); });
+  painel.addEventListener("change", (e) => { if ((e.target as HTMLElement).matches("#v-montaria, #v-estradas, #v-barco, [data-ignora]") && caminho.length > 1) redesenhar(); });
 
   // ----- seleção de vários hexágonos (copiar a lista de códigos) -----
   const camadaSel = L.layerGroup().addTo(map);
