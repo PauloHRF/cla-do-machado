@@ -168,26 +168,35 @@ export function mountMapa() {
     `<label class="check"><input type="checkbox" data-camada="${id}" ${ligadas[id] ? "checked" : ""}><span class="box"></span>${icone}<span>${rotulo}</span></label>`;
   const iconeCat = (c: string) => { const sim = simboloCategoria(c); return sim ? htmlSimbolo(sim, 20, "mini") : `<i class="fa-solid fa-${CATEGORIAS[c].icone} mini" style="color:${CATEGORIAS[c].cor}"></i>`; };
   filtros.innerHTML = `
-    <h2 class="ribbon">Marcos Oficiais</h2>
+    <details class="grupo" data-grupo="oficiais" open><summary class="ribbon">Marcos Oficiais</summary>
     ${(Object.keys(TIPOS) as Tipo[]).map((t) => linha(t, TIPOS[t].nome, htmlSimbolo(simboloTipo(t), 20, "mini"))).join("")}
     ${linha("pdi_fixo", "PDI* (Fixo)", iconeCat("pdi_fixo"))}
     ${linha("pdi_itinerante", "PDI* (Itinerante)", iconeCat("pdi_itinerante"))}
     ${linha("teleporte", "Teleportes", iconeCat("teleporte"))}
     ${linha("porto", "Portos", iconeCat("porto"))}
     ${linha("doca", "Docas (portos fluviais)", iconeCat("doca"))}
-    <p class="muted nota">* Pontos de Interesse</p>
-    <h2 class="ribbon"><a href="#" data-abrir="contribuicoes" title="Abrir a aba Contribuições">Contribuições</a><span class="ast">**</span></h2>
+    <p class="muted nota">* Pontos de Interesse</p></details>
+    <details class="grupo" data-grupo="contribuicoes" open><summary class="ribbon"><a href="#" data-abrir="contribuicoes" title="Abrir a aba Contribuições">Contribuições</a><span class="ast">**</span></summary>
     ${CATEGORIAS_COMUNIDADE.map((c) => linha(c, CATEGORIAS[c].nome, iconeCat(c))).join("")}
-    <p class="muted nota">** Contribuições da comunidade do Clã do Machado. De mestres a jogadores.</p>
-    <h2 class="ribbon">Filtros</h2>
+    <p class="muted nota">** Contribuições da comunidade do Clã do Machado. De mestres a jogadores.</p></details>
+    <details class="grupo" data-grupo="filtros" open><summary class="ribbon">Filtros</summary>
     ${linha("alcance", "Alcance do Clã (temporada 4)", `<i class="fa-solid fa-bullseye mini"></i>`)}
     ${linha("dominios", "Regiões", `<i class="fa-solid fa-flag mini"></i>`)}
-    ${linha("rotas", "Rotas aquáticas", `<i class="fa-solid fa-ship mini"></i>`)}
-    <h2 class="ribbon">Conferência</h2>
+    ${linha("rotas", "Rotas aquáticas", `<i class="fa-solid fa-ship mini"></i>`)}</details>
+    <details class="grupo" data-grupo="conferencia" open><summary class="ribbon">Conferência</summary>
     ${linha("hex", "Grade de hexágonos", `<i class="fa-solid fa-border-all mini"></i>`)}
     ${linha("terreno", "Terreno (viagem)", `<i class="fa-solid fa-mountain-sun mini"></i>`)}
-    ${linha("estradas", "Estradas (viagem)", `<i class="fa-solid fa-road mini"></i>`)}
+    ${linha("estradas", "Estradas (viagem)", `<i class="fa-solid fa-road mini"></i>`)}</details>
     <p class="muted dica">Dica: segure <kbd>Shift</kbd> e clique no mapa para copiar as coordenadas (úteis ao cadastrar um local).</p>`;
+  // grupos retráteis (lembra o que o jogador recolheu)
+  const guardados = (() => { try { return JSON.parse(localStorage.getItem("filtros-recolhidos") ?? "[]") as string[]; } catch { return []; } })();
+  filtros.querySelectorAll<HTMLDetailsElement>("details.grupo").forEach((d) => {
+    if (guardados.includes(d.dataset.grupo!)) d.open = false;
+    d.addEventListener("toggle", () => {
+      const rec = Array.from(filtros.querySelectorAll<HTMLDetailsElement>("details.grupo")).filter((x) => !x.open).map((x) => x.dataset.grupo!);
+      try { localStorage.setItem("filtros-recolhidos", JSON.stringify(rec)); } catch { /* sem armazenamento */ }
+    });
+  });
   filtros.addEventListener("click", (e) => {
     const a = (e.target as HTMLElement).closest<HTMLElement>("[data-abrir]");
     if (a) { e.preventDefault(); openTab(a.dataset.abrir!); }

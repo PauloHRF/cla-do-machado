@@ -5,7 +5,7 @@ import { esc, setTab } from "./ui";
 export function montarJornais() {
   const sec = document.createElement("section");
   sec.innerHTML = `
-    <h1>Jornais</h1>
+    <h1>O Koboldiário</h1>
     <p class="muted">As notícias de Phantyr, edição por edição. Clique para ler em tela cheia, com zoom.</p>
     ${jornais.length
       ? `<div class="jornais">${jornais.map((j, i) => `
@@ -30,7 +30,7 @@ function abrirLeitor(j: (typeof jornais)[number]) {
   el.className = "leitor";
   el.innerHTML = `
     <div class="leitor-barra">
-      <span class="leitor-titulo">${esc(j.nome)} · Edição ${j.edicao}${j.data ? ` · ${esc(j.data)}` : ""}</span>
+      <span class="leitor-titulo"></span>
       <button class="btn" data-z="-" aria-label="Diminuir"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
       <button class="btn" data-z="0" aria-label="Ajustar à tela"><i class="fa-solid fa-expand"></i></button>
       <button class="btn" data-z="+" aria-label="Aumentar"><i class="fa-solid fa-magnifying-glass-plus"></i></button>

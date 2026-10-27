@@ -284,9 +284,9 @@ kbd { background: var(--paper-2); border: 1px solid var(--ink-soft); border-bott
 
 /* filtros: notas e título de seção com link */
 .nota { font-size: 0.95rem; margin: 4px 0 0; }
-h2.ribbon a { color: inherit; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 4px; }
-h2.ribbon a:hover { text-decoration-style: solid; }
-h2.ribbon .ast { font-size: 0.7em; margin-left: -6px; align-self: flex-start; }
+h2.ribbon a, summary.ribbon a { color: inherit; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 4px; }
+h2.ribbon a:hover, summary.ribbon a:hover { text-decoration-style: solid; }
+h2.ribbon .ast, summary.ribbon .ast { font-size: 0.7em; margin-left: -6px; align-self: flex-start; }
 
 /* botões flutuantes na mesma linha da busca (voltar ao mapa de Phantyr, desligar ferramenta) */
 :root { --busca-w: min(380px, calc(100vw - 150px)); --busca-cx: 50%; }
@@ -321,3 +321,11 @@ h2.ribbon .ast { font-size: 0.7em; margin-left: -6px; align-self: flex-start; }
 .leitor-area { flex: 1; position: relative; overflow: hidden; touch-action: none; cursor: grab; }
 .leitor-area:active { cursor: grabbing; }
 .leitor-area img { position: absolute; left: 0; top: 0; max-width: none; transform-origin: 0 0; user-select: none; box-shadow: 0 4px 24px rgb(0 0 0 / 0.6); }
+
+/* grupos retráteis dos filtros */
+details.grupo > summary.ribbon { display: flex; align-items: center; gap: 10px; cursor: pointer; list-style: none; user-select: none; font-family: var(--display); font-weight: 400; color: var(--accent); font-size: 1.7rem; line-height: 1; margin: 24px 0 12px; padding: 0; }
+details.grupo > summary::-webkit-details-marker { display: none; }
+details.grupo > summary.ribbon::before { content: "▾"; font-size: 0.8em; transition: transform 0.15s; }
+details.grupo:not([open]) > summary.ribbon::before { transform: rotate(-90deg); }
+details.grupo > summary.ribbon::after { content: ""; flex: 1; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); order: 5; }
+#panel-body > section > details.grupo:first-child > summary.ribbon { margin-top: 6px; }
