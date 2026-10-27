@@ -145,7 +145,7 @@ export function mountMapa() {
     const g = L.layerGroup();
     for (const c of cidades.filter((x) => x.tipo === t && !x.oculto)) {
       const m = L.marker([c.y, c.x], { icon: simbolo(simboloTipo(t)), alt: c.nome, riseOnHover: true }).addTo(g);
-      tooltip(m, c.nome).on("click", () => { if (!viagem.capturar(c.y, c.x, c.nome)) location.hash = `#/local/${c.slug}`; });
+      tooltip(m, c.nome).on("click", () => { if (!viagem.capturar(c.y, c.x)) location.hash = `#/local/${c.slug}`; });
       marcadores.set(c.slug, m);
     }
     camadas[t] = g;
@@ -155,7 +155,7 @@ export function mountMapa() {
     const sim = simboloCategoria(cat);   // marcos oficiais usam o símbolo da legenda; contribuições, um disco com ícone
     for (const p of pontos.filter((x) => x.categoria === cat && !x.oculto)) {
       const m = L.marker([p.y, p.x], { icon: sim ? simbolo(sim) : disco(p.icone || CATEGORIAS[cat].icone, p.cor || CATEGORIAS[cat].cor, 28), alt: p.nome }).addTo(g);
-      tooltip(m, p.nome).on("click", () => { if (!viagem.capturar(p.y, p.x, p.nome)) location.hash = `#/local/${p.slug}`; });
+      tooltip(m, p.nome).on("click", () => { if (!viagem.capturar(p.y, p.x)) location.hash = `#/local/${p.slug}`; });
       marcadores.set(p.slug, m);
     }
     camadas[cat] = g;
