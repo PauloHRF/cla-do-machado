@@ -59,6 +59,7 @@ export const TIPOS: Record<Tipo, { nome: string; cor: string }> = {
 export const CATEGORIAS: Record<string, { nome: string; icone: string; cor: string; oficial?: boolean }> = {
   pdi_fixo: { nome: "PDI (Fixo)", icone: "location-dot", cor: "#2a1d12", oficial: true },
   pdi_itinerante: { nome: "PDI (Itinerante)", icone: "shoe-prints", cor: "#2a1d12", oficial: true },
+  teleporte: { nome: "Teleportes", icone: "wand-magic-sparkles", cor: "#7b3fc4", oficial: true },
   porto: { nome: "Portos", icone: "anchor", cor: "#1f5f8b", oficial: true },
   doca: { nome: "Docas (portos fluviais)", icone: "sailboat", cor: "#2d8f8a", oficial: true },
   assentamento: { nome: "Assentamentos/Vilas", icone: "tents", cor: "#8a5a2b" },

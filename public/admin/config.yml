@@ -73,6 +73,7 @@ collections:
         options:
           - { label: "PDI (Fixo)", value: pdi_fixo }
           - { label: "PDI (Itinerante)", value: pdi_itinerante }
+          - { label: Teleportes, value: teleporte }
           - { label: Portos, value: porto }
           - { label: "Docas (portos fluviais)", value: doca }
           - { label: "Assentamentos/Vilas", value: assentamento }
