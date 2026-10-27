@@ -1,5 +1,5 @@
 // Regras de viagem do clã (1 hex = 1 dia a pé; montaria dobra; terreno difícil divide por 2; estrada ignora o terreno difícil).
-import { HEX_COLUNAS as NC, HEX_LINHAS as NL, distancia, type Hex } from "./hex";
+import { HEX_COLUNAS as NC, HEX_LINHAS as NL, distancia, hexDe, type Hex } from "./hex";
 
 export type Terreno = "agua" | "planicie" | "floresta" | "montanha" | "deserto" | "neve";
 export const TERRENOS: Record<Terreno, { nome: string; cor: string; dificil: boolean }> = {
@@ -58,7 +58,7 @@ export const temEstrada = (a: Hex, b: Hex) => estradas.has(aresta(a, b));
 export const todasEstradas = (): [Hex, Hex][] =>
   [...estradas].map((k) => { const [a, b] = k.split("-").map((p) => p.split(",").map(Number)); return [{ c: a[0], l: a[1] }, { c: b[0], l: b[1] }]; });
 
-export interface Perfil { montaria: boolean; ignora: Terreno[]; estradas: boolean; barco?: boolean }
+export interface Perfil { montaria: boolean; ignora: Terreno[]; estradas: boolean; barco?: boolean; teleporte?: boolean }
 
 // ---- rotas aquáticas (passagem de barco entre portos e docas) ----
 /** Velocidade de quem viaja por rota aquática, em hexágonos por dia (a confirmar com a equipe; hoje igual à montaria). */
@@ -74,8 +74,23 @@ function viaBarco(a: Hex, b: Hex, p: Perfil): boolean {
   return !!p.barco && estaEmRotaAquatica(a) && estaEmRotaAquatica(b) && 1 / BARCO_HEX_POR_DIA <= custoTerra(a, b, p);
 }
 
+// ---- teleportes (rede entre os pontos de teleporte; todos se ligam entre si) ----
+/** Dias gastos em um teleporte entre dois pontos da rede (a confirmar com a equipe; hoje instantâneo). */
+export const TELEPORTE_DIAS = 0;
+const pontosTp = import.meta.glob("./content/pontos/*.json", { eager: true, import: "default" }) as Record<string, any>;
+export const hexesTeleporte: Hex[] = Object.values(pontosTp)
+  .filter((d) => d.categoria === "teleporte").map((d) => hexDe(d.x, d.y)).filter(Boolean) as Hex[];
+const noTp = new Set<string>(hexesTeleporte.map((h) => `${h.c},${h.l}`));
+export const eTeleporte = (h: Hex) => noTp.has(`${h.c},${h.l}`);
+const mesmoHex = (a: Hex, b: Hex) => a.c === b.c && a.l === b.l;
+/** Passo de teleporte: dois pontos distintos da rede que não são vizinhos. */
+function viaTeleporte(a: Hex, b: Hex, p: Perfil): boolean {
+  return !!p.teleporte && !mesmoHex(a, b) && eTeleporte(a) && eTeleporte(b) && distancia(a, b) > 1;
+}
+
 /** Dias para entrar no hexágono b vindo do vizinho a. */
 export function custoPasso(a: Hex, b: Hex, p: Perfil): number {
+  if (viaTeleporte(a, b, p)) return TELEPORTE_DIAS;
   return viaBarco(a, b, p) ? 1 / BARCO_HEX_POR_DIA : custoTerra(a, b, p);
 }
 
@@ -97,6 +112,10 @@ export interface Rota {
 function resumirCaminho(caminho: Hex[], p: Perfil): Rota["detalhe"] {
   const mapa = new Map<string, { rotulo: string; hexes: number; dias: number }>();
   for (let i = 1; i < caminho.length; i++) {
+    if (viaTeleporte(caminho[i - 1], caminho[i], p)) {
+      const e = mapa.get("Teleporte") ?? { rotulo: "Teleporte", hexes: 0, dias: 0 };
+      e.hexes++; e.dias += TELEPORTE_DIAS; mapa.set("Teleporte", e); continue;
+    }
     const t = terrenoDe(caminho[i]);
     const noEstrada = p.estradas && temEstrada(caminho[i - 1], caminho[i]);
     const barco = viaBarco(caminho[i - 1], caminho[i], p);
@@ -150,6 +169,10 @@ export function calcularRota(de: Hex, ate: Hex, p: Perfil): Rota | null {
     for (const v of vizinhos(hu.c, hu.l)) {
       const w = custoPasso(hu, v, p), nd = d + w;
       if (nd < dist[id(v)]) { dist[id(v)] = nd; ant[id(v)] = u; heap.push(nd, id(v)); }
+    }
+    if (p.teleporte && eTeleporte(hu)) for (const v of hexesTeleporte) {
+      const nd = d + TELEPORTE_DIAS;
+      if (!mesmoHex(hu, v) && nd < dist[id(v)]) { dist[id(v)] = nd; ant[id(v)] = u; heap.push(nd, id(v)); }
     }
   }
   if (!isFinite(dist[id(ate)])) return null;
