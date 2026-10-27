@@ -70,7 +70,7 @@ export interface Perfil { montaria: boolean; ignora: Terreno[]; estradas: boolea
 // ---- rotas aquáticas ----
 // Passagem de barco: cada rota liga dois portos/docas e só vale entre eles (embarca numa ponta, desce na outra).
 // Barco próprio: navega por qualquer hexágono de água.
-/** Velocidade do barco, em hexágonos por dia; cada trecho de barco é arredondado para cima em dias inteiros. */
+/** Velocidade do barco, em hexágonos por dia. */
 export const BARCO_HEX_POR_DIA = 4;
 export interface RotaAquatica { nome: string; de: Hex; ate: Hex; hexes: Hex[]; /** menor trajeto de `de` até `ate` dentro da rota */ trajeto: Hex[] }
 function trajetoDaRota(de: Hex, ate: Hex, hexes: Hex[]): Hex[] {
@@ -90,7 +90,7 @@ export const rotasAquaticas: RotaAquatica[] = (dado("rotas-aquaticas")?.rotas ??
 const naRota = new Set<string>(rotasAquaticas.flatMap((r) => r.hexes.map((h) => `${h.c},${h.l}`)));
 export const estaEmRotaAquatica = (h: Hex) => naRota.has(`${h.c},${h.l}`);
 const mesmo = (a: Hex, b: Hex) => a.c === b.c && a.l === b.l;
-const diasBarco = (r: RotaAquatica) => Math.ceil((r.trajeto.length - 1) / BARCO_HEX_POR_DIA);
+const diasBarco = (r: RotaAquatica) => (r.trajeto.length - 1) / BARCO_HEX_POR_DIA;
 /** Rotas que saem do hexágono h (é um porto/doca de ponta), com o sentido já aplicado. */
 const rotasDe = new Map<string, { rota: RotaAquatica; trajeto: Hex[] }[]>();
 for (const r of rotasAquaticas) {
@@ -100,9 +100,11 @@ for (const r of rotasAquaticas) {
   }
 }
 const navegavel = (h: Hex) => terrenoDe(h) === "agua" || estaEmRotaAquatica(h);
+/** Regra do clã: soma-se tudo e só então arredonda para cima; toda viagem leva no mínimo 1 dia. */
+export const diasInteiros = (dias: number) => Math.max(1, Math.ceil(dias - 1e-9));
 /** Rotas que saem do hexágono h, já no sentido h → destino, com os dias de passagem. */
 export function rotasDoHex(h: Hex): { rota: RotaAquatica; destino: Hex; trajeto: Hex[]; dias: number }[] {
-  return (rotasDe.get(`${h.c},${h.l}`) ?? []).map(({ rota, trajeto }) => ({ rota, destino: trajeto[trajeto.length - 1], trajeto, dias: diasBarco(rota) }));
+  return (rotasDe.get(`${h.c},${h.l}`) ?? []).map(({ rota, trajeto }) => ({ rota, destino: trajeto[trajeto.length - 1], trajeto, dias: diasInteiros(diasBarco(rota)) }));
 }
 /** Passo livre de quem tem barco próprio: os dois hexágonos são de água (ou portos/docas das rotas). */
 function viaBarcoProprio(a: Hex, b: Hex, p: Perfil): boolean {
@@ -128,14 +130,6 @@ function passosDe(caminho: Hex[], p: Perfil): { barco: boolean; custo: number; t
     if (viaTeleporte(a, b, p)) r.push({ barco: false, custo: TELEPORTE_DIAS, teleporte: true });
     else if (viaBarcoProprio(a, b, p)) r.push({ barco: true, custo: 1 / BARCO_HEX_POR_DIA, teleporte: false, proprio: true });
     else r.push({ barco: false, custo: custoTerra(a, b, p), teleporte: false });
-  }
-  // barco próprio: cada trecho contínuo é arredondado para cima em dias inteiros
-  for (let i = 1; i < r.length; i++) {
-    if (!r[i].proprio) continue;
-    let j = i; while (j + 1 < r.length && r[j + 1].proprio) j++;
-    const total = r.slice(i, j + 1).reduce((x, y) => x + y.custo, 0), alvo = Math.ceil(total - 1e-9);
-    for (let k = i; k <= j; k++) r[k].custo *= alvo / total;
-    i = j;
   }
   return r;
 }
