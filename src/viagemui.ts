@@ -1,6 +1,6 @@
 import L from "leaflet";
 import { centroLatLng, centroTopo, verticesTopo, hexDe, rotulo, linhaHex, MAPA_ALTURA, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, type Hex } from "./hex";
-import { VOOS, type Voo, avaliarCaminho, terrenoDe, todasEstradas, rotasAquaticas, BARCO_HEX_POR_DIA, TELEPORTE_DIAS, eTeleporte, TERRENOS, type Perfil, type Terreno } from "./viagem";
+import { calcularRota, VOOS, type Voo, avaliarCaminho, terrenoDe, todasEstradas, rotasAquaticas, BARCO_HEX_POR_DIA, TELEPORTE_DIAS, eTeleporte, TERRENOS, type Perfil, type Terreno } from "./viagem";
 import { esc, toast } from "./ui";
 // ---------- camadas de revisão (para a equipe conferir o que foi lido do mapa) ----------
 export function camadaTerreno() {
@@ -59,17 +59,22 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   const painel = document.createElement("section");
   painel.innerHTML = `
     <h1>Viagem</h1>
+    <h2 class="ribbon">Desenhar caminho</h2>
+    <div class="actions">
+      <button class="btn" id="d-modo"><i class="fa-solid fa-pen"></i> Desenhar</button>
+      <button class="btn" id="d-desfazer"><i class="fa-solid fa-rotate-left"></i> Desfazer</button>
+      <button class="btn" id="d-limpar"><i class="fa-solid fa-eraser"></i> Limpar caminho</button>
+    </div>
+    <div id="d-res"></div>
     <h2 class="ribbon">Grupo</h2>
-    <div class="viagem-campo"><label for="v-voo">Transporte</label><div><select id="v-voo">
-      <option value="">Terrestre / aquático</option>
-      ${(Object.keys(VOOS) as Voo[]).map((k) => `<option value="${k}">${VOOS[k].nome} (${VOOS[k].hexPorDia} hex/dia, em linha reta)</option>`).join("")}
-    </select></div></div>
     <div id="v-solo">
     <label class="check"><input type="checkbox" id="v-montaria"><span class="box"></span><span>Todo o grupo tem montaria</span></label>
-    <div id="v-ignora" hidden>
-      <p class="muted">A montaria ignora o terreno difícil de:</p>
-      ${(["floresta", "montanha", "deserto", "neve"] as Terreno[]).map((t) => `<label class="check"><input type="checkbox" data-ignora="${t}"><span class="box"></span><span>${TERRENOS[t].nome}</span></label>`).join("")}
-      <p class="muted">Ex.: camelo → deserto; bode → montanha.</p>
+    <div id="v-ignora" class="viagem-campo" hidden>
+      <label for="v-ignora-sel">A montaria ignora o terreno difícil de</label>
+      <div><select id="v-ignora-sel" class="selecao">
+        <option value="">Nenhum</option>
+        ${(["floresta", "montanha", "deserto", "neve"] as Terreno[]).map((t) => `<option value="${t}">${TERRENOS[t].nome}</option>`).join("")}
+      </select></div>
     </div>
     <label class="check"><input type="checkbox" id="v-estradas" checked><span class="box"></span><span>Usar estradas</span></label>
     <label class="check"><input type="checkbox" id="v-barco"><span class="box"></span><span>Usar passagens de barco (rotas aquáticas)</span></label>
@@ -79,13 +84,10 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     <label class="check"><input type="checkbox" id="v-teleporte"><span class="box"></span><span>Usar teleportes</span></label>
     <p class="muted nota" id="v-teleporte-nota" hidden>Entre os pontos de teleporte do mapa (filtro <em>Teleportes</em>): tempo de teleporte: ${TELEPORTE_DIAS} dia(s).</p>
     </div>
-    <h2 class="ribbon">Desenhar caminho</h2>
-    <div class="actions">
-      <button class="btn" id="d-modo"><i class="fa-solid fa-pen"></i> Desenhar</button>
-      <button class="btn" id="d-desfazer"><i class="fa-solid fa-rotate-left"></i> Desfazer</button>
-      <button class="btn" id="d-limpar"><i class="fa-solid fa-eraser"></i> Limpar caminho</button>
-    </div>
-    <div id="d-res"></div>`;
+    <div class="viagem-campo"><label for="v-voo">Transporte</label><div><select id="v-voo" class="selecao">
+      <option value="">Terrestre / aquático</option>
+      ${(Object.keys(VOOS) as Voo[]).map((k) => `<option value="${k}">${VOOS[k].nome} (${VOOS[k].hexPorDia} hex/dia, em linha reta)</option>`).join("")}
+    </select></div></div>`;
 
   // ferramentas de conferência: aba discreta, sem ícone, acima do Discord
   const ferramentas = document.createElement("section");
@@ -109,16 +111,20 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
 
   // ----- caminho desenhado à mão -----
   const camadaDes = L.layerGroup().addTo(map);
-  let caminho: Hex[] = [];
+  let extremos: Hex[] = [];   // origem e destino escolhidos no mapa
+  let caminho: Hex[] = [];    // melhor caminho entre eles com o que estiver habilitado
+  let semCaminho = false;
   let desenhando = false;
   const perfilAtual = (): Perfil => ({
     voo: (q<HTMLSelectElement>("#v-voo").value || undefined) as Voo | undefined,
     montaria: q<HTMLInputElement>("#v-montaria").checked, estradas: q<HTMLInputElement>("#v-estradas").checked, barco: q<HTMLInputElement>("#v-barco").checked, barcoProprio: q<HTMLInputElement>("#v-barco-proprio").checked, teleporte: q<HTMLInputElement>("#v-teleporte").checked,
-    ignora: Array.from(painel.querySelectorAll<HTMLInputElement>("[data-ignora]:checked")).map((i) => i.dataset.ignora as Terreno),
+    ignora: (q<HTMLSelectElement>("#v-ignora-sel").value ? [q<HTMLSelectElement>("#v-ignora-sel").value as Terreno] : []),
   });
   const fmtN = (n: number) => String(Math.round(n * 100) / 100).replace(".", ",");
   function redesenhar() {
     camadaDes.clearLayers();
+    semCaminho = false; caminho = extremos.slice();
+    if (extremos.length === 2) { const r = calcularRota(extremos[0], extremos[1], perfilAtual()); if (r) caminho = r.caminho; else semCaminho = true; }
     const pts = caminho.map((h) => centroLatLng(h.c, h.l));
     if (pts.length > 1) {
       L.polyline(pts, { color: "#1b2a38", weight: 8, opacity: 0.55, interactive: false }).addTo(camadaDes);
@@ -129,7 +135,8 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
       L.circleMarker(centroLatLng(h.c, h.l), { radius: i === 0 || i === caminho.length - 1 ? 7 : 3.5, color: "#1b2a38", weight: 2, fillColor: agua ? "#ff4d4d" : i === 0 ? "#6be26b" : "#35d0c0", fillOpacity: 1, interactive: false }).addTo(camadaDes);
     });
     const res = q("#d-res");
-    if (caminho.length < 2) { res.innerHTML = caminho.length ? `<p class="muted">Início em ${rotulo(caminho[0])}. Clique no próximo hexágono.</p>` : ""; return; }
+    if (semCaminho) { res.innerHTML = `<p class="viagem-aviso">Não há caminho entre esses pontos com as opções escolhidas.</p>`; return; }
+    if (caminho.length < 2) { res.innerHTML = extremos.length ? `<p class="muted">Origem em ${rotulo(extremos[0])}. Clique no destino.</p>` : ""; return; }
     const r = avaliarCaminho(caminho, perfilAtual());
     const dias = fmtN(r.dias), inteiro = Math.ceil(r.dias - 1e-9);
     res.innerHTML = `
@@ -140,12 +147,10 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
       </tbody></table>`;
   }
   function adicionar(h: Hex) {
-    const ult = caminho[caminho.length - 1];
-    if (ult && ult.c === h.c && ult.l === h.l) return;
-    const pf = perfilAtual();
-    const rota = ult && pf.barco ? rotasAquaticas.find((r) => (mesmoHex(r.de, ult) && mesmoHex(r.ate, h)) || (mesmoHex(r.ate, ult) && mesmoHex(r.de, h))) : undefined;
-    caminho.push(...(!ult ? [h] : rota ? (mesmoHex(rota.de, ult) ? rota.trajeto : [...rota.trajeto].reverse()).slice(1)
-      : pf.teleporte && eTeleporte(ult) && eTeleporte(h) ? [h] : linhaHex(ult, h).slice(1)));
+    if (extremos.length === 2) extremos = [];
+    if (extremos.length === 1 && mesmoHex(extremos[0], h)) return;
+    extremos.push(h);
+    if (extremos.length === 2) modoDesenho(false);
     redesenhar();
   }
   const botaoModo = q<HTMLButtonElement>("#d-modo");
@@ -153,15 +158,19 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     desenhando = on; botaoModo.classList.toggle("on", on); botaoModo.innerHTML = on ? `<i class="fa-solid fa-check"></i> Concluir` : `<i class="fa-solid fa-pen"></i> Desenhar`;
     map.getContainer().classList.toggle("modo-pick", on);
   }
-  botaoModo.addEventListener("click", () => { if (selecionando) modoSelecao(false); modoDesenho(!desenhando); });
-  q("#d-desfazer").addEventListener("click", () => { caminho.pop(); redesenhar(); });
-  q("#d-limpar").addEventListener("click", () => { caminho = []; redesenhar(); });
+  botaoModo.addEventListener("click", () => {
+    if (selecionando) modoSelecao(false);
+    if (!desenhando && extremos.length === 2) { extremos = []; redesenhar(); }
+    modoDesenho(!desenhando);
+  });
+  q("#d-desfazer").addEventListener("click", () => { extremos.pop(); redesenhar(); });
+  q("#d-limpar").addEventListener("click", () => { extremos = []; redesenhar(); });
   map.on("click", (e: L.LeafletMouseEvent) => {
     if (!desenhando) return;
     const h = hexDe(e.latlng.lng, e.latlng.lat); if (h) adicionar(h);
   });
   // o perfil do grupo vale também para o caminho desenhado
-  painel.addEventListener("change", (e) => { if ((e.target as HTMLElement).matches("#v-voo, #v-montaria, #v-estradas, #v-barco, #v-barco-proprio, #v-teleporte, [data-ignora]") && caminho.length > 1) redesenhar(); });
+  painel.addEventListener("change", (e) => { if ((e.target as HTMLElement).matches("#v-voo, #v-montaria, #v-estradas, #v-barco, #v-barco-proprio, #v-teleporte, #v-ignora-sel") && extremos.length === 2) redesenhar(); });
 
   // ----- seleção de vários hexágonos (copiar a lista de códigos) -----
   const camadaSel = L.layerGroup().addTo(map);
