@@ -32,7 +32,7 @@ export function setTab(name: string, node: HTMLElement) {
 export function hideTab(name: string) {
   tabs[name]?.remove();
   delete tabs[name];
-  rail.querySelector<HTMLElement>(`[data-tab="${name}"]`)!.hidden = name === "detalhe";
+  rail.querySelector<HTMLElement>(`[data-tab="${name}"]`)!.hidden = name === "detalhe" || name === "ferramentas";
   if (current === name) closePanel();
 }
 

@@ -1,5 +1,5 @@
 // Regras de viagem do clã (1 hex = 1 dia a pé; montaria dobra; terreno difícil divide por 2; estrada ignora o terreno difícil).
-import { HEX_COLUNAS as NC, HEX_LINHAS as NL, distancia, hexDe, type Hex } from "./hex";
+import { HEX_COLUNAS as NC, HEX_LINHAS as NL, distancia, hexDe, linhaHex, type Hex } from "./hex";
 
 export type Terreno = "agua" | "planicie" | "floresta" | "montanha" | "deserto" | "neve";
 export const TERRENOS: Record<Terreno, { nome: string; cor: string; dificil: boolean }> = {
@@ -58,7 +58,14 @@ export const temEstrada = (a: Hex, b: Hex) => estradas.has(aresta(a, b));
 export const todasEstradas = (): [Hex, Hex][] =>
   [...estradas].map((k) => { const [a, b] = k.split("-").map((p) => p.split(",").map(Number)); return [{ c: a[0], l: a[1] }, { c: b[0], l: b[1] }]; });
 
-export interface Perfil { montaria: boolean; ignora: Terreno[]; estradas: boolean; barco?: boolean; teleporte?: boolean; barcoProprio?: boolean }
+// ---- voo: em linha reta por qualquer terreno (e água), sem estradas, barcos ou teleportes ----
+export type Voo = "montaria" | "spelljammer";
+export const VOOS: Record<Voo, { nome: string; hexPorDia: number }> = {
+  montaria: { nome: "Montaria voadora", hexPorDia: 2 },
+  spelljammer: { nome: "Spelljammer", hexPorDia: 5 },
+};
+
+export interface Perfil { montaria: boolean; ignora: Terreno[]; estradas: boolean; barco?: boolean; teleporte?: boolean; barcoProprio?: boolean; voo?: Voo }
 
 // ---- rotas aquáticas ----
 // Passagem de barco: cada rota liga dois portos/docas e só vale entre eles (embarca numa ponta, desce na outra).
@@ -111,7 +118,8 @@ function passagemEm(caminho: Hex[], i: number, p: Perfil): { passos: number; rot
   return null;
 }
 /** Para cada passo i (de caminho[i-1] a caminho[i]), se foi feito de barco e o custo. */
-function passosDe(caminho: Hex[], p: Perfil): { barco: boolean; custo: number; teleporte: boolean; proprio?: boolean }[] {
+function passosDe(caminho: Hex[], p: Perfil): { barco: boolean; custo: number; teleporte: boolean; proprio?: boolean; voo?: boolean }[] {
+  if (p.voo) return caminho.map((_, i) => ({ barco: false, custo: i ? 1 / VOOS[p.voo!].hexPorDia : 0, teleporte: false, voo: true }));
   const r: { barco: boolean; custo: number; teleporte: boolean; proprio?: boolean }[] = [{ barco: false, custo: 0, teleporte: false }];
   for (let i = 0; i < caminho.length - 1; i++) {
     const pass = passagemEm(caminho, i, p);
@@ -172,6 +180,10 @@ function resumirCaminho(caminho: Hex[], p: Perfil): Rota["detalhe"] {
   const passos = passosDe(caminho, p);
   for (let i = 1; i < caminho.length; i++) {
     const t = terrenoDe(caminho[i]), st = passos[i];
+    if (st.voo) {
+      const rot = VOOS[p.voo!].nome, e = mapa.get(rot) ?? { rotulo: rot, hexes: 0, dias: 0 };
+      e.hexes++; e.dias += st.custo; mapa.set(rot, e); continue;
+    }
     const noEstrada = p.estradas && temEstrada(caminho[i - 1], caminho[i]);
     if (!st.teleporte && !st.barco && t === "agua" && !noEstrada) continue; // água sem estrada nem rota não tem custo definido (ver aviso na tela)
     const rotulo = st.teleporte ? "Teleporte" : st.barco ? (st.proprio ? "Barco próprio" : "Rota aquática (barco)") : t === "agua" ? "Ponte/vau (estrada sobre água)" : `${TERRENOS[t].nome}${noEstrada ? " (estrada)" : ""}`;
@@ -213,6 +225,10 @@ class Heap {
 
 /** Menor tempo entre dois hexágonos (Dijkstra). Retorna null se não houver caminho por terra. */
 export function calcularRota(de: Hex, ate: Hex, p: Perfil): Rota | null {
+  if (p.voo) { // em linha reta
+    const caminho = linhaHex(de, ate), direta = distancia(de, ate);
+    return { caminho, dias: direta / VOOS[p.voo].hexPorDia, passos: caminho.length - 1, direta, detalhe: resumirCaminho(caminho, p) };
+  }
   const id = (h: Hex) => (h.l - 1) * NC + (h.c - 1);
   const dist = new Float64Array(NC * NL).fill(Infinity), ant = new Int32Array(NC * NL).fill(-1);
   const heap = new Heap(); dist[id(de)] = 0; heap.push(0, id(de));

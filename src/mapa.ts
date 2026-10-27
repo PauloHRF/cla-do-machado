@@ -226,6 +226,7 @@ export function mountMapa() {
   setTab("filtros", filtros);
 
   setTab("viagem", viagem.painel);
+  setTab("ferramentas", viagem.ferramentas);
 
   // ----- seleção -----
   let atual: Local | null = null;
@@ -287,7 +288,7 @@ export function mountMapa() {
     selecionar,
     destroy() {
       map.remove();
-      ["inicio", "filtros", "viagem", "detalhe"].forEach(hideTab);
+      ["inicio", "filtros", "viagem", "ferramentas", "detalhe"].forEach(hideTab);
       document.title = "Clã do Machado — Mapa de Phantyr";
     },
   };

@@ -1,9 +1,8 @@
 import L from "leaflet";
 import { locais, norm } from "./data";
 import { centroLatLng, centroTopo, verticesTopo, hexDe, rotulo, linhaHex, MAPA_ALTURA, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, type Hex } from "./hex";
-import { calcularRota, avaliarCaminho, terrenoDe, todasEstradas, rotasAquaticas, BARCO_HEX_POR_DIA, TELEPORTE_DIAS, eTeleporte, TERRENOS, type Perfil, type Terreno } from "./viagem";
+import { calcularRota, VOOS, type Voo, avaliarCaminho, terrenoDe, todasEstradas, rotasAquaticas, BARCO_HEX_POR_DIA, TELEPORTE_DIAS, eTeleporte, TERRENOS, type Perfil, type Terreno } from "./viagem";
 import { esc, toast } from "./ui";
-
 // ---------- camadas de revisão (para a equipe conferir o que foi lido do mapa) ----------
 export function camadaTerreno() {
   const Camada = L.GridLayer.extend({
@@ -55,7 +54,7 @@ export function camadaRotasAquaticas() {
 }
 
 // ---------- painel "Viagem" ----------
-export interface Viagem { painel: HTMLElement; capturar(lat: number, lng: number, nome?: string): boolean }
+export interface Viagem { painel: HTMLElement; ferramentas: HTMLElement; capturar(lat: number, lng: number, nome?: string): boolean }
 
 export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   const painel = document.createElement("section");
@@ -68,6 +67,11 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     <div class="viagem-campo"><label for="v-ate">Destino</label><div><input id="v-ate" list="v-locais" placeholder="Local ou C45-L32" autocomplete="off"><button class="btn" data-pick="ate" title="Clicar no mapa"><i class="fa-solid fa-location-crosshairs"></i></button></div></div>
     <datalist id="v-locais">${nomes.map((n) => `<option value="${esc(n)}">`).join("")}</datalist>
     <h2 class="ribbon">Grupo</h2>
+    <div class="viagem-campo"><label for="v-voo">Transporte</label><div><select id="v-voo">
+      <option value="">Terrestre / aquático</option>
+      ${(Object.keys(VOOS) as Voo[]).map((k) => `<option value="${k}">${VOOS[k].nome} (${VOOS[k].hexPorDia} hex/dia, em linha reta)</option>`).join("")}
+    </select></div></div>
+    <div id="v-solo">
     <label class="check"><input type="checkbox" id="v-montaria"><span class="box"></span><span>Todo o grupo tem montaria</span></label>
     <div id="v-ignora" hidden>
       <p class="muted">A montaria ignora o terreno difícil de:</p>
@@ -81,6 +85,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     <p class="muted nota" id="v-barco-proprio-nota" hidden>Com barco próprio o grupo entra e sai em qualquer ponto das rotas aquáticas (${BARCO_HEX_POR_DIA} hexágonos por dia).</p>
     <label class="check"><input type="checkbox" id="v-teleporte"><span class="box"></span><span>Usar teleportes</span></label>
     <p class="muted nota" id="v-teleporte-nota" hidden>Entre os pontos de teleporte do mapa (filtro <em>Teleportes</em>): tempo de teleporte: ${TELEPORTE_DIAS} dia(s).</p>
+    </div>
     <p class="muted nota" id="v-barco-nota" hidden>Entre portos e docas, pelas rotas do mapa: ${BARCO_HEX_POR_DIA} hexágonos por dia. Ligue <em>Filtros → Rotas aquáticas</em> para ver.</p>
     <div class="actions"><button class="btn primary" id="v-calc"><i class="fa-solid fa-route"></i> Calcular</button><button class="btn" id="v-limpar">Limpar</button></div>
     <div id="v-res"></div>
@@ -91,7 +96,12 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
       <button class="btn" id="d-desfazer"><i class="fa-solid fa-rotate-left"></i> Desfazer</button>
       <button class="btn" id="d-limpar"><i class="fa-solid fa-eraser"></i> Limpar caminho</button>
     </div>
-    <div id="d-res"></div>
+    <div id="d-res"></div>`;
+
+  // ferramentas de conferência: aba discreta, sem ícone, acima do Discord
+  const ferramentas = document.createElement("section");
+  ferramentas.innerHTML = `
+    <h1>Ferramentas</h1>
     <h2 class="ribbon">Selecionar hexágonos</h2>
     <p class="muted">Para corrigir terreno ou estradas em vários hexágonos de uma vez: ligue a seleção, clique nos hexágonos (clique de novo para tirar) e copie a lista. <strong>Ctrl + arrastar</strong> pinta vários de uma vez; <strong>Ctrl + Alt + arrastar</strong> apaga.</p>
     <div class="actions">
@@ -101,7 +111,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     </div>
     <div id="s-res"></div>`;
 
-  const q = <T extends HTMLElement>(s: string) => painel.querySelector<T>(s)!;
+  const q = <T extends HTMLElement>(s: string) => (painel.querySelector<T>(s) ?? ferramentas.querySelector<T>(s))!;
   const pontos: Record<"de" | "ate", Hex | null> = { de: null, ate: null };
   let modo: "de" | "ate" | null = null;
   const camada = L.layerGroup().addTo(map);
@@ -136,6 +146,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     const k = modo; sair(); definir(k, h);
   });
 
+  q<HTMLSelectElement>("#v-voo").addEventListener("change", (e) => (q("#v-solo").hidden = !!(e.target as HTMLSelectElement).value));
   q<HTMLInputElement>("#v-teleporte").addEventListener("change", (e) => (q("#v-teleporte-nota").hidden = !(e.target as HTMLInputElement).checked));
   q<HTMLInputElement>("#v-barco").addEventListener("change", (e) => (q("#v-barco-nota").hidden = !(e.target as HTMLInputElement).checked));
   q<HTMLInputElement>("#v-barco-proprio").addEventListener("change", (e) => (q("#v-barco-proprio-nota").hidden = !(e.target as HTMLInputElement).checked));
@@ -148,11 +159,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     sair(); lerCampo("de"); lerCampo("ate");
     const res = q("#v-res");
     if (!pontos.de || !pontos.ate) { res.innerHTML = `<p class="viagem-aviso">Escolha a origem e o destino (pelo nome, pelo hexágono ou clicando no mapa).</p>`; return; }
-    const montaria = q<HTMLInputElement>("#v-montaria").checked;
-    const perfil: Perfil = {
-      montaria, estradas: q<HTMLInputElement>("#v-estradas").checked, barco: q<HTMLInputElement>("#v-barco").checked, barcoProprio: q<HTMLInputElement>("#v-barco-proprio").checked, teleporte: q<HTMLInputElement>("#v-teleporte").checked,
-      ignora: Array.from(painel.querySelectorAll<HTMLInputElement>("[data-ignora]:checked")).map((i) => i.dataset.ignora as Terreno),
-    };
+    const perfil = perfilAtual();
     limparRota();
     const r = calcularRota(pontos.de, pontos.ate, perfil);
     if (!r) { res.innerHTML = `<p class="viagem-aviso">Não há caminho por terra entre esses pontos.</p>`; return; }
@@ -175,6 +182,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   let caminho: Hex[] = [];
   let desenhando = false;
   const perfilAtual = (): Perfil => ({
+    voo: (q<HTMLSelectElement>("#v-voo").value || undefined) as Voo | undefined,
     montaria: q<HTMLInputElement>("#v-montaria").checked, estradas: q<HTMLInputElement>("#v-estradas").checked, barco: q<HTMLInputElement>("#v-barco").checked, barcoProprio: q<HTMLInputElement>("#v-barco-proprio").checked, teleporte: q<HTMLInputElement>("#v-teleporte").checked,
     ignora: Array.from(painel.querySelectorAll<HTMLInputElement>("[data-ignora]:checked")).map((i) => i.dataset.ignora as Terreno),
   });
@@ -223,7 +231,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     const h = hexDe(e.latlng.lng, e.latlng.lat); if (h) adicionar(h);
   });
   // o perfil do grupo vale também para o caminho desenhado
-  painel.addEventListener("change", (e) => { if ((e.target as HTMLElement).matches("#v-montaria, #v-estradas, #v-barco, #v-barco-proprio, #v-teleporte, [data-ignora]") && caminho.length > 1) redesenhar(); });
+  painel.addEventListener("change", (e) => { if ((e.target as HTMLElement).matches("#v-voo, #v-montaria, #v-estradas, #v-barco, #v-barco-proprio, #v-teleporte, [data-ignora]") && caminho.length > 1) redesenhar(); });
 
   // ----- seleção de vários hexágonos (copiar a lista de códigos) -----
   const camadaSel = L.layerGroup().addTo(map);
@@ -299,7 +307,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   map.on("unload", () => desligar.remove());
 
   return {
-    painel,
+    painel, ferramentas,
     // clique num marcador de local durante a escolha no mapa
     capturar(lat, lng, nome) {
       if (desenhando) { const h = hexDe(lng, lat); if (h) adicionar(h); return true; }
