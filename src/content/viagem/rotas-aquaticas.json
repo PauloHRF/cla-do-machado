@@ -1,8 +1,145 @@
 {
- "descricao": "Rotas aquáticas entre portos e docas (passagem de barco). Cada rota é o conjunto de hexágonos do trajeto (conectados por vizinhança), incluindo os dois portos das pontas. Quem usa rotas aquáticas anda por esses hexágonos a 2 hexágonos por dia.",
+ "descricao": "Rotas aquáticas: cada rota liga dois portos/docas (de → ate) e só funciona entre esses dois pontos, percorrendo os hexágonos listados. Quem tem barco próprio circula livre pelos hexágonos das rotas.",
  "rotas": [
   {
+   "nome": "Bhorg'Dra-Caideas",
+   "de": "C08-L47",
+   "ate": "C20-L31",
+   "hexes": [
+    "C15-L29",
+    "C16-L29",
+    "C17-L29",
+    "C13-L30",
+    "C14-L30",
+    "C18-L30",
+    "C19-L30",
+    "C11-L31",
+    "C12-L31",
+    "C20-L31",
+    "C09-L32",
+    "C10-L32",
+    "C08-L33",
+    "C08-L34",
+    "C08-L35",
+    "C08-L36",
+    "C08-L37",
+    "C08-L38",
+    "C08-L39",
+    "C08-L40",
+    "C08-L41",
+    "C08-L42",
+    "C08-L43",
+    "C08-L44",
+    "C08-L45",
+    "C08-L46",
+    "C08-L47"
+   ]
+  },
+  {
+   "nome": "Caideas-Ilha Verennia",
+   "de": "C20-L31",
+   "ate": "C21-L25",
+   "hexes": [
+    "C21-L25",
+    "C21-L26",
+    "C20-L27",
+    "C20-L28",
+    "C20-L29",
+    "C20-L30",
+    "C20-L31"
+   ]
+  },
+  {
+   "nome": "Ilha Verennia-Syr",
+   "de": "C21-L25",
+   "ate": "C26-L22",
+   "hexes": [
+    "C25-L22",
+    "C26-L22",
+    "C24-L23",
+    "C23-L24",
+    "C24-L24",
+    "C21-L25",
+    "C22-L25"
+   ]
+  },
+  {
+   "nome": "Ilha Verennia-Valaski",
+   "de": "C21-L25",
+   "ate": "C17-L21",
+   "hexes": [
+    "C17-L21",
+    "C18-L22",
+    "C18-L23",
+    "C19-L23",
+    "C20-L24",
+    "C21-L24",
+    "C21-L25"
+   ]
+  },
+  {
+   "nome": "Syr-Valaski",
+   "de": "C26-L22",
+   "ate": "C17-L21",
+   "hexes": [
+    "C17-L21",
+    "C18-L22",
+    "C19-L22",
+    "C25-L22",
+    "C26-L22",
+    "C20-L23",
+    "C21-L23",
+    "C23-L23",
+    "C24-L23",
+    "C22-L24"
+   ]
+  },
+  {
+   "nome": "Syr-Doca Mercantil Daktar",
+   "de": "C26-L22",
+   "ate": "C47-L08",
+   "hexes": [
+    "C47-L08",
+    "C31-L09",
+    "C33-L09",
+    "C34-L09",
+    "C35-L09",
+    "C36-L09",
+    "C37-L09",
+    "C38-L09",
+    "C39-L09",
+    "C47-L09",
+    "C29-L10",
+    "C30-L10",
+    "C32-L10",
+    "C40-L10",
+    "C41-L10",
+    "C43-L10",
+    "C45-L10",
+    "C46-L10",
+    "C27-L11",
+    "C28-L11",
+    "C42-L11",
+    "C44-L11",
+    "C27-L12",
+    "C26-L13",
+    "C25-L14",
+    "C26-L14",
+    "C25-L15",
+    "C25-L16",
+    "C24-L17",
+    "C24-L18",
+    "C24-L19",
+    "C24-L20",
+    "C25-L20",
+    "C25-L21",
+    "C26-L22"
+   ]
+  },
+  {
    "nome": "Bhorg'Dra-Drukonbar",
+   "de": "C08-L47",
+   "ate": "C20-L49",
    "hexes": [
     "C07-L47",
     "C08-L47",
@@ -26,6 +163,8 @@
   },
   {
    "nome": "Bhorg'Dra-Cidade Coral",
+   "de": "C08-L47",
+   "ate": "C32-L66",
    "hexes": [
     "C07-L47",
     "C08-L47",
@@ -74,6 +213,8 @@
   },
   {
    "nome": "Drukonbar-Cidade Coral",
+   "de": "C20-L49",
+   "ate": "C32-L66",
    "hexes": [
     "C19-L49",
     "C20-L49",
@@ -119,6 +260,8 @@
   },
   {
    "nome": "Cidade Coral-Folha Verde",
+   "de": "C32-L66",
+   "ate": "C37-L59",
    "hexes": [
     "C37-L59",
     "C38-L60",
@@ -136,6 +279,8 @@
   },
   {
    "nome": "Folha Verde-Maalnar",
+   "de": "C37-L59",
+   "ate": "C32-L49",
    "hexes": [
     "C32-L49",
     "C33-L49",
@@ -155,6 +300,8 @@
   },
   {
    "nome": "Cidade Coral-Utambar",
+   "de": "C32-L66",
+   "ate": "C58-L65",
    "hexes": [
     "C58-L65",
     "C59-L65",
@@ -207,6 +354,8 @@
   },
   {
    "nome": "Utambar-Aguera",
+   "de": "C58-L65",
+   "ate": "C86-L54",
    "hexes": [
     "C86-L54",
     "C87-L54",
@@ -261,6 +410,8 @@
   },
   {
    "nome": "Aguera-Ilha das Caveiras Sinistras",
+   "de": "C86-L54",
+   "ate": "C87-L52",
    "hexes": [
     "C87-L52",
     "C86-L53",
@@ -269,6 +420,8 @@
   },
   {
    "nome": "Aguera-Rhamora",
+   "de": "C86-L54",
+   "ate": "C89-L46",
    "hexes": [
     "C89-L46",
     "C89-L47",
@@ -284,6 +437,8 @@
   },
   {
    "nome": "Aguera-Erimoor",
+   "de": "C86-L54",
+   "ate": "C67-L45",
    "hexes": [
     "C67-L45",
     "C67-L46",
@@ -312,6 +467,8 @@
   },
   {
    "nome": "Erimoor-Rhamora",
+   "de": "C67-L45",
+   "ate": "C89-L46",
    "hexes": [
     "C67-L45",
     "C67-L46",
@@ -343,22 +500,9 @@
    ]
   },
   {
-   "nome": "Erimoor-Oliviert",
-   "hexes": [
-    "C89-L46",
-    "C89-L47",
-    "C89-L48",
-    "C88-L49",
-    "C87-L50",
-    "C88-L50",
-    "C86-L51",
-    "C86-L52",
-    "C86-L53",
-    "C86-L54"
-   ]
-  },
-  {
    "nome": "Oliviert-Khyrm",
+   "de": "C63-L47",
+   "ate": "C56-L46",
    "hexes": [
     "C56-L46",
     "C57-L46",
@@ -372,6 +516,8 @@
   },
   {
    "nome": "Khyrm-Morbav",
+   "de": "C56-L46",
+   "ate": "C43-L39",
    "hexes": [
     "C43-L39",
     "C44-L40",
@@ -395,6 +541,8 @@
   },
   {
    "nome": "Morbav-Doca Mercantil de Sheidrost",
+   "de": "C43-L39",
+   "ate": "C39-L39",
    "hexes": [
     "C43-L37",
     "C41-L38",
@@ -408,6 +556,8 @@
   },
   {
    "nome": "Aguera-Sukarno",
+   "de": "C86-L54",
+   "ate": "C87-L37",
    "hexes": [
     "C87-L37",
     "C88-L38",
@@ -443,6 +593,8 @@
   },
   {
    "nome": "Rhamora-Sukarno",
+   "de": "C89-L46",
+   "ate": "C87-L37",
    "hexes": [
     "C87-L37",
     "C88-L38",
@@ -479,6 +631,8 @@
   },
   {
    "nome": "Sukarno-Maelk",
+   "de": "C87-L37",
+   "ate": "C93-L29",
    "hexes": [
     "C93-L29",
     "C92-L30",
@@ -497,6 +651,8 @@
   },
   {
    "nome": "Meride-Maelk",
+   "de": "C102-L31",
+   "ate": "C93-L29",
    "hexes": [
     "C93-L29",
     "C92-L30",
@@ -516,6 +672,8 @@
   },
   {
    "nome": "Maelk-Flowergarden",
+   "de": "C93-L29",
+   "ate": "C80-L30",
    "hexes": [
     "C81-L29",
     "C93-L29",
@@ -535,6 +693,8 @@
   },
   {
    "nome": "Flowergarden-Eryndra",
+   "de": "C80-L30",
+   "ate": "C74-L26",
    "hexes": [
     "C74-L26",
     "C75-L26",
@@ -548,6 +708,8 @@
   },
   {
    "nome": "Flowergarden-Starhaven",
+   "de": "C80-L30",
+   "ate": "C76-L26",
    "hexes": [
     "C76-L26",
     "C76-L27",
@@ -560,6 +722,8 @@
   },
   {
    "nome": "Starhaven-Eryndra",
+   "de": "C76-L26",
+   "ate": "C74-L26",
    "hexes": [
     "C75-L25",
     "C74-L26",
@@ -568,6 +732,8 @@
   },
   {
    "nome": "Eryndra-Guibrun",
+   "de": "C74-L26",
+   "ate": "C68-L29",
    "hexes": [
     "C73-L24",
     "C71-L25",
@@ -583,6 +749,8 @@
   },
   {
    "nome": "Guibrun-Kalingon",
+   "de": "C68-L29",
+   "ate": "C63-L26",
    "hexes": [
     "C63-L26",
     "C62-L27",
@@ -597,6 +765,8 @@
   },
   {
    "nome": "Kalingon-Zhatar",
+   "de": "C63-L26",
+   "ate": "C55-L26",
    "hexes": [
     "C55-L26",
     "C57-L26",
@@ -611,6 +781,8 @@
   },
   {
    "nome": "Zhatar-Zur'Franco",
+   "de": "C55-L26",
+   "ate": "C56-L23",
    "hexes": [
     "C56-L23",
     "C55-L24",
@@ -624,6 +796,8 @@
   },
   {
    "nome": "Zur'Franco-Zur'Bakan",
+   "de": "C56-L23",
+   "ate": "C56-L19",
    "hexes": [
     "C57-L18",
     "C56-L19",
@@ -637,6 +811,8 @@
   },
   {
    "nome": "Meride-Vila Veldora",
+   "de": "C102-L31",
+   "ate": "C105-L26",
    "hexes": [
     "C105-L26",
     "C106-L26",
@@ -652,6 +828,8 @@
   },
   {
    "nome": "Vila Veldora-Reeds",
+   "de": "C105-L26",
+   "ate": "C101-L24",
    "hexes": [
     "C101-L24",
     "C102-L24",
@@ -663,6 +841,8 @@
   },
   {
    "nome": "Reeds-Sallek",
+   "de": "C101-L24",
+   "ate": "C87-L15",
    "hexes": [
     "C87-L15",
     "C86-L16",
@@ -689,6 +869,8 @@
   },
   {
    "nome": "Sallek-Verdisar",
+   "de": "C87-L15",
+   "ate": "C81-L13",
    "hexes": [
     "C81-L13",
     "C82-L14",
@@ -701,7 +883,9 @@
    ]
   },
   {
-   "nome": "Sallek-Zur'Baldar",
+   "nome": "Verdisar-Zur'Baldar (trecho de Sallek-Zur'Baldar)",
+   "de": "C81-L13",
+   "ate": "C65-L08",
    "hexes": [
     "C65-L08",
     "C66-L08",

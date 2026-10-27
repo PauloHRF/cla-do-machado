@@ -36,6 +36,8 @@ export function camadaEstradas() {
   return g;
 }
 
+const mesmoHex = (a: Hex, b: Hex) => a.c === b.c && a.l === b.l;
+
 export function camadaRotasAquaticas() {
   const g = L.layerGroup();
   const vizinho = (c: number, l: number) => c & 1
@@ -73,7 +75,10 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
       <p class="muted">Ex.: camelo → deserto; bode → montanha.</p>
     </div>
     <label class="check"><input type="checkbox" id="v-estradas" checked><span class="box"></span><span>Usar estradas</span></label>
-    <label class="check"><input type="checkbox" id="v-barco"><span class="box"></span><span>Usar rotas aquáticas (passagem de barco)</span></label>
+    <label class="check"><input type="checkbox" id="v-barco"><span class="box"></span><span>Usar passagens de barco (rotas aquáticas)</span></label>
+    <p class="muted nota" id="v-barco-nota" hidden>Cada rota liga dois portos/docas e só vale entre eles: ${BARCO_HEX_POR_DIA} hexágonos por dia. Ligue <em>Filtros → Rotas aquáticas</em> para ver.</p>
+    <label class="check"><input type="checkbox" id="v-barco-proprio"><span class="box"></span><span>Tenho barco próprio</span></label>
+    <p class="muted nota" id="v-barco-proprio-nota" hidden>Com barco próprio o grupo entra e sai em qualquer ponto das rotas aquáticas (${BARCO_HEX_POR_DIA} hexágonos por dia).</p>
     <label class="check"><input type="checkbox" id="v-teleporte"><span class="box"></span><span>Usar teleportes</span></label>
     <p class="muted nota" id="v-teleporte-nota" hidden>Entre os pontos de teleporte do mapa (filtro <em>Teleportes</em>): tempo de teleporte: ${TELEPORTE_DIAS} dia(s).</p>
     <p class="muted nota" id="v-barco-nota" hidden>Entre portos e docas, pelas rotas do mapa: ${BARCO_HEX_POR_DIA} hexágonos por dia. Ligue <em>Filtros → Rotas aquáticas</em> para ver.</p>
@@ -133,6 +138,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
 
   q<HTMLInputElement>("#v-teleporte").addEventListener("change", (e) => (q("#v-teleporte-nota").hidden = !(e.target as HTMLInputElement).checked));
   q<HTMLInputElement>("#v-barco").addEventListener("change", (e) => (q("#v-barco-nota").hidden = !(e.target as HTMLInputElement).checked));
+  q<HTMLInputElement>("#v-barco-proprio").addEventListener("change", (e) => (q("#v-barco-proprio-nota").hidden = !(e.target as HTMLInputElement).checked));
   q<HTMLInputElement>("#v-montaria").addEventListener("change", (e) => (q("#v-ignora").hidden = !(e.target as HTMLInputElement).checked));
 
   function limparRota() { camada.clearLayers(); (["de", "ate"] as const).forEach((k) => (marcadores[k] = undefined)); (["de", "ate"] as const).forEach((k) => pontos[k] && definir(k, pontos[k], campo(k).value)); q("#v-res").innerHTML = ""; }
@@ -144,7 +150,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     if (!pontos.de || !pontos.ate) { res.innerHTML = `<p class="viagem-aviso">Escolha a origem e o destino (pelo nome, pelo hexágono ou clicando no mapa).</p>`; return; }
     const montaria = q<HTMLInputElement>("#v-montaria").checked;
     const perfil: Perfil = {
-      montaria, estradas: q<HTMLInputElement>("#v-estradas").checked, barco: q<HTMLInputElement>("#v-barco").checked, teleporte: q<HTMLInputElement>("#v-teleporte").checked,
+      montaria, estradas: q<HTMLInputElement>("#v-estradas").checked, barco: q<HTMLInputElement>("#v-barco").checked, barcoProprio: q<HTMLInputElement>("#v-barco-proprio").checked, teleporte: q<HTMLInputElement>("#v-teleporte").checked,
       ignora: Array.from(painel.querySelectorAll<HTMLInputElement>("[data-ignora]:checked")).map((i) => i.dataset.ignora as Terreno),
     };
     limparRota();
@@ -169,7 +175,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   let caminho: Hex[] = [];
   let desenhando = false;
   const perfilAtual = (): Perfil => ({
-    montaria: q<HTMLInputElement>("#v-montaria").checked, estradas: q<HTMLInputElement>("#v-estradas").checked, barco: q<HTMLInputElement>("#v-barco").checked, teleporte: q<HTMLInputElement>("#v-teleporte").checked,
+    montaria: q<HTMLInputElement>("#v-montaria").checked, estradas: q<HTMLInputElement>("#v-estradas").checked, barco: q<HTMLInputElement>("#v-barco").checked, barcoProprio: q<HTMLInputElement>("#v-barco-proprio").checked, teleporte: q<HTMLInputElement>("#v-teleporte").checked,
     ignora: Array.from(painel.querySelectorAll<HTMLInputElement>("[data-ignora]:checked")).map((i) => i.dataset.ignora as Terreno),
   });
   const fmtN = (n: number) => String(Math.round(n * 100) / 100).replace(".", ",");
@@ -198,7 +204,10 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   function adicionar(h: Hex) {
     const ult = caminho[caminho.length - 1];
     if (ult && ult.c === h.c && ult.l === h.l) return;
-    caminho.push(...(ult ? (perfilAtual().teleporte && eTeleporte(ult) && eTeleporte(h) ? [h] : linhaHex(ult, h).slice(1)) : [h]));
+    const pf = perfilAtual();
+    const rota = ult && pf.barco ? rotasAquaticas.find((r) => (mesmoHex(r.de, ult) && mesmoHex(r.ate, h)) || (mesmoHex(r.ate, ult) && mesmoHex(r.de, h))) : undefined;
+    caminho.push(...(!ult ? [h] : rota ? (mesmoHex(rota.de, ult) ? rota.trajeto : [...rota.trajeto].reverse()).slice(1)
+      : pf.teleporte && eTeleporte(ult) && eTeleporte(h) ? [h] : linhaHex(ult, h).slice(1)));
     redesenhar();
   }
   const botaoModo = q<HTMLButtonElement>("#d-modo");
@@ -214,7 +223,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     const h = hexDe(e.latlng.lng, e.latlng.lat); if (h) adicionar(h);
   });
   // o perfil do grupo vale também para o caminho desenhado
-  painel.addEventListener("change", (e) => { if ((e.target as HTMLElement).matches("#v-montaria, #v-estradas, #v-barco, #v-teleporte, [data-ignora]") && caminho.length > 1) redesenhar(); });
+  painel.addEventListener("change", (e) => { if ((e.target as HTMLElement).matches("#v-montaria, #v-estradas, #v-barco, #v-barco-proprio, #v-teleporte, [data-ignora]") && caminho.length > 1) redesenhar(); });
 
   // ----- seleção de vários hexágonos (copiar a lista de códigos) -----
   const camadaSel = L.layerGroup().addTo(map);
