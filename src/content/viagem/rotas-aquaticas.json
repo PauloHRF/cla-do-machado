@@ -1,5 +1,5 @@
 {
- "descricao": "Rotas aquáticas: cada rota liga dois portos/docas (de → ate) e só funciona entre esses dois pontos, percorrendo os hexágonos listados. Quem tem barco próprio circula livre pelos hexágonos das rotas.",
+ "descricao": "Rotas aquáticas: cada rota liga dois portos/docas (de → ate) e só funciona entre esses dois pontos, percorrendo os hexágonos listados. Quem tem barco próprio navega por qualquer hexágono de água.",
  "rotas": [
   {
    "nome": "Bhorg'Dra-Caideas",
@@ -904,6 +904,19 @@
     "C79-L13",
     "C80-L13",
     "C81-L13"
+   ]
+  },
+  {
+   "nome": "Erimoor-Oliviert",
+   "de": "C67-L45",
+   "ate": "C63-L47",
+   "hexes": [
+    "C67-L45",
+    "C66-L46",
+    "C65-L46",
+    "C65-L47",
+    "C64-L48",
+    "C63-L47"
    ]
   }
  ]

@@ -313,3 +313,8 @@ h2.ribbon .ast { font-size: 0.7em; margin-left: -6px; align-self: flex-start; }
 .jornal-ed { font-size: 0.9rem; line-height: 1.2; color: var(--ink-soft); }
 .jornal-grande { width: 100%; height: auto; display: block; margin: 8px auto 0; border-radius: 3px; box-shadow: 0 2px 10px rgb(0 0 0 / 0.4); }
 #modal .box:has(.jornal-grande) { width: min(560px, 100%); }
+
+.rotas-lista { list-style: none; margin: 0 0 12px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.rotas-lista li { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rotas-lista li > button:first-child { flex: 1 1 100%; justify-content: flex-start; }
+.rotas-lista li > .muted { flex: 1; }
