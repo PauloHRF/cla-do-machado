@@ -162,8 +162,9 @@ export function custoPasso(a: Hex, b: Hex, p: Perfil): number {
 
 function custoTerra(a: Hex, b: Hex, p: Perfil): number {
   const t = terrenoDe(b);
-  // água não se atravessa, exceto onde há estrada (ponte ou vau): a estrada que cruza um rio vale como terreno normal
-  if (t === "agua") return p.estradas && temEstrada(a, b) ? 1 / (p.montaria ? 2 : 1) : Infinity;
+  // água não se atravessa, exceto: onde há estrada (ponte ou vau, vale como terreno normal) ou quando é só 1 hexágono
+  // de água entre terra e terra (sem barco; não pode vir de outro hexágono de água)
+  if (t === "agua") return (p.estradas && temEstrada(a, b)) || terrenoDe(a) !== "agua" ? 1 / (p.montaria ? 2 : 1) : Infinity;
   let vel = p.montaria ? 2 : 1;
   if (TERRENOS[t].dificil && !(p.montaria && p.ignora.includes(t)) && !(p.estradas && temEstrada(a, b))) vel /= 2;
   return 1 / vel;
@@ -185,8 +186,8 @@ function resumirCaminho(caminho: Hex[], p: Perfil): Rota["detalhe"] {
       e.hexes++; e.dias += st.custo; mapa.set(rot, e); continue;
     }
     const noEstrada = p.estradas && temEstrada(caminho[i - 1], caminho[i]);
-    if (!st.teleporte && !st.barco && t === "agua" && !noEstrada) continue; // água sem estrada nem rota não tem custo definido (ver aviso na tela)
-    const rotulo = st.teleporte ? "Teleporte" : st.barco ? (st.proprio ? "Barco próprio" : "Rota aquática (barco)") : t === "agua" ? "Ponte/vau (estrada sobre água)" : `${TERRENOS[t].nome}${noEstrada ? " (estrada)" : ""}`;
+    if (!isFinite(st.custo)) continue; // 2 ou mais hexágonos de água seguidos, sem estrada nem barco: fora da conta (ver aviso na tela)
+    const rotulo = st.teleporte ? "Teleporte" : st.barco ? (st.proprio ? "Barco próprio" : "Rota aquática (barco)") : t === "agua" ? (noEstrada ? "Ponte/vau (estrada sobre água)" : "Travessia de 1 hex de água") : `${TERRENOS[t].nome}${noEstrada ? " (estrada)" : ""}`;
     const e = mapa.get(rotulo) ?? { rotulo, hexes: 0, dias: 0 };
     e.hexes++; e.dias += st.custo; mapa.set(rotulo, e);
   }

@@ -66,6 +66,8 @@ Cidades e pontos podem ter um **link externo** (vira um botão na página do loc
 ## Rotas aquáticas
 Em `src/content/viagem/rotas-aquaticas.json`: 39 rotas, cada uma ligando **dois** portos/docas (`de` → `ate`) pelos hexágonos listados. Na aba **Viagem**: **"Usar passagens de barco"** só deixa embarcar numa ponta e descer na outra, pelo trajeto da rota, a `BARCO_HEX_POR_DIA` (4, arredondando cada trecho para cima em dias inteiros) hexágonos por dia (`src/viagem.ts`); rotas se encadeiam pelos portos em comum. **"Tenho barco próprio"** navega por qualquer hexágono de água (portos e docas incluídos). Nos dois casos o tempo de cada trecho de barco é arredondado para cima em dias inteiros. Ao clicar num porto ou doca no mapa, o painel lista as rotas que saem dele (destino, hexágonos e dias) e desenha as rotas no mapa. A passagem paga não entra na conta. *Filtros → Rotas aquáticas* mostra as rotas no mapa.
 
+**Água a pé:** 1 hexágono de água entre dois hexágonos de terra pode ser atravessado sem barco, custando como terreno normal ("Travessia de 1 hex de água"). Dois ou mais hexágonos de água seguidos continuam exigindo estrada (ponte/vau), barco ou voo.
+
 **Voo:** o seletor **Transporte** troca para *Montaria voadora* (2 hex/dia) ou *Spelljammer* (5 hex/dia): voa em linha reta até qualquer ponto, sem depender de terreno, água, estradas, barcos ou teleportes (`VOOS` em `src/viagem.ts`).
 
 **Teleportes:** a caixa **"Usar teleportes"** liga os 15 pontos de teleporte entre si (todos com todos), a `TELEPORTE_DIAS` (0) dias por salto (`src/viagem.ts`, valor a confirmar). O cálculo escolhe sozinho se compensa teleportar; no desenho à mão, clique num ponto de teleporte e depois em outro para fazer o salto.
