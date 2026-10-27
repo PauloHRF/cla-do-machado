@@ -1,7 +1,6 @@
 import L from "leaflet";
-import { locais, norm } from "./data";
 import { centroLatLng, centroTopo, verticesTopo, hexDe, rotulo, linhaHex, MAPA_ALTURA, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, type Hex } from "./hex";
-import { calcularRota, VOOS, type Voo, avaliarCaminho, terrenoDe, todasEstradas, rotasAquaticas, BARCO_HEX_POR_DIA, TELEPORTE_DIAS, eTeleporte, TERRENOS, type Perfil, type Terreno } from "./viagem";
+import { VOOS, type Voo, avaliarCaminho, terrenoDe, todasEstradas, rotasAquaticas, BARCO_HEX_POR_DIA, TELEPORTE_DIAS, eTeleporte, TERRENOS, type Perfil, type Terreno } from "./viagem";
 import { esc, toast } from "./ui";
 // ---------- camadas de revisão (para a equipe conferir o que foi lido do mapa) ----------
 export function camadaTerreno() {
@@ -54,18 +53,12 @@ export function camadaRotasAquaticas() {
 }
 
 // ---------- painel "Viagem" ----------
-export interface Viagem { painel: HTMLElement; ferramentas: HTMLElement; capturar(lat: number, lng: number, nome?: string): boolean }
+export interface Viagem { painel: HTMLElement; ferramentas: HTMLElement; capturar(lat: number, lng: number): boolean }
 
 export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   const painel = document.createElement("section");
-  const nomes = [...locais.values()].filter((l) => !l.oculto).map((l) => l.nome).sort((a, b) => a.localeCompare(b, "pt"));
   painel.innerHTML = `
     <h1>Viagem</h1>
-    <p class="muted">Calcula o tempo pela regra do clã: 1 hex = 1 dia a pé; montaria dobra a velocidade; terreno difícil (floresta, montanha, deserto, neve) divide por 2; estrada ignora o terreno difícil.</p>
-    <h2 class="ribbon">Trajeto</h2>
-    <div class="viagem-campo"><label for="v-de">Origem</label><div><input id="v-de" list="v-locais" placeholder="Local ou C45-L32" autocomplete="off"><button class="btn" data-pick="de" title="Clicar no mapa"><i class="fa-solid fa-location-crosshairs"></i></button></div></div>
-    <div class="viagem-campo"><label for="v-ate">Destino</label><div><input id="v-ate" list="v-locais" placeholder="Local ou C45-L32" autocomplete="off"><button class="btn" data-pick="ate" title="Clicar no mapa"><i class="fa-solid fa-location-crosshairs"></i></button></div></div>
-    <datalist id="v-locais">${nomes.map((n) => `<option value="${esc(n)}">`).join("")}</datalist>
     <h2 class="ribbon">Grupo</h2>
     <div class="viagem-campo"><label for="v-voo">Transporte</label><div><select id="v-voo">
       <option value="">Terrestre / aquático</option>
@@ -86,11 +79,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     <label class="check"><input type="checkbox" id="v-teleporte"><span class="box"></span><span>Usar teleportes</span></label>
     <p class="muted nota" id="v-teleporte-nota" hidden>Entre os pontos de teleporte do mapa (filtro <em>Teleportes</em>): tempo de teleporte: ${TELEPORTE_DIAS} dia(s).</p>
     </div>
-    <p class="muted nota" id="v-barco-nota" hidden>Entre portos e docas, pelas rotas do mapa: ${BARCO_HEX_POR_DIA} hexágonos por dia. Ligue <em>Filtros → Rotas aquáticas</em> para ver.</p>
-    <div class="actions"><button class="btn primary" id="v-calc"><i class="fa-solid fa-route"></i> Calcular</button><button class="btn" id="v-limpar">Limpar</button></div>
-    <div id="v-res"></div>
     <h2 class="ribbon">Desenhar caminho</h2>
-    <p class="muted">Clique nos hexágonos do mapa, na ordem do trajeto (ou nos locais). Se o clique não for vizinho do anterior, os hexágonos do meio entram em linha reta.</p>
     <div class="actions">
       <button class="btn" id="d-modo"><i class="fa-solid fa-pen"></i> Desenhar</button>
       <button class="btn" id="d-desfazer"><i class="fa-solid fa-rotate-left"></i> Desfazer</button>
@@ -112,70 +101,11 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     <div id="s-res"></div>`;
 
   const q = <T extends HTMLElement>(s: string) => (painel.querySelector<T>(s) ?? ferramentas.querySelector<T>(s))!;
-  const pontos: Record<"de" | "ate", Hex | null> = { de: null, ate: null };
-  let modo: "de" | "ate" | null = null;
-  const camada = L.layerGroup().addTo(map);
-  const marcadores: Record<string, L.Marker | undefined> = {};
-
-  const campo = (k: "de" | "ate") => q<HTMLInputElement>(k === "de" ? "#v-de" : "#v-ate");
-  function definir(k: "de" | "ate", h: Hex | null, texto?: string) {
-    pontos[k] = h; if (h) campo(k).value = texto ?? rotulo(h);
-    marcadores[k]?.remove(); marcadores[k] = undefined;
-    if (h) marcadores[k] = L.marker(centroLatLng(h.c, h.l), {
-      icon: L.divIcon({ className: "viagem-pino", html: `<span>${k === "de" ? "A" : "B"}</span>`, iconSize: [26, 26], iconAnchor: [13, 13] }), interactive: false, keyboard: false,
-    }).addTo(camada);
-  }
-  function lerCampo(k: "de" | "ate") {
-    const v = campo(k).value.trim(); if (!v) return definir(k, null);
-    const local = [...locais.values()].find((l) => norm(l.nome) === norm(v));
-    if (local) { const h = hexDe(local.x, local.y); if (h) return definir(k, h, local.nome); }
-    const m = /(\d+)\D+(\d+)/.exec(v);
-    if (m) { const h = { c: +m[1], l: +m[2] }; if (h.c >= 1 && h.c <= HEX_COLUNAS && h.l >= 1 && h.l <= HEX_LINHAS) return definir(k, h); }
-    pontos[k] = null;
-  }
-  (["de", "ate"] as const).forEach((k) => campo(k).addEventListener("change", () => lerCampo(k)));
-
-  const sair = () => { modo = null; map.getContainer().classList.remove("modo-pick"); painel.querySelectorAll("[data-pick]").forEach((b) => b.classList.remove("on")); };
-  painel.querySelectorAll<HTMLElement>("[data-pick]").forEach((b) => b.addEventListener("click", () => {
-    const k = b.dataset.pick as "de" | "ate"; const ligado = modo === k; sair(); if (desenhando) modoDesenho(false); if (selecionando) modoSelecao(false);
-    if (!ligado) { modo = k; b.classList.add("on"); map.getContainer().classList.add("modo-pick"); }
-  }));
-  map.on("click", (e: L.LeafletMouseEvent) => {
-    if (!modo) return;
-    const h = hexDe(e.latlng.lng, e.latlng.lat); if (!h) return;
-    const k = modo; sair(); definir(k, h);
-  });
-
   q<HTMLSelectElement>("#v-voo").addEventListener("change", (e) => (q("#v-solo").hidden = !!(e.target as HTMLSelectElement).value));
   q<HTMLInputElement>("#v-teleporte").addEventListener("change", (e) => (q("#v-teleporte-nota").hidden = !(e.target as HTMLInputElement).checked));
   q<HTMLInputElement>("#v-barco").addEventListener("change", (e) => (q("#v-barco-nota").hidden = !(e.target as HTMLInputElement).checked));
   q<HTMLInputElement>("#v-barco-proprio").addEventListener("change", (e) => (q("#v-barco-proprio-nota").hidden = !(e.target as HTMLInputElement).checked));
   q<HTMLInputElement>("#v-montaria").addEventListener("change", (e) => (q("#v-ignora").hidden = !(e.target as HTMLInputElement).checked));
-
-  function limparRota() { camada.clearLayers(); (["de", "ate"] as const).forEach((k) => (marcadores[k] = undefined)); (["de", "ate"] as const).forEach((k) => pontos[k] && definir(k, pontos[k], campo(k).value)); q("#v-res").innerHTML = ""; }
-  q("#v-limpar").addEventListener("click", () => { sair(); camada.clearLayers(); pontos.de = pontos.ate = null; campo("de").value = campo("ate").value = ""; q("#v-res").innerHTML = ""; });
-
-  q("#v-calc").addEventListener("click", () => {
-    sair(); lerCampo("de"); lerCampo("ate");
-    const res = q("#v-res");
-    if (!pontos.de || !pontos.ate) { res.innerHTML = `<p class="viagem-aviso">Escolha a origem e o destino (pelo nome, pelo hexágono ou clicando no mapa).</p>`; return; }
-    const perfil = perfilAtual();
-    limparRota();
-    const r = calcularRota(pontos.de, pontos.ate, perfil);
-    if (!r) { res.innerHTML = `<p class="viagem-aviso">Não há caminho por terra entre esses pontos.</p>`; return; }
-    L.polyline(r.caminho.map((h) => centroLatLng(h.c, h.l)), { color: "#d9a441", weight: 5, opacity: 0.95, lineJoin: "round", interactive: false }).addTo(camada);
-    L.polyline(r.caminho.map((h) => centroLatLng(h.c, h.l)), { color: "#3a2412", weight: 8, opacity: 0.45, interactive: false }).addTo(camada).bringToBack();
-    const dias = Math.round(r.dias * 100) / 100, inteiro = Math.ceil(r.dias - 1e-9);
-    const fmt = (n: number) => String(n).replace(".", ",");
-    res.innerHTML = `
-      <div class="viagem-total"><strong>${fmt(dias)}</strong> dia${dias === 1 ? "" : "s"}<small>${inteiro !== dias ? `(chegada no ${inteiro}º dia)` : ""}</small></div>
-      <p class="muted">${r.passos} hexágono${r.passos === 1 ? "" : "s"} percorridos; em linha reta seriam ${r.direta}.</p>
-      <table class="viagem-tab"><thead><tr><th>Tipo</th><th>Hexes</th><th>Dias</th></tr></thead><tbody>
-      ${r.detalhe.map((d) => `<tr><td>${esc(d.rotulo)}</td><td>${d.hexes}</td><td>${fmt(Math.round(d.dias * 100) / 100)}</td></tr>`).join("")}
-      </tbody></table>
-      <p class="muted dica">Terreno e estradas foram lidos automaticamente do mapa e podem ter erros. Ligue <em>Terreno</em> e <em>Estradas</em> em Mapas para conferir.</p>`;
-    map.fitBounds(L.latLngBounds(r.caminho.map((h) => centroLatLng(h.c, h.l))), { paddingTopLeft: [rolagemPainel() + 40, 80], paddingBottomRight: [40, 40], maxZoom: 1.5 });
-  });
 
   // ----- caminho desenhado à mão -----
   const camadaDes = L.layerGroup().addTo(map);
@@ -223,7 +153,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     desenhando = on; botaoModo.classList.toggle("on", on); botaoModo.innerHTML = on ? `<i class="fa-solid fa-check"></i> Concluir` : `<i class="fa-solid fa-pen"></i> Desenhar`;
     map.getContainer().classList.toggle("modo-pick", on);
   }
-  botaoModo.addEventListener("click", () => { sair(); if (selecionando) modoSelecao(false); modoDesenho(!desenhando); });
+  botaoModo.addEventListener("click", () => { if (selecionando) modoSelecao(false); modoDesenho(!desenhando); });
   q("#d-desfazer").addEventListener("click", () => { caminho.pop(); redesenhar(); });
   q("#d-limpar").addEventListener("click", () => { caminho = []; redesenhar(); });
   map.on("click", (e: L.LeafletMouseEvent) => {
@@ -265,7 +195,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     botaoSel.classList.toggle("on", on); botaoSel.innerHTML = on ? `<i class="fa-solid fa-check"></i> Concluir` : `<i class="fa-solid fa-hand-pointer"></i> Selecionar`;
     map.getContainer().classList.toggle("modo-pick", on);
   }
-  botaoSel.addEventListener("click", () => { sair(); if (desenhando) modoDesenho(false); modoSelecao(!selecionando); });
+  botaoSel.addEventListener("click", () => { if (desenhando) modoDesenho(false); modoSelecao(!selecionando); });
   q("#s-limpar").addEventListener("click", () => { selecionados.clear(); redesenharSel(); });
   q("#s-copiar").addEventListener("click", () => {
     const t = listaCodigos().join(", ");
@@ -297,10 +227,10 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   desligar.id = "desligar-ferramenta"; desligar.className = "btn btn-busca"; desligar.hidden = true;
   document.body.append(desligar);
   function atualizarDesligar() {
-    const txt = desenhando ? "Desligar desenho" : selecionando ? "Desligar seleção" : modo ? "Cancelar escolha no mapa" : "";
+    const txt = desenhando ? "Desligar desenho" : selecionando ? "Desligar seleção" : "";
     desligar.hidden = !txt; desligar.innerHTML = txt ? `<i class="fa-solid fa-xmark"></i> ${txt}` : "";
   }
-  desligar.addEventListener("click", () => { sair(); if (desenhando) modoDesenho(false); if (selecionando) modoSelecao(false); atualizarDesligar(); });
+  desligar.addEventListener("click", () => { if (desenhando) modoDesenho(false); if (selecionando) modoSelecao(false); atualizarDesligar(); });
   // reavalia depois de qualquer clique no painel ou no mapa (os modos mudam nesses cliques)
   painel.addEventListener("click", () => setTimeout(atualizarDesligar, 0));
   map.on("click", () => setTimeout(atualizarDesligar, 0));
@@ -309,12 +239,10 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
   return {
     painel, ferramentas,
     // clique num marcador de local durante a escolha no mapa
-    capturar(lat, lng, nome) {
+    capturar(lat, lng) {
       if (desenhando) { const h = hexDe(lng, lat); if (h) adicionar(h); return true; }
       if (selecionando) { const h = hexDe(lng, lat); if (h) alternar(h, "toggle"); return true; }
-      if (!modo) return false;
-      const h = hexDe(lng, lat); if (!h) return false;
-      const k = modo; sair(); definir(k, h, nome); return true;
+      return false;
     },
   };
 }
