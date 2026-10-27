@@ -2,7 +2,7 @@ import L from "leaflet";
 import { locais, norm } from "./data";
 import { centroLatLng, centroTopo, verticesTopo, hexDe, rotulo, linhaHex, MAPA_ALTURA, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, type Hex } from "./hex";
 import { calcularRota, avaliarCaminho, terrenoDe, todasEstradas, rotasAquaticas, BARCO_HEX_POR_DIA, TELEPORTE_DIAS, eTeleporte, TERRENOS, type Perfil, type Terreno } from "./viagem";
-import { esc, copiaCliquePausada, toast } from "./ui";
+import { esc, toast } from "./ui";
 
 // ---------- camadas de revisão (para a equipe conferir o que foi lido do mapa) ----------
 export function camadaTerreno() {
@@ -253,7 +253,7 @@ export function montarViagem(map: L.Map, rolagemPainel: () => number): Viagem {
     redesenharSel();
   }
   function modoSelecao(on: boolean) {
-    selecionando = on; copiaCliquePausada.valor = on;
+    selecionando = on;
     botaoSel.classList.toggle("on", on); botaoSel.innerHTML = on ? `<i class="fa-solid fa-check"></i> Concluir` : `<i class="fa-solid fa-hand-pointer"></i> Selecionar`;
     map.getContainer().classList.toggle("modo-pick", on);
   }
