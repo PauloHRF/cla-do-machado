@@ -125,6 +125,51 @@
       "y": 461,
       "descricao": "",
       "detalhe": ""
+    },
+    {
+      "nome": "Eid Entrelinhas - Escritório de Investigação da Dandara",
+      "icone": "user-secret",
+      "cor": "#8F1A00",
+      "x": 368,
+      "y": 197,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Shillelagh Transportes LTDA",
+      "icone": "horse",
+      "cor": "#02C205",
+      "x": 332,
+      "y": 415,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Dragão de Matcha - Casa de Chá",
+      "icone": "mug-hot",
+      "cor": "#87BF4E",
+      "x": 262,
+      "y": 376,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "A Dama e o Girassol - Floricultura",
+      "icone": "spa",
+      "cor": "#D2D600",
+      "x": 284,
+      "y": 393,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "Mansão Crepúsculo - Taverna Estalagem",
+      "icone": "beer-mug-empty",
+      "cor": "#4C3669",
+      "x": 570,
+      "y": 364,
+      "descricao": "",
+      "detalhe": ""
     }
   ]
 }
