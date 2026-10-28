@@ -116,6 +116,15 @@
       "y": 277,
       "descricao": "",
       "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Esmeralda.webp' width='250' height='400' class='center'><p><b>Esmeralda</b> - Bibliotecária (não é a dona da biblioteca, a biblioteca faz parte da propriedade do líder da cidade). É irmã da Jade (dona da taverna). Ela é extremamente metódica, passando o tempo indexando os livros, já que a biblioteca não vem sendo muito frequentada.</p>"
+    },
+    {
+      "nome": "T.O.C.A. - Torre Octogonal de Capacitação Arcana",
+      "icone": "hat-wizard",
+      "cor": "lightblue",
+      "x": 387,
+      "y": 461,
+      "descricao": "",
+      "detalhe": ""
     }
   ]
 }
