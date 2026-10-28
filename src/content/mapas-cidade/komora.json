@@ -170,6 +170,24 @@
       "y": 364,
       "descricao": "",
       "detalhe": ""
+    },
+    {
+      "nome": "Galos da Madrugada - Taverna/Clube da luta",
+      "icone": "hand-fist",
+      "cor": "#B36200",
+      "x": 322,
+      "y": 184,
+      "descricao": "",
+      "detalhe": ""
+    },
+    {
+      "nome": "MI & AU - Pet Café",
+      "icone": "cat",
+      "cor": "lightgray",
+      "x": 211,
+      "y": 297,
+      "descricao": "",
+      "detalhe": ""
     }
   ]
 }
