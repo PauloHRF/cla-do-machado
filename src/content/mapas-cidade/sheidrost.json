@@ -79,7 +79,7 @@
       "x": 2402,
       "y": 1728,
       "descricao": "Centro de controle do aqueduto de Sheidrost, responsável por distribuir água potável para toda a cidade. Construída com a colaboração do Vórtice Oculto e dos artesãos locais, a estrutura combina magia e tecnologia: o tratamento da água utiliza criaturas de limo como filtros e purificadores.",
-      "detalhe": ""
+      "detalhe": "<h3>Einsbaron Azurita</h3>\n\nZongari de pele alaranjada e desbotada e longos cabelos azul-escuros, Einsbaron é aprendiz de Erodir Liquestra e responsável pela manutenção do aqueduto de Sheidrost. Calmo, sereno e dedicado, possui profundo conhecimento sobre o funcionamento da estrutura, cujo sistema de purificação utiliza colônias de limos.\n![](/img/einsbaron.png)"
     },
     {
       "nome": "Exportações Shadowbreeze",
@@ -96,8 +96,8 @@
       "cor": "blue",
       "x": 2298,
       "y": 1934,
-      "descricao": "",
-      "detalhe": ""
+      "descricao": "Uma das primeiras grandes companhias arcanas de Sheidrost, especializada na criação, compra e venda de artefatos mágicos. Sob a direção de Keltoris Tanzanita, a empresa tenta manter sua relevância diante da crescente concorrência. A queda nas vendas alimenta a ambição de seus representantes, que consideram sabotar os concorrentes para recuperar o espaço perdido.",
+      "detalhe": "<h3>Ravadi Bonança</h3>\n\nTiefling de pele amarela e sorriso largo e amigável, Ravadi é uma negociante da companhia Poções, Runas e Maravilhas. Extremamente ambiciosa, vê seus objetivos ameaçados pela forte concorrência no mercado de artefatos mágicos e pela queda nas vendas da empresa.\n![](/img/ravadi.png)"
     },
     {
       "nome": "Esquina das Misturas",
@@ -105,8 +105,8 @@
       "cor": "green",
       "x": 2408,
       "y": 2324,
-      "descricao": "",
-      "detalhe": ""
+      "descricao": "Uma pequena loja de poções escondida em uma rua estreita e mal iluminada do Mercado Místico. Administrada pela goblin Gnat, comercializa elixires de resultados imprevisíveis e itens mágicos roubados ou contrabandeados.",
+      "detalhe": "<h3>Gnat</h3>\n\nGoblin de voz esganiçada e riso fácil, Gnat é a proprietária da Esquina das Misturas. Fervorosa adoradora de Huerir e Velatha, é conhecida por negociar elixires de qualidade duvidosa e comercializar itens mágicos roubados ou contrabandeados. Apesar das frequentes buscas dos guardas, ninguém conseguiu descobrir onde ela esconde suas mercadorias ilegais.\n![](/img/gnat.png)"
     },
     {
       "nome": "Fazendas Estância do Sol",
@@ -114,8 +114,8 @@
       "cor": "gold",
       "x": 3064,
       "y": 3630,
-      "descricao": "",
-      "detalhe": ""
+      "descricao": "Distrito agrícola responsável por produzir parte dos alimentos que abastecem Sheidrost e as cidades vizinhas. Reúne plantações de trigo, pomares, hortas e criação de gado. Após ser incorporada à cidade, passou a receber proteção dos Capas Púrpuras, mas também foi submetida a impostos elevados.",
+      "detalhe": "<h3>Oksana Pomaral</h3>\n\nOksana é uma jovem humana de cabelos ruivos e encaracolados, nascida e criada na Estância do Sol. Herdeira da posição de porta-voz dos fazendeiros que antes era ocupada por seu pai, ela luta por condições mais justas para os trabalhadores rurais, insatisfeitos com os impostos exorbitantes cobrados por Sheidrost após a incorporação do distrito à cidade.\n![](/img/oksana.png)"
     },
     {
       "nome": "Quartel dos Capas Púrpuras",
