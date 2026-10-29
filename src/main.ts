@@ -14,10 +14,12 @@ import { mountCidade } from "./cidade";
 import { openTab, isMobile } from "./ui";
 import { montarJornais } from "./jornais";
 import { montarContribuicoes } from "./contribuicoes";
+import { montarCalendario } from "./calendario";
 
 // aba de jornais: vale para o mapa e para os mapas de cidade
 montarJornais();
 montarContribuicoes();
+montarCalendario();
 
 // ---------- rotas: #/  ·  #/local/<slug>  ·  #/cidade/<slug> ----------
 type View = { destroy(): void; selecionar?(slug: string | null): void };
