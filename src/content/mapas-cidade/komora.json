@@ -118,12 +118,12 @@
       "detalhe": "<h1>NPCs:</h1><img src='/img/NPCs/Esmeralda.webp' width='250' height='400' class='center'><p><b>Esmeralda</b> - Bibliotecária (não é a dona da biblioteca, a biblioteca faz parte da propriedade do líder da cidade). É irmã da Jade (dona da taverna). Ela é extremamente metódica, passando o tempo indexando os livros, já que a biblioteca não vem sendo muito frequentada.</p>"
     },
     {
-      "nome": "T.O.C.A. - Torre Octogonal de Capacitação Arcana",
+      "nome": "T.O.C.A.",
       "icone": "hat-wizard",
       "cor": "lightblue",
       "x": 387,
       "y": 461,
-      "descricao": "",
+      "descricao": "A Torre Octogonal de Capacitação Arcana tem o objetivo de propiciar tanto ferramentas para arcanistas experientes criarem projetos e progredir em seu conhecimento, quanto promover o interesse de novatos nos estudos das artes arcanas. Um local totalmente aparamentado para produção de projetos, mas também preocupado com o lazer. \n\n\nVenha explorar os 10 andares da T.O.C.A.\n\n- Subsolo - **IML - Instituto Mágico Legal**: Andar reservado para estudos anatômicos, necromânticos e magizoológicos. Todo projeto desta ala passa pelo conselho de ética da torre.\n- 1º Andar - **Exploratórium**: É a sessão cultural da torre. Nela ocorrem eventos como musicais, exposições, saraus, etc; e conterá o Museu Exploratórium, o qual conta com itens colecionados pelos membros do clã em suas aventuras.\n- 2º Andar - **Círculo Acadêmico**: É constituído de salas aulas e auditório para cursos e palestras. Qualquer morador de Komora poderá acompanhar as aulas, a única limitação é o número de vagas por sala.\n- 3º Andar - **Fogão Mágico**: Para não haver necessidade de sair da torre entre as pausas dos estudos, o restaurante Fogão Mágico oferece refeição a um preço justo.\n- 4º Andar - **Campo Experimental**: Local para testar magias e poções em segurança. Totalmente aparamentado para evitar acidentes.\n- 5º Andar - **Divinoteca**: Local da biblioteca da torre, com um acervo que conta com exemplares de diversos campos da magia, porém focado em adivinhação. A Bola de Cristal ao centro é a atração principal, podendo revelar muitas possíveis profecias.\n- 6º Andar - **Câmara Verde**: Andar exclusivo para o estudo de botânica e alquimia. É possível criar as mais diversas poções com os extratos vegetais gerados na própria estufa do local.\n- 7º Andar - **Reator M.O.D.R.O.N.**: É reservado para variados tipos de ofícios, como ferraria, carpintaria, cerâmica, porém, com foco maior em engenharia. Nele também está o reator M.O.D.R.O.N., responsável por energizar toda torre com fluxo de mana retirado da própria trama.\n- 8º Andar - **Sala da Magia**: Local de reunião dos Magos Fundadores. Onde os fundadores tem seus escritórios/dormitórios. O acesso é restrito.\n- 9º Andar - **Observatório**: Local para estudo dos planos e onde está o círculo de teletransporte da torre. Também apresenta um corviário para comunicações.",
       "detalhe": ""
     },
     {
@@ -172,22 +172,13 @@
       "detalhe": ""
     },
     {
-      "nome": "Galos da Madrugada - Taverna/Clube da luta",
-      "icone": "hand-fist",
-      "cor": "#B36200",
-      "x": 322,
-      "y": 184,
-      "descricao": "",
-      "detalhe": ""
-    },
-    {
       "nome": "MI & AU - Pet Café",
       "icone": "cat",
       "cor": "lightgray",
-      "x": 211,
-      "y": 297,
-      "descricao": "",
-      "detalhe": ""
+      "x": 456,
+      "y": 456,
+      "descricao": "Um refúgio aconchegante de madeira clara e sofás laranja sob um telhado de vigas, onde o sol da tarde dança no piso de pedra. Animais mágicos (gatos, cães e até um pequeno worg) correm e brincam livremente entre mesas e plantas pendentes. O ar cheira a especiarias e café fresco, convidando à calma.",
+      "detalhe": "<h3>Quartzo</h3>\n\nGnoma reborn astuta, sempre de chapéu de bruxa verde enorme. Criou a maior parte do cardápio. Aparece de vez em quando para conferir tudo e preparar drinks especiais. \n\n<h3>Neyrelle</h3>\n\n\nHalfling alegre e dedicada. Cuida de absolutamente tudo no dia a dia: atendimento, cardápio, animais e o bom funcionamento da cafeteria."
     }
   ]
 }
