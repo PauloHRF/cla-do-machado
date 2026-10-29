@@ -74,3 +74,7 @@ Em `src/content/viagem/rotas-aquaticas.json`: 39 rotas, cada uma ligando **dois*
 
 
 **Arredondamento:** todos os tempos são somados exatamente (barco = 0,25 dia por hexágono, voo etc.) e só o total da viagem é arredondado para cima; toda viagem leva no mínimo **1 dia**.
+
+## Calendário
+
+Aba **Calendário** (ícone de calendário no menu). Dados em `src/content/calendario/calendario.json`: meses, estações, nomes dos dias da semana, mensagens especiais (1º dia e meio de cada estação) e a **âncora** (`ancora`: data real = dia/mês/ano de Phantyr; hoje 28/10/2026 = 16 de Pentario, 1497). O ano tem 360 dias (12 meses de 30, 3 semanas de 10). **1 dia real = 3 dias de Phantyr** no horário de Brasília: até 8h dia 1, até 16h dia 2, até 0h dia 3. A conta (`src/calendario.ts`) foi conferida contra todas as linhas da planilha original.
