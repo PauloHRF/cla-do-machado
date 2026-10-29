@@ -6,7 +6,7 @@ import { camadaAlcance } from "./alcance";
 import { montarViagem, camadaTerreno, camadaEstradas, camadaRotasAquaticas } from "./viagemui";
 import { rotasDoHex } from "./viagem";
 import { hexDe, rotulo, centroLatLng, centroTopo, verticesTopo, HEX_COLUNAS, HEX_LINHAS, HEX_LADO, MAPA_ALTURA } from "./hex";
-import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, toast, loreButtons, isMobile } from "./ui";
+import { esc, md, setTab, openTab, hideTab, openEvents, closeEvents, panelWidth, showCoords, loreButtons, isMobile } from "./ui";
 
 const BOUNDS: L.LatLngBoundsExpression = [[0, 0], [1697, 2000]];
 
@@ -54,12 +54,11 @@ function detalheHtml(l: Local) {
     const hexTag = hx ? `<span class="tag ghost">Hex ${rotulo(hx)}</span>` : "";
     const ficha = fichaCidade(l);
     const vazio = !ficha && !l.texto ? `<p class="muted">Ainda não há informações sobre este lugar.</p>` : "";
-    return `<h1>${esc(l.nome)}</h1><p class="tags">${tag}${dom}${hexTag}</p>${ficha}<div class="prose">${md(l.texto)}</div>${vazio}
+    return `<h1>${esc(l.nome)}</h1><p class="tags">${tag}${dom}${hexTag}</p>
+      ${l.pagina ? `<div class="actions topo"><a class="btn primary" href="#/cidade/${l.pagina}"><i class="fa-solid fa-map"></i> Mapa da cidade</a></div>` : ""}${ficha}<div class="prose">${md(l.texto)}</div>${vazio}
       <div class="actions">
-        ${l.pagina ? `<a class="btn primary" href="#/cidade/${l.pagina}"><i class="fa-solid fa-map"></i> Mapa da cidade</a>` : ""}
         ${l.link && !l.pagina ? botaoLink(l) : ""}
         ${l.eventos?.length ? `<button class="btn" data-act="eventos"><i class="fa-solid fa-timeline"></i> Eventos</button>` : ""}
-        <button class="btn" data-act="copiar"><i class="fa-solid fa-link"></i> Copiar link</button>
       </div>`;
   }
   const cat = CATEGORIAS[l.categoria]?.nome ?? "";
@@ -72,7 +71,6 @@ function detalheHtml(l: Local) {
     <div class="actions">
       ${l.link ? botaoLink(l) : ""}
       ${l.eventos?.length ? `<button class="btn" data-act="eventos"><i class="fa-solid fa-timeline"></i> Eventos</button>` : ""}
-      <button class="btn" data-act="copiar"><i class="fa-solid fa-link"></i> Copiar link</button>
     </div>`;
 }
 
@@ -240,8 +238,6 @@ export function mountMapa() {
     const b = alvo.closest<HTMLElement>("[data-act]");
     if (!b || !atual) return;
     if (b.dataset.act === "eventos" && atual.eventos) openEvents(atual.nome, atual.eventos);
-    if (b.dataset.act === "copiar")
-      navigator.clipboard?.writeText(`${location.origin}${location.pathname}#/local/${atual.slug}`).then(() => toast("Link copiado"));
   });
 
   // rotas aquáticas do porto selecionado (destacadas no mapa)

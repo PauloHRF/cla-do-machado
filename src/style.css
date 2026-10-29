@@ -351,3 +351,4 @@ select.selecao {
 select.selecao:hover { background-color: rgb(255 255 255 / 0.8); }
 select.selecao:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
 select.selecao option { background: var(--paper); color: var(--ink); }
+.actions.topo { margin: 0 0 12px; }
