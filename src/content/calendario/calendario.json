@@ -1,0 +1,113 @@
+{
+ "descricao": "Calendário de Phantyr: 12 meses de 30 dias (3 semanas de 10 dias), 4 estações. 1 dia real = 3 dias de Phantyr (até 8h = dia 1, até 16h = dia 2, até 0h = dia 3, horário de Brasília). A âncora liga uma data real a um dia de Phantyr.",
+ "dias_semana": [
+  "Xandrize",
+  "Hitrice",
+  "Jimont",
+  "Tremera",
+  "Zarchid",
+  "Shaedy",
+  "Piszulie",
+  "Nubira",
+  "Dhupax",
+  "Tunsblane"
+ ],
+ "meses": [
+  {
+   "nome": "Primeval",
+   "estacao": "Primavera"
+  },
+  {
+   "nome": "Segurio",
+   "estacao": "Primavera"
+  },
+  {
+   "nome": "Trínios",
+   "estacao": "Primavera"
+  },
+  {
+   "nome": "Quartano",
+   "estacao": "Verão"
+  },
+  {
+   "nome": "Pentario",
+   "estacao": "Verão"
+  },
+  {
+   "nome": "Medianor",
+   "estacao": "Verão"
+  },
+  {
+   "nome": "Setus",
+   "estacao": "Outono"
+  },
+  {
+   "nome": "Octar",
+   "estacao": "Outono"
+  },
+  {
+   "nome": "Notus",
+   "estacao": "Outono"
+  },
+  {
+   "nome": "Decarion",
+   "estacao": "Inverno"
+  },
+  {
+   "nome": "Anterio",
+   "estacao": "Inverno"
+  },
+  {
+   "nome": "Finitar",
+   "estacao": "Inverno"
+  }
+ ],
+ "ancora": {
+  "data_real": "2026-10-28",
+  "mes": "Pentario",
+  "dia": 16,
+  "ano": 1497
+ },
+ "estacoes": [
+  {
+   "nome": "Primavera",
+   "inicio": {
+    "mensagem": "🌸 Começou a Primavera em Phantyr 🌸",
+    "imagem": "https://i.imgur.com/1dDHisn.png"
+   },
+   "meio": {
+    "mensagem": "🌸 Estamos no meio da Primavera em Phantyr 🌸"
+   }
+  },
+  {
+   "nome": "Verão",
+   "inicio": {
+    "mensagem": "☀️ Começou o Verão em Phantyr ☀️",
+    "imagem": "https://i.imgur.com/3FxmXaQ.jpeg"
+   },
+   "meio": {
+    "mensagem": "☀️ Estamos no meio do Verão em Phantyr ☀️"
+   }
+  },
+  {
+   "nome": "Outono",
+   "inicio": {
+    "mensagem": "🍂 Começou o Outono em Phantyr 🍂",
+    "imagem": "https://i.imgur.com/QgsR1E6.png"
+   },
+   "meio": {
+    "mensagem": "🍂 Estamos no meio do Outono em Phantyr 🍂"
+   }
+  },
+  {
+   "nome": "Inverno",
+   "inicio": {
+    "mensagem": "❄️ Começou o Inverno em Phantyr ❄️",
+    "imagem": "https://i.imgur.com/2uEBDxB.jpeg"
+   },
+   "meio": {
+    "mensagem": "❄️ Estamos no meio do Inverno em Phantyr ❄️"
+   }
+  }
+ ]
+}
