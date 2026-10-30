@@ -1,5 +1,7 @@
 // Aba "Calendário": como funciona o calendário de Phantyr e a correlação entre o dia real e os dias de Phantyr.
 import { esc, setTab } from "./ui";
+import { asset } from "./data";
+import { abrirLeitor } from "./jornais";
 
 interface Mensagem { mensagem: string; imagem?: string }
 interface Dados {
@@ -80,26 +82,14 @@ function listaDia(diaReal: number) {
 
 export function montarCalendario() {
   const sec = document.createElement("section");
-  const meses = dados.meses.map((m, i) => `<tr><td>${esc(m.nome)}</td><td>${i * DIAS_MES + 1} a ${(i + 1) * DIAS_MES}</td><td>${esc(m.estacao)}</td></tr>`).join("");
   sec.innerHTML = `
     <h1>Calendário</h1>
     <div class="cal-abas" role="tablist">
-      <button class="btn on" data-aba="como" role="tab">Como funciona</button>
-      <button class="btn" data-aba="real" role="tab">Dia real × Phantyr</button>
+      <button class="btn on" data-aba="real" role="tab">Dia real × Phantyr</button>
+      <button class="btn" data-aba="estrutura" role="tab">Estrutura</button>
     </div>
 
-    <div data-painel="como">
-      <p>O ano de Phantyr tem <strong>${DIAS_ANO} dias</strong>, divididos em <strong>${dados.meses.length} meses de ${DIAS_MES} dias</strong>. Cada mês tem <strong>${DIAS_MES / DIAS_SEMANA} semanas de ${DIAS_SEMANA} dias</strong>, e cada dia da semana tem um nome.</p>
-      <h2 class="ribbon">Dias da semana</h2>
-      <ol class="cal-semana-lista">${dados.dias_semana.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>
-      <h2 class="ribbon">Meses e estações</h2>
-      <table class="viagem-tab"><thead><tr><th>Mês</th><th>Dias do ano</th><th>Estação</th></tr></thead><tbody>${meses}</tbody></table>
-      <p class="muted">Cada estação dura três meses e começa no primeiro dia do primeiro mês dela. O ano começa na Primavera.</p>
-    </div>
-
-    <div data-painel="real" hidden>
-      <p><strong>1 dia real = ${DIAS_POR_DIA_REAL} dias de Phantyr</strong> (horário de Brasília):</p>
-      <ul class="cal-turnos"><li><strong>Dia 1:</strong> ${FAIXAS[0]}</li><li><strong>Dia 2:</strong> ${FAIXAS[1]}</li><li><strong>Dia 3:</strong> ${FAIXAS[2]}</li></ul>
+    <div data-painel="real">
       <h2 class="ribbon">Agora</h2>
       <div id="cal-agora"></div>
       <h2 class="ribbon">Consultar uma data</h2>
@@ -107,12 +97,17 @@ export function montarCalendario() {
       <div id="cal-consulta"></div>
       <h2 class="ribbon">Próximos dias</h2>
       <ul class="cal-lista" id="cal-proximos"></ul>
+    </div>
+
+    <div data-painel="estrutura" hidden>
+      <p>O ano de Phantyr tem ${DIAS_ANO} dias, divididos em ${dados.meses.length} meses de ${DIAS_MES} dias, cada mês tem ${DIAS_MES / DIAS_SEMANA} semanas de ${DIAS_SEMANA} dias e as estações têm duração de 3 meses.</p>
+      <button class="cal-imagem" data-ampliar title="Ampliar"><img src="${asset("/img/calendario.webp")}" alt="Calendário de Phantyr: 12 meses, 3 semanas de 10 dias cada" loading="lazy"></button>
     </div>`;
 
   const q = <T extends HTMLElement>(s: string) => sec.querySelector<T>(s)!;
   function atualizarAgora() {
     const a = agora();
-    q("#cal-agora").innerHTML = `<p class="muted">${esc(dataBr(a.diaReal))}, ${String(a.hora).padStart(2, "0")}h</p>${blocoDia(a.diaReal, a.turno)}`;
+    q("#cal-agora").innerHTML = `<p class="muted">${esc(dataBr(a.diaReal))}, ${String(a.hora).padStart(2, "0")}h</p><p class="cal-regra">1 dia real = ${DIAS_POR_DIA_REAL} dias de Phantyr</p>${blocoDia(a.diaReal, a.turno)}`;
     q("#cal-proximos").innerHTML = Array.from({ length: 10 }, (_, i) => listaDia(a.diaReal + i + 1)).join("");
   }
   const data = q<HTMLInputElement>("#cal-data");
@@ -125,6 +120,7 @@ export function montarCalendario() {
   setInterval(atualizarAgora, 60_000);
 
   sec.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement).closest("[data-ampliar]")) { abrirLeitor(asset("/img/calendario.webp"), "Calendário de Phantyr"); return; }
     const b = (e.target as HTMLElement).closest<HTMLElement>("[data-aba]");
     if (!b) return;
     sec.querySelectorAll<HTMLElement>("[data-aba]").forEach((x) => x.classList.toggle("on", x === b));
