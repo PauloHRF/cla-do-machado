@@ -19,13 +19,13 @@ export function montarJornais() {
     const b = (e.target as HTMLElement).closest<HTMLElement>("[data-i]");
     if (!b) return;
     const j = jornais[+b.dataset.i!];
-    abrirLeitor(j);
+    abrirLeitor(asset(j.imagem), j.manchete ?? j.nome);
   });
   setTab("jornais", sec);
 }
 
 /** Leitor em tela cheia: zoom (roda do mouse, botões, duplo clique, pinça) e arrastar, sem sair do site. */
-function abrirLeitor(j: (typeof jornais)[number]) {
+export function abrirLeitor(src: string, alt: string) {
   const el = document.createElement("div");
   el.className = "leitor";
   el.innerHTML = `
@@ -36,7 +36,7 @@ function abrirLeitor(j: (typeof jornais)[number]) {
       <button class="btn" data-z="+" aria-label="Aumentar"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
       <button class="btn" data-z="x" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div class="leitor-area"><img src="${asset(j.imagem)}" alt="${esc(j.manchete ?? j.nome)}" draggable="false"></div>`;
+    <div class="leitor-area"><img src="${esc(src)}" alt="${esc(alt)}" draggable="false"></div>`;
   document.body.append(el);
   const area = el.querySelector<HTMLElement>(".leitor-area")!, img = el.querySelector<HTMLImageElement>("img")!;
   let k = 1, tx = 0, ty = 0, base = 1;
