@@ -1,0 +1,58 @@
+# Mantém este repositório e o repositório espelho (outra conta) idênticos, nos dois sentidos.
+# Precisa de: variável ESPELHO_REPO (ex.: outra-conta/cla-do-machado) e segredo ESPELHO_TOKEN
+# (token com permissão de escrita no outro repositório). O mesmo arquivo deve existir nos dois lados.
+name: Espelhar com o outro repositório
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: espelho
+  cancel-in-progress: false
+jobs:
+  espelhar:
+    if: ${{ vars.ESPELHO_REPO != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+      - name: Sincronizar
+        env:
+          OUTRO: ${{ vars.ESPELHO_REPO }}
+          TOKEN: ${{ secrets.ESPELHO_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "espelho"
+          git config user.email "espelho@users.noreply.github.com"
+          git remote add outro "https://x-access-token:${TOKEN}@github.com/${OUTRO}.git"
+          # outro repositório ainda vazio: envia tudo
+          if ! git fetch outro main; then
+            git push outro HEAD:main
+            exit 0
+          fi
+          A=$(git rev-parse HEAD); B=$(git rev-parse outro/main)
+          if [ "$A" = "$B" ]; then
+            echo "Já estão iguais."
+          elif git merge-base --is-ancestor "$B" "$A"; then
+            echo "Aqui está à frente: enviando para o outro."
+            git push outro HEAD:main
+          elif git merge-base --is-ancestor "$A" "$B"; then
+            echo "O outro está à frente: trazendo para cá."
+            git merge --ff-only outro/main
+            git push origin HEAD:main
+          else
+            echo "Os dois têm novidades: juntando."
+            if ! git merge --no-edit outro/main; then
+              git merge --abort
+              echo "::error::Conflito entre os dois repositórios. Resolva manualmente (merge de um no outro) e o espelho volta a funcionar."
+              exit 1
+            fi
+            git push outro HEAD:main
+            git push origin HEAD:main
+          fi
