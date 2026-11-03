@@ -32,7 +32,7 @@ Se os dois receberem mudanças ao mesmo tempo, o workflow junta sozinho; se houv
 2. No Netlify: *Add new site → Import from Git*. O `netlify.toml` já define build e publicação.
 
 ## CMS (/admin)
-1. Acesse `/admin`, entre com GitHub (quem edita precisa de acesso de escrita ao repositório). Cada “Salvar” vira um commit e o Netlify republica.
+1. O CMS grava no repositório de `backend.repo` em `public/admin/config.yml` (hoje `TIteamcla/cla-do-machado`, o que o Netlify publica; o espelho leva a mudança ao outro). Acesse `/admin`, entre com GitHub (quem edita precisa de acesso de escrita ao repositório). Cada “Salvar” vira um commit e o Netlify republica.
 2. Em desenvolvimento, `local_backend: true` edita os arquivos locais.
 
 ## Hexágonos (coordenadas do mapa)
