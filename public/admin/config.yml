@@ -2,7 +2,7 @@
 # Acesse em /admin e entre com sua conta do GitHub. Cada "Salvar" vira um commit e o Netlify publica sozinho.
 backend:
   name: github
-  repo: PauloHRF/cla-do-machado
+  repo: TIteamcla/cla-do-machado
   branch: main
 
 local_backend: true # em desenvolvimento (npm run dev), edita os arquivos locais
