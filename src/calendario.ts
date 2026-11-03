@@ -50,6 +50,10 @@ function agora(): { diaReal: number; turno: number; hora: number } {
   return { diaReal: diaCivil(+p.year, +p.month, +p.day), turno: turnoDaHora(hora), hora };
 }
 
+/** Posição absoluta (dias desde o ano 0) de um dia de Phantyr, e o caminho inverso: dia real e turno em que ele cai. */
+const absDe = (ano: number, iMes: number, dia: number) => ano * DIAS_ANO + iMes * DIAS_MES + (dia - 1);
+const absAtual = (a: { diaReal: number; turno: number }) => ancoraAbs + (a.diaReal - ancoraReal) * DIAS_POR_DIA_REAL + a.turno;
+const realDe = (abs: number) => { const n = abs - ancoraAbs; return { diaReal: ancoraReal + Math.floor(n / DIAS_POR_DIA_REAL), turno: mod(n, DIAS_POR_DIA_REAL) }; };
 const dataBr = (diaReal: number) => new Date(diaReal * 86400000).toLocaleDateString("pt-BR", { timeZone: "UTC", weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" });
 const paraIso = (diaReal: number) => new Date(diaReal * 86400000).toISOString().slice(0, 10);
 const doIso = (iso: string) => { const [y, m, d] = iso.split("-").map(Number); return diaCivil(y, m, d); };
@@ -92,6 +96,7 @@ export function montarCalendario() {
     <div data-painel="real">
       <h2 class="ribbon">Agora</h2>
       <div id="cal-agora"></div>
+      <div class="cal-calendario" id="cal-mes"></div>
       <h2 class="ribbon">Consultar uma data</h2>
       <div class="viagem-campo"><label for="cal-data">Data real</label><div><input type="date" id="cal-data"></div></div>
       <div id="cal-consulta"></div>
@@ -110,6 +115,48 @@ export function montarCalendario() {
     q("#cal-agora").innerHTML = `<p class="muted">${esc(dataBr(a.diaReal))}, ${String(a.hora).padStart(2, "0")}h</p><p class="cal-regra">1 dia real = ${DIAS_POR_DIA_REAL} dias de Phantyr</p>${blocoDia(a.diaReal, a.turno)}`;
     q("#cal-proximos").innerHTML = Array.from({ length: 10 }, (_, i) => listaDia(a.diaReal + i + 1)).join("");
   }
+  // ----- calendário do mês de Phantyr (3 semanas de 10 dias) -----
+  let ver = { ano: 0, mes: 0 }, seletor = false, anoSel = 0, escolhido: number | null = null, vistoHoje = -1;
+  function desenharMes() {
+    const a = agora(), hoje = absAtual(a), hojeInicio = hoje - a.turno, hd = phantyrDe(a.diaReal, a.turno);
+    const m = dados.meses[ver.mes], base = absDe(ver.ano, ver.mes, 1);
+    const cab = dados.dias_semana.map((d) => `<span class="cal-cab" title="${esc(d)}">${esc(d[0])}</span>`).join("");
+    const cel = Array.from({ length: DIAS_MES }, (_, i) => {
+      const abs = base + i, d = phantyrDe(a.diaReal + Math.floor((abs - hoje) / DIAS_POR_DIA_REAL), mod(abs - hoje + a.turno, DIAS_POR_DIA_REAL));
+      const cls = abs === hoje ? " hoje" : abs >= hojeInicio && abs < hojeInicio + DIAS_POR_DIA_REAL ? " hoje-dia" : "";
+      return `<button class="cal-cel${cls}${abs === escolhido ? " sel" : ""}${d.especial ? " especial" : ""}" data-abs="${abs}" aria-label="${i + 1} de ${esc(m.nome)}">${i + 1}</button>`;
+    }).join("");
+    let info = "";
+    if (escolhido !== null) {
+      const r = realDe(escolhido), d = phantyrDe(r.diaReal, r.turno);
+      info = `<p class="cal-info"><strong>${esc(d.semana)}, ${d.dia} de ${esc(d.mes)} de ${d.ano}</strong><br>Dia real: ${esc(dataBr(r.diaReal))} · Dia ${r.turno + 1} (${FAIXAS[r.turno]})${d.especial ? `<br><em>${esc(semTitulo(d.especial.mensagem))}</em>` : ""}</p>`;
+    }
+    const meses = dados.meses.map((x, i) => `<button class="cal-mes-op${anoSel === ver.ano && i === ver.mes ? " sel" : ""}" data-mes="${i}">${esc(x.nome)}</button>`).join("");
+    q("#cal-mes").innerHTML = `
+      <div class="cal-mes-cab">
+        <div><div class="cal-mes-titulo">${esc(m.nome)} • ${ver.ano}</div>
+        <button class="cal-hoje-link" data-hoje title="Voltar para hoje">Hoje: ${hd.dia} de ${esc(hd.mes)} · ${esc(hd.estacao)}</button></div>
+        <button class="btn cal-chevron" data-seletor aria-expanded="${seletor}" aria-label="Escolher mês e ano"><i class="fa-solid fa-chevron-${seletor ? "up" : "down"}"></i></button>
+      </div>
+      ${seletor ? `<div class="cal-seletor"><div class="cal-seletor-ano"><button class="btn" data-ano="-1" aria-label="Ano anterior"><i class="fa-solid fa-chevron-left"></i></button><strong>${anoSel}</strong><button class="btn" data-ano="1" aria-label="Próximo ano"><i class="fa-solid fa-chevron-right"></i></button></div><div class="cal-seletor-meses">${meses}</div></div>` : ""}
+      <div class="cal-grade">${cab}${cel}</div>${info}`;
+  }
+  function irParaHoje() {
+    const a = agora(), d = phantyrDe(a.diaReal, a.turno);
+    ver = { ano: d.ano, mes: dados.meses.findIndex((x) => x.nome === d.mes) }; anoSel = ver.ano; escolhido = null; seletor = false; desenharMes();
+  }
+  q("#cal-mes").addEventListener("click", (e) => {
+    const t = e.target as HTMLElement, c = t.closest<HTMLElement>("[data-abs]");
+    if (c) { escolhido = escolhido === +c.dataset.abs! ? null : +c.dataset.abs!; desenharMes(); return; }
+    if (t.closest("[data-hoje]")) { irParaHoje(); return; }
+    if (t.closest("[data-seletor]")) { seletor = !seletor; anoSel = ver.ano; desenharMes(); return; }
+    const an = t.closest<HTMLElement>("[data-ano]");
+    if (an) { anoSel += +an.dataset.ano!; desenharMes(); return; }
+    const ms = t.closest<HTMLElement>("[data-mes]");
+    if (ms) { ver = { ano: anoSel, mes: +ms.dataset.mes! }; seletor = false; escolhido = null; desenharMes(); }
+  });
+  irParaHoje();
+
   const data = q<HTMLInputElement>("#cal-data");
   function consultar() {
     q("#cal-consulta").innerHTML = data.value ? blocoDia(doIso(data.value), null) : "";
@@ -117,7 +164,7 @@ export function montarCalendario() {
   data.value = paraIso(agora().diaReal);
   data.addEventListener("input", consultar);
   atualizarAgora(); consultar();
-  setInterval(atualizarAgora, 60_000);
+  setInterval(() => { atualizarAgora(); const h = absAtual(agora()); if (h !== vistoHoje) { vistoHoje = h; desenharMes(); } }, 60_000);
 
   sec.addEventListener("click", (e) => {
     if ((e.target as HTMLElement).closest("[data-ampliar]")) { abrirLeitor(asset("/img/calendario.webp"), "Calendário de Phantyr"); return; }
