@@ -133,7 +133,7 @@
       "x": 368,
       "y": 197,
       "descricao": "É um escritório de investigação localizado em Komora, liderado por Dandara, uma perita experiente. Especializado em casos sobrenaturais e inexplicáveis, o estabelecimento também oferece serviços de investigação de desaparecimentos, roubos, fraudes, suspeitas de traição, localização de objetos e pesquisa documental. Seu diferencial é a atuação na prevenção e investigação de sabotagens culinárias, área supervisionada diretamente por Dandara.",
-      "detalhe": "<h3>Dandara</h3>\n\n\n<h3>Feanor</h3>"
+      "detalhe": "<h3>Dandara Snowtail Morow</h3>\n\nGuerreira e Clériga do conhecimento de gaweleem, investigadora e cozinheira profissional, Dona e administradora. Faz preferencialmente os serviços que envolve investigação bibliográfica ou burocrática, e TODOS, SEM EXCEÇÃO, QUANDO ENVOLVE INVESTIGAÇÃO ou SABOTAGEM CULINÁRIA. Nem sempre está em Komora, pois sua residência é em Erimor, mas se for o serviço relacionado a culinária, ela sai de Erimor especificamente para fazer. Mas caso necessário, na falta dos outros funcionários, se for quando está em Komora, pode fazer todos os serviços.\n![](/img/dandara.png)\n\n<h3>Feanor Snowtail Morow</h3>\nFilho de Dandara e de Hisoka. Monge e investigador. Ele está no escritório ao mesmo tempo que a mãe e tem as mesmas habilidades investigativas.\n![](/img/faenor.png)\n\n<h3>Tília Fagulha</h3>\n\nGnoma investigadora, enérgica e brilhante, Dandara a acolheu quando era adolescente e já não podia ficar num orfanato. É sua pupila oficial, mora em Komora mesmo. No fundo do escritório. Fica mais tempo no escritório que qualquer um. Não tem a resiliência física da Dandara, mas é mais brilhante e de mente mais afiada ainda que a mestra.\n![](/img/tilia.png)"
     },
     {
       "nome": "Shillelagh Transportes LTDA",
@@ -141,15 +141,15 @@
       "cor": "#02C205",
       "x": 332,
       "y": 415,
-      "descricao": "",
+      "descricao": "O prédio tem uma torre administrativa com o ancoradouro de navio voador e uma zona de estábulo similar a uma rodoviária cercando a torre. \nDuas lhamas falantes são responsáveis pela recepção.\nShadyn - cuida das viagens por terra; \nEnill - é o administrador; \nCricket - cuida das viagens de barco, voadoras e não voadoras.",
       "detalhe": ""
     },
     {
       "nome": "Dragão de Matchá",
       "icone": "mug-hot",
       "cor": "#87BF4E",
-      "x": 262,
-      "y": 376,
+      "x": 529,
+      "y": 357,
       "descricao": "O Dragão de Matchá é uma pequena e acolhedora casa de chá, escondida entre as ruas movimentadas da cidade. Com sua fachada de madeira, telhado oriental e uma placa adornada por um majestoso dragão, a loja convida os viajantes a fazer uma pausa para saborear uma boa xícara de chá e um pedaço de bolo de limão. \nAtrás do balcão, Satoshi recebe seus clientes com um sorriso caloroso, enquanto Kioshi, sua gata tricolor, dorme tranquilamente por perto. Entre aromas de chá verde, conversas despretensiosas e histórias de terras distantes, o Dragão de Matchá é um refúgio para aqueles que buscam descanso, boa companhia e, quem sabe, um pouco de sabedoria.![](/img/dragaomacha.png)",
       "detalhe": "<h3>Satoshi Haru</h3>\n\nSatoshi é um aasimar, ex-professor e pesquisador. Em sua busca por conhecimento, juntou-se ao Clã do Machado, mas ao longo de sua jornada descobriu que sua verdadeira vocação era ser um humilde e feliz vendedor de chá. \nCom as economias que acumulou durante seu tempo no clã, comprou uma pequena loja, onde hoje continua sua busca por conhecimento, não mais por meio dos livros, mas ouvindo as histórias de seus antigos companheiros de aventura e de viajantes vindos de terras distantes. \n![](/img/satoshi.png)\n\n\n<h3>Kioshi</h3>\n\nÉ a mascote do Dragão de Matchá, uma ex-gata de rua adotada por Satoshi. Em sua coleira, carrega um sigilo que simboliza o pacto de seu dono, tornando-se, assim, a guardiã desse vínculo. \nSatoshi acredita que os gatos possuem uma conexão especial com o sobrenatural, o que faz de Kioshi a guardiã ideal para proteger o sigilo. Enquanto passa os dias dormindo tranquilamente sobre o balcão da casa de chá, ela guarda um segredo muito maior do que qualquer cliente poderia imaginar.\n![](/img/kioshi.png)"
     },
