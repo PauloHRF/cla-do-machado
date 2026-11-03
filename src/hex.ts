@@ -14,7 +14,6 @@ export const HEX_COLUNAS = 114;
 export const HEX_LINHAS = 83;
 export const MAPA_ALTURA = 1697;
 export const HEX_LADO = LADO;
-export const HEX_ESCALA_Y = ESCALA_Y;
 
 export interface Hex { c: number; l: number }
 
