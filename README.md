@@ -83,8 +83,6 @@ Em `src/content/viagem/rotas-aquaticas.json`: 40 rotas, cada uma ligando **dois*
 
 **Arredondamento:** todos os tempos são somados exatamente (barco = 0,25 dia por hexágono, voo etc.) e só o total da viagem é arredondado para cima; toda viagem leva no mínimo **1 dia**.
 
-## Ferramentas (aba discreta)
-No menu lateral, logo acima do Discord, há um botão sem ícone que abre a aba **Ferramentas** com a seleção de hexágonos (clique nos hexágonos, copie a lista; *Ctrl + arrastar* pinta vários). É para quem edita terreno e estradas.
 
 ## Calendário
 
