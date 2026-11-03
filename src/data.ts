@@ -72,7 +72,6 @@ export const CATEGORIAS: Record<string, { nome: string; icone: string; cor: stri
   masmorra: { nome: "Masmorras", icone: "dungeon", cor: "#3d3d46" },
   mais: { nome: "Mais", icone: "plus", cor: "#5c5c5c" },
 };
-export const CATEGORIAS_OFICIAIS = Object.keys(CATEGORIAS).filter((k) => CATEGORIAS[k].oficial);
 export const CATEGORIAS_COMUNIDADE = Object.keys(CATEGORIAS).filter((k) => !CATEGORIAS[k].oficial);
 
 // Símbolos da legenda do mapa: cidade grande, cidade pequena, ponto de interesse e PDI itinerante.
