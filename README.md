@@ -23,7 +23,7 @@ Para descobrir coordenadas: segure **Shift** e clique no mapa (copia `x, y`).
 ## Espelho entre dois repositórios
 O site é publicado só pelo Netlify, a partir de um dos dois repositórios. O workflow `.github/workflows/espelho.yml` mantém os dois iguais, nos dois sentidos (a cada push na `main` e a cada 20 minutos). Para ligar, em cada repositório (*Settings → Secrets and variables → Actions*):
 1. **Variável** `ESPELHO_REPO`: o outro repositório, no formato `dono/nome`.
-2. **Segredo** `ESPELHO_TOKEN`: um token do GitHub com permissão de escrita **no outro repositório** (fine-grained: *Contents: read and write*; clássico: `repo`).
+2. **Segredo** `ESPELHO_TOKEN`: um token do GitHub com permissão de escrita **no outro repositório** (fine-grained: *Contents: read and write* **e** *Workflows: read and write*; clássico: `repo` e `workflow`).
 3. O mesmo arquivo `espelho.yml` precisa existir nos dois repositórios. O repositório novo deve ser criado **vazio** (sem README).
 Se os dois receberem mudanças ao mesmo tempo, o workflow junta sozinho; se houver conflito no mesmo trecho, ele falha com um aviso e é preciso fazer o merge à mão. Mudanças nos próprios arquivos de `.github/workflows` não passam pelo espelho automático (o token padrão não tem essa permissão): altere nos dois lados.
 

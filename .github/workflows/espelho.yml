@@ -1,6 +1,6 @@
 # Mantém este repositório e o repositório espelho (outra conta) idênticos, nos dois sentidos.
 # Precisa de: variável ESPELHO_REPO (ex.: outra-conta/cla-do-machado) e segredo ESPELHO_TOKEN
-# (token com permissão de escrita no outro repositório). O mesmo arquivo deve existir nos dois lados.
+# (token com escrita no outro repositório, incluindo a permissão "Workflows"). O mesmo arquivo deve existir nos dois lados.
 name: Espelhar com o outro repositório
 on:
   push:
@@ -22,14 +22,18 @@ jobs:
         with:
           fetch-depth: 0
           ref: main
+          persist-credentials: false   # senão a credencial do robô se sobrepõe ao token do outro repositório
       - name: Sincronizar
         env:
           OUTRO: ${{ vars.ESPELHO_REPO }}
           TOKEN: ${{ secrets.ESPELHO_TOKEN }}
+          ESTE: ${{ github.repository }}
+          TOKEN_ESTE: ${{ github.token }}
         run: |
           set -euo pipefail
           git config user.name "espelho"
           git config user.email "espelho@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${TOKEN_ESTE}@github.com/${ESTE}.git"
           git remote add outro "https://x-access-token:${TOKEN}@github.com/${OUTRO}.git"
           # outro repositório ainda vazio: envia tudo
           if ! git fetch outro main; then
