@@ -154,13 +154,13 @@
       "detalhe": "<h3>Satoshi Haru</h3>\n\nSatoshi é um aasimar, ex-professor e pesquisador. Em sua busca por conhecimento, juntou-se ao Clã do Machado, mas ao longo de sua jornada descobriu que sua verdadeira vocação era ser um humilde e feliz vendedor de chá. \nCom as economias que acumulou durante seu tempo no clã, comprou uma pequena loja, onde hoje continua sua busca por conhecimento, não mais por meio dos livros, mas ouvindo as histórias de seus antigos companheiros de aventura e de viajantes vindos de terras distantes. \n![](/img/satoshi.png)\n\n\n<h3>Kioshi</h3>\n\nÉ a mascote do Dragão de Matchá, uma ex-gata de rua adotada por Satoshi. Em sua coleira, carrega um sigilo que simboliza o pacto de seu dono, tornando-se, assim, a guardiã desse vínculo. \nSatoshi acredita que os gatos possuem uma conexão especial com o sobrenatural, o que faz de Kioshi a guardiã ideal para proteger o sigilo. Enquanto passa os dias dormindo tranquilamente sobre o balcão da casa de chá, ela guarda um segredo muito maior do que qualquer cliente poderia imaginar.\n![](/img/kioshi.png)"
     },
     {
-      "nome": "A Dama e o Girassol - Floricultura",
+      "nome": "A Dama e o Girassol",
       "icone": "spa",
       "cor": "#D2D600",
       "x": 284,
       "y": 393,
-      "descricao": "",
-      "detalhe": ""
+      "descricao": "A Dama e o Girassol é uma charmosa floricultura que combina o encanto das flores com o aconchego de uma pequena cafeteria. Instalada em um edifício de arquitetura acolhedora, com fachada em tons claros, janelas de madeira e toldos avermelhados, a loja transmite uma atmosfera convidativa e romântica.\n\nÉ um lugar perfeito para quem deseja presentear alguém especial, renovar a decoração da casa ou simplesmente fazer uma pausa agradável durante o dia. A combinação entre o aroma do café e o perfume das flores faz da Dama e o Girassol um dos cantinhos mais acolhedores da vizinhança.\n![](/img/damaegirassol.png)",
+      "detalhe": "<h3>Flora</h3>\n\n\nA pequena e fofa atendente da floricultura. Uma verdan atenciosa e com habilidade ímpares de jardinagem.\n\n![](/img/flora.png)"
     },
     {
       "nome": "Mansão Crepúsculo",
